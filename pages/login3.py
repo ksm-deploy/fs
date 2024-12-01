@@ -2,13 +2,13 @@
 import streamlit as st
 
 import altair as alt
-from altair.expr import datum
+# from altair.expr import datum
 import pandas as pd
 import numpy as np
 import streamlit as st
 import datetime
-from streamlit_plotly_events import plotly_events
-import streamlit as st
+# from streamlit_plotly_events import plotly_events
+# import streamlit as st
 import plotly.express as px
 import pandas as pd
 from altair import datum
@@ -19,7 +19,7 @@ import seaborn as sns
 import pickle
 from pathlib import Path
 import streamlit_authenticator as stauth
-from streamlit_navigation_bar import st_navbar
+# from streamlit_navigation_bar import st_navbar
 # import bcrypt
 import streamlit_highcharts as hct
 import plotly.graph_objects as go
