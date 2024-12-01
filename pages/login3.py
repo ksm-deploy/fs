@@ -14,14 +14,14 @@ import pandas as pd
 from altair import datum
 import warnings
 # warnings.filterwarnings("ignore")
-from streamlit_extras.metric_cards import style_metric_cards
+# from streamlit_extras.metric_cards import style_metric_cards
 import seaborn as sns 
 import pickle
 from pathlib import Path
 import streamlit_authenticator as stauth
 # from streamlit_navigation_bar import st_navbar
 # import bcrypt
-import streamlit_highcharts as hct
+# import streamlit_highcharts as hct
 import plotly.graph_objects as go
 # import matplotlib.pyplot as plt 
 import os
