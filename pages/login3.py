@@ -386,7 +386,7 @@ if authentication_status:
 
 
 
-    디바이스 = st.multiselect("DESKTOP","MOBILE")
+    디바이스 = st.selectbox("CHOICE DEVICE",("DESKTOP","MOBILE"), index= None)
         # 비교년도 = int(기준년도)-1
 
     if 디바이스 == "DESKTOP":
