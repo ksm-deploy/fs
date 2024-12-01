@@ -56,8 +56,9 @@ with file_path.open("rb") as file:
     hashed_passwords = pickle.load(file)
 
 
-authenticator = stauth.authenticate(names, usernames, hashed_passwords, "FINANCIAL Data Dashboard", "addfd", cookie_expiry_days=30)
-
+authenticator = stauth.Authenticate(names, usernames, hashed_passwords, "FINANCIAL Data Dashboard", "addfd", cookie_expiry_days=30)
+# stauth.authenticate 오류 해결
+# https://stackoverflow.com/questions/73152424/streamlit-authenticate-init-got-multiple-values-for-argument-cookie-expir
 name, authentication_status, username = authenticator.login("Login", "main")
 
 
