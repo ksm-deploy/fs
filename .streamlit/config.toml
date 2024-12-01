@@ -1,0 +1,9 @@
+[global]
+dataFrameSerialization = "legacy"
+
+[client]
+showErrorDetails = false
+
+[theme]
+base="dark"
+font = "Noto Sans KR"
