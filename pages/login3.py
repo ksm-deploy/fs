@@ -386,555 +386,558 @@ if authentication_status:
 
 
 
+    디바이스 = st.multiselect("DESKTOP","MOBILE")
+        # 비교년도 = int(기준년도)-1
+
+    if 디바이스 == "DESKTOP":
+
+        tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
+        with tab1:
+            ####이후 bs수식으로 간호화 예정
+            df_all_bs = df_all[df_all['손익구분'] == "BS"]
+
+            # ★감가상각누계액 제외 조건 반영 필요 ->
+            df_all_bs['누적금액'] = df_all_bs.groupby('보고반영')['금액2'].cumsum() #를 함수로 변환
 
 
 
+            # st.dataframe(df_all_bs,use_container_width=True)
+            df_all_bs_보고반영 = df_all_bs.groupby(by=['중분류','세분류','bs분류'])['금액2'].sum()
+            # st.text("groupby 1차")
+            # st.dataframe(df_all_bs_보고반영, use_container_width= True)
 
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
-    with tab1:
-        ####이후 bs수식으로 간호화 예정
-        df_all_bs = df_all[df_all['손익구분'] == "BS"]
+            df_all_bs = df_all_bs.reset_index()
+            df_all_bs_약식 = df_all_bs.pivot_table(index=['중분류','세분류',"bs분류"], columns=["기준일"], values="금액2",aggfunc="sum")
+            # st.dataframe(df_all_bs_약식,use_container_width=True)
 
-        # ★감가상각누계액 제외 조건 반영 필요 ->
-        df_all_bs['누적금액'] = df_all_bs.groupby('보고반영')['금액2'].cumsum() #를 함수로 변환
+            df_all_bs_약식 = round(df_all_bs_약식/1000000)
+            # st.dataframe(df_all_bs_약식,use_container_width=True)
 
+            기준일 = str(기준년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
+            비교일 = str(비교년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
 
+            # st.text(기준일)
+            # st.text(비교일)
 
-        # st.dataframe(df_all_bs,use_container_width=True)
-        df_all_bs_보고반영 = df_all_bs.groupby(by=['중분류','세분류','bs분류'])['금액2'].sum()
-        # st.text("groupby 1차")
-        # st.dataframe(df_all_bs_보고반영, use_container_width= True)
-
-        df_all_bs = df_all_bs.reset_index()
-        df_all_bs_약식 = df_all_bs.pivot_table(index=['중분류','세분류',"bs분류"], columns=["기준일"], values="금액2",aggfunc="sum")
-        # st.dataframe(df_all_bs_약식,use_container_width=True)
-
-        df_all_bs_약식 = round(df_all_bs_약식/1000000)
-        # st.dataframe(df_all_bs_약식,use_container_width=True)
-
-        기준일 = str(기준년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
-        비교일 = str(비교년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
-
-        # st.text(기준일)
-        # st.text(비교일)
-
-        # st.text("시점기준 불러오기")
-        listVars_bs=df_all_bs_약식.columns.get_level_values(0)
+            # st.text("시점기준 불러오기")
+            listVars_bs=df_all_bs_약식.columns.get_level_values(0)
 
 
-        df_all_bs_약식.insert(0,f'{기준일}누계',df_all_bs_약식.loc[:,listVars_bs <= 기준일].sum(axis=1).fillna(''))
-        listVars_bs=df_all_bs_약식.columns.get_level_values(0)
-        df_all_bs_약식.insert(1,f'{비교일}누계',df_all_bs_약식.loc[:,listVars_bs <= 비교일].sum(axis=1).fillna(''))
-        증감 = df_all_bs_약식[f'{기준일}누계'] - df_all_bs_약식[f'{비교일}누계']
-        df_all_bs_약식.insert(2,'증감',증감)
-        df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
+            df_all_bs_약식.insert(0,f'{기준일}누계',df_all_bs_약식.loc[:,listVars_bs <= 기준일].sum(axis=1).fillna(''))
+            listVars_bs=df_all_bs_약식.columns.get_level_values(0)
+            df_all_bs_약식.insert(1,f'{비교일}누계',df_all_bs_약식.loc[:,listVars_bs <= 비교일].sum(axis=1).fillna(''))
+            증감 = df_all_bs_약식[f'{기준일}누계'] - df_all_bs_약식[f'{비교일}누계']
+            df_all_bs_약식.insert(2,'증감',증감)
+            df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
 
 
-        # st.dataframe(df_all_bs_약식, use_container_width=True)
+            # st.dataframe(df_all_bs_약식, use_container_width=True)
 
-        # st.text("누계만 발라내기 - bs분류 일치화 필요")
+            # st.text("누계만 발라내기 - bs분류 일치화 필요")
 
-        df_all_bs_약식_누계 = df_all_bs_약식[[f'{비교일}누계',f'{기준일}누계','증감']]
-        df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-01누계', '누계')
+            df_all_bs_약식_누계 = df_all_bs_약식[[f'{비교일}누계',f'{기준일}누계','증감']]
+            df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-01누계', '누계')
 
-        df_all_bs_약식_누계_요약 = df_all_bs_약식_누계.groupby(by=['중분류','세분류']).sum([f'{비교일}누계',[f'{기준일}누계']])
-        df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_요약
-        # st.text("중분류합계 테스트")
+            df_all_bs_약식_누계_요약 = df_all_bs_약식_누계.groupby(by=['중분류','세분류']).sum([f'{비교일}누계',[f'{기준일}누계']])
+            df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_요약
+            # st.text("중분류합계 테스트")
 
-        df_all_bs_약식_누계_요약.insert(0,'bs분류',"")
-        # st.dataframe(df_all_bs_약식_누계_요약,use_container_width=True)
+            df_all_bs_약식_누계_요약.insert(0,'bs분류',"")
+            # st.dataframe(df_all_bs_약식_누계_요약,use_container_width=True)
 
-        # df_all_bs_약식_누계 = round(df_all_bs_약식_누계/1000000)
-        df_all_bs_약식_누계_임시 = df_all_bs_약식_누계
-        # st.dataframe(df_all_bs_약식_누계,use_container_width=True)
+            # df_all_bs_약식_누계 = round(df_all_bs_약식_누계/1000000)
+            df_all_bs_약식_누계_임시 = df_all_bs_약식_누계
+            # st.dataframe(df_all_bs_약식_누계,use_container_width=True)
 
-        # st.text("중분류합계 테스트 - 합계테이블 병합 테스트")
-        df_all_bs_약식_누계 = df_all_bs_약식_누계.reset_index()
+            # st.text("중분류합계 테스트 - 합계테이블 병합 테스트")
+            df_all_bs_약식_누계 = df_all_bs_약식_누계.reset_index()
 
-        df_all_bs_약식_누계_요약 = df_all_bs_약식_누계_요약.reset_index()
-        df_all_bs_약식_누계_병합 = pd.concat([df_all_bs_약식_누계,df_all_bs_약식_누계_요약])
-
-
-        df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index(['중분류','세분류','bs분류'])
-        df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.sort_index(axis=0, level=[0,1,2],ascending=[False,False,True])
+            df_all_bs_약식_누계_요약 = df_all_bs_약식_누계_요약.reset_index()
+            df_all_bs_약식_누계_병합 = pd.concat([df_all_bs_약식_누계,df_all_bs_약식_누계_요약])
 
 
-        # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index(['중분류','세분류','bs분류'])
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.sort_index(axis=0, level=[0,1,2],ascending=[False,False,True])
+
+
+            # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
 
 
 
-        df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index()
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index()
 
 
-        # st.text("t전")
-        # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+            # st.text("t전")
+            # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
 
 
-        df_all_bs_약식_누계_병합_서식대상 = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']==""]
+            df_all_bs_약식_누계_병합_서식대상 = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']==""]
 
-        # st.text("서식대상 필터 테스트")
+            # st.text("서식대상 필터 테스트")
 
-        # st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
-
-
-        # 조건 1은 콜_행사가, 콜_수량합계 열에, 조건 2는 풋_행사가, 풋_수량합계 열에 적용 
+            # st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
 
 
-        # st.text("서식대상 필터 테스트_apply후")
-        # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
-        #             lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합_서식대상[df_all_bs_약식_누계_병합_서식대상['bs분류'] ==""].index,slice(None))
-        #             # lambda _: "background-color: gray; ", subset=(['bs중분류','영업이익'], slice(None))
-        #         ).format(precision=0, thousands=',')
+            # 조건 1은 콜_행사가, 콜_수량합계 열에, 조건 2는 풋_행사가, 풋_수량합계 열에 적용 
 
 
-        # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
-        ##bs분야 증감 확인
-        현금df = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']=="현금 및 등가물"]
-        # st.dataframe(현금df,use_container_width=True)
-        ####이후 bs수식으로 간호화 예정
+            # st.text("서식대상 필터 테스트_apply후")
+            # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
+            #             lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합_서식대상[df_all_bs_약식_누계_병합_서식대상['bs분류'] ==""].index,slice(None))
+            #             # lambda _: "background-color: gray; ", subset=(['bs중분류','영업이익'], slice(None))
+            #         ).format(precision=0, thousands=',')
 
-        직전현금 = 현금df.iloc[0,3]
-        당기현금 = 현금df.iloc[0,4]
-        차입금df = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']=="단기차입금"]
-        # st.dataframe(차입금df,use_container_width=True)
-        차입금 = 차입금df.iloc[0,5]
 
-        # st.text(직전현금)
-        # st.text(당기현금)
+            # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+            ##bs분야 증감 확인
+            현금df = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']=="현금 및 등가물"]
+            # st.dataframe(현금df,use_container_width=True)
+            ####이후 bs수식으로 간호화 예정
 
-        df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-        # st.dataframe(df_손익_전체_누계)
+            직전현금 = 현금df.iloc[0,3]
+            당기현금 = 현금df.iloc[0,4]
+            차입금df = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']=="단기차입금"]
+            # st.dataframe(차입금df,use_container_width=True)
+            차입금 = 차입금df.iloc[0,5]
 
-        ## 손익분야 증감확인
-        df_all_wf = df_all[df_all['대분류']=='손익']
-        df_all_wf = df_all_wf.loc[(df_all_wf['회계연도'].isin(targets)) & (df_all_wf['전기월']<=int(기준월))]
+            # st.text(직전현금)
+            # st.text(당기현금)
 
-        df_tem = df_all_wf[cond_전체]
-        df_tem = df_tem.groupby(['중분류','회계연도'])['금액2'].sum().unstack().reset_index() # -> 월을 그룹대상에서 빼야 당초 조회 월 누계로 작동
-        # df_tem = df_tem.set_index('중분류')
-        df_tem["전년비"] = df_tem[f"{기준년도}"]-df_tem[f"{비교년도}"]
-        temp_SORT1 = ['매출','사업비','인건비','일반관리비','건물관리비','지급임차료','기부금']
-        # df_tem = df_tem.reset_index()
-        df_tem = df_tem.set_index('중분류')
-        df_tem = df_tem.reindex(temp_SORT1)
-        df_tem.loc["영업이익"] = df_tem.iloc[0] - df_tem.iloc[1] - df_tem.iloc[2] - df_tem.iloc[3]- df_tem.iloc[4]- df_tem.iloc[5]
-        df_tem = df_tem.reset_index()
-        
-
-        # st.dataframe(df_tem)
-        기부금df = df_tem[df_tem['중분류']=="기부금"]
-        기부금증감 = (기부금df.iloc[0,3])/1000000
-        # st.text(기부금증감)
-        영업이익df = df_tem[df_tem['중분류']=="영업이익"]
-        영업이익변동 = round(영업이익df.iloc[0,3]/1000000)
-        # st.text(기부금증감)
-
-        # 미지급등 = 당기현금 - 직전현금 - 기부금증감 - 영업이익변동 - 차입금
-        미지급등 = 당기현금 - 직전현금 - 기부금증감 - 영업이익변동 - 차입금
-        
-        # st.text(미지급등)
-        
-        cfdata = {'전년동기현금': 직전현금, '기부금증감': 기부금증감,'영업활동효과': 영업이익변동,'차입금증감': 차입금,'미지금이연등': [미지급등],'당기말현금': 당기현금}
-        cfdata = pd.DataFrame(cfdata)
-        cfdata = cfdata.set_index('전년동기현금')
-        # cfdata.drop(columns = ['']) 
-        # cfdata = cfdata.loc[:, "c":"e":1]
-        # cfdata = cfdata.loc[:,0:]
-        # cfdata.loc[:, (cfdata != 0).any(axis=0)]
-        st.error("전년동기대비 Cashflow 변동 _ 단위: 백만")
-        st.dataframe(cfdata,use_container_width=True)
-        st.text("")
-
-        col1b, col2b = st.columns(2)
-        with col1b:
-            st.error("서머리")
-            col1, col2, col3 = st.columns(3)
-            # st.text("11")
-            with col1:
-                df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-                # st.dataframe(df_손익_전체_누계,use_container_width=True)
-                # st.dataframe(df_손익_전체_누계)
-                st.header("전체")
-                # st.markdown('<p class="blank-font"></p>', unsafe_allow_html=True)
-                st.text('')
-                st.metric("매출", f"{df_손익_전체_누계.iloc[0,1]:,.0f}",f"{df_손익_전체_누계.iloc[0,2]:,.0f}")
-                st.text('')
-                st.metric("사업비", f"{df_손익_전체_누계.iloc[1,1]:,.0f}",f"{df_손익_전체_누계.iloc[1,2]:,.0f}")
-                st.text('')
-                # st.markdown('#')
-                st.metric("매출이익", f"{df_손익_전체_누계.iloc[2,1]:,.0f}",f"{df_손익_전체_누계.iloc[2,2]:,.0f}")
-                판매관리비 = df_손익_전체_누계.iloc[3,1]+df_손익_전체_누계.iloc[4,1]+df_손익_전체_누계.iloc[5,1]+df_손익_전체_누계.iloc[6,1]
-                판매관리비_증감 = df_손익_전체_누계.iloc[3,2]+df_손익_전체_누계.iloc[4,2]+df_손익_전체_누계.iloc[5,2]+df_손익_전체_누계.iloc[6,2]
-                st.text('')
-                st.metric("판매관리비",f"{판매관리비:,.0f}" ,f"{판매관리비_증감:,.0f}")
-                st.text('')
-                전체영업이익 = df_손익_전체_누계.iloc[7,1]
-                st.metric("영업이익", f"{df_손익_전체_누계.iloc[7,1]:,.0f}",f"{df_손익_전체_누계.iloc[7,2]:,.0f}")
-                st.text('')
-                임차제외_영업이익 = df_손익_전체_누계.iloc[7,1]+df_손익_전체_누계.iloc[6,1]
-                임차제외_영업이익_증감 = df_손익_전체_누계.iloc[7,2]+df_손익_전체_누계.iloc[6,2]
-                st.metric("임차료제외영업이익", f"{임차제외_영업이익:,.0f}",f"{임차제외_영업이익_증감:,.0f}")
-
- 
-            with col2:
-                df_손익_공연2_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
-                # st.dataframe(df_손익_공연2_누계,use_container_width=True)
-                
-                st.header("공연")
-                st.text('')
-                st.metric("매출", f"{df_손익_공연2_누계.iloc[0,1]:,.0f}",f"{df_손익_공연2_누계.iloc[0,2]:,.0f}")
-                st.text('')
-                st.metric("사업비", f"{df_손익_공연2_누계.iloc[1,1]:,.0f}",f"{df_손익_공연2_누계.iloc[1,2]:,.0f}")
-                st.text('')
-                st.metric("매출이익", f"{df_손익_공연2_누계.iloc[2,1]:,.0f}",f"{df_손익_공연2_누계.iloc[2,2]:,.0f}")
-                공연_판매관리비 = df_손익_공연2_누계.iloc[3,1]+df_손익_공연2_누계.iloc[4,1]+df_손익_공연2_누계.iloc[5,1]+df_손익_공연2_누계.iloc[6,1]
-                공연_판매관리비_증감 = df_손익_공연2_누계.iloc[3,2]+df_손익_공연2_누계.iloc[4,2]+df_손익_공연2_누계.iloc[5,2]+df_손익_공연2_누계.iloc[6,2]
-                st.text('')
-                st.metric("판매관리비",f"{공연_판매관리비:,.0f}" ,f"{공연_판매관리비_증감:,.0f}")
-                st.text('')
-                st.metric("영업이익", f"{df_손익_공연2_누계.iloc[7,1]:,.0f}",f"{df_손익_공연2_누계.iloc[7,2]:,.0f}")
-                st.text('')
-                임차제외_영업이익_공연 = df_손익_공연2_누계.iloc[7,1]+df_손익_공연2_누계.iloc[6,1]
-                임차제외_영업이익_증감_공연 = df_손익_공연2_누계.iloc[7,2]+df_손익_공연2_누계.iloc[6,2]
-                st.metric("임차료제외영업이익", f"{임차제외_영업이익_공연:,.0f}",f"{임차제외_영업이익_증감_공연:,.0f}")
-
-            with col3:
-                df_손익_전시_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)
-                st.header("전시")
-                st.text('')
-                st.metric("매출", f"{df_손익_전시_누계.iloc[0,1]:,.0f}",f"{df_손익_전시_누계.iloc[0,2]:,.0f}")
-                st.text('')
-                st.metric("사업비", f"{df_손익_전시_누계.iloc[1,1]:,.0f}",f"{df_손익_전시_누계.iloc[1,2]:,.0f}")
-                st.text('')
-                st.metric("매출이익", f"{df_손익_전시_누계.iloc[2,1]:,.0f}",f"{df_손익_전시_누계.iloc[2,2]:,.0f}")
-                전시_판매관리비 = df_손익_전시_누계.iloc[3,1]+df_손익_전시_누계.iloc[4,1]+df_손익_전시_누계.iloc[5,1]+df_손익_전시_누계.iloc[6,1]
-                전시_판매관리비_증감 = df_손익_전시_누계.iloc[3,2]+df_손익_전시_누계.iloc[4,2]+df_손익_전시_누계.iloc[5,2]+df_손익_전시_누계.iloc[6,2]
-                st.text('')
-                st.metric("판매관리비",f"{전시_판매관리비:,.0f}" ,f"{전시_판매관리비_증감:,.0f}")
-                st.text('')
-                st.metric("영업이익", f"{df_손익_전시_누계.iloc[7,1]:,.0f}",f"{df_손익_전시_누계.iloc[7,2]:,.0f}")
-                st.text('')
-                임차제외_영업이익_전시 = df_손익_전시_누계.iloc[7,1]+df_손익_전시_누계.iloc[6,1]
-                임차제외_영업이익_증감_전시 = df_손익_전시_누계.iloc[7,2]+df_손익_전시_누계.iloc[6,2]
-                st.metric("임차료제외영업이익", f"{임차제외_영업이익_전시:,.0f}",f"{임차제외_영업이익_증감_전시:,.0f}")
-
-            with col2b:
-                st.error(f"{기준년도}년 손익 Cash영향 (단위:억원)")
-                df_all_wf = df_all[df_all['대분류']=='손익']
-                df_all_wf = df_all_wf.loc[(df_all_wf['회계연도'].isin(targets)) & (df_all_wf['전기월']<=int(기준월))]
-
-                df_tem = df_all_wf[cond_전체]
-                df_tem = df_tem.groupby(['중분류','회계연도'])['금액2'].sum().unstack().reset_index() # -> 월을 그룹대상에서 빼야 당초 조회 월 누계로 작동
-                df_tem = df_tem[['중분류',f'{기준년도}']]
-                df_tem = df_tem.set_index('중분류')
-                sort_wf = ['기부금','매출','사업비','인건비','일반관리비','건물관리비','지급임차료']
-                df_tem = df_tem.reindex(sort_wf)
-                df_tem[f'{기준년도}_N'] = 0
-                df_tem = df_tem.reset_index()
-
-                def 금액작업(row):
-                    if row['중분류'] == '매출':
-                        val = round(row['2024']/100000000)
-                    elif row['중분류'] == '기부금':
-                        val = round(row['2024']/100000000)
-                    else :
-                        val = round(row['2024']/100000000*-1)
-
-                    return val
-
-                # 함수적용
-                df_tem[f'{기준년도}_N'] = df_tem.apply(금액작업, axis=1)
-                df_tem = df_tem.set_index('중분류')
-                기부금 = df_tem.iloc[0,1]
-                # st.text(기부금)
-                cashflow = 전체영업이익/100 + 기부금
-                
-
-                fig = go.Figure(go.Waterfall(
-                    name ="손익흐름", orientation='v',
-                    x= df_tem.index, y=df_tem[f'{기준년도}_N'], 
-                    text=df_tem['2024_N'],textposition='outside',
-                    texttemplate='%{text:,}',
-                    increasing={'marker':{"color":"White"}},
-                    decreasing={'marker':{"color":"#967078"}},
-                    
-                ))
-                # https://docs.streamlit.io/develop/api-reference/widgets/st.color_picker
-                fig.update_layout(height=800,title_text=f"전체현금흐름 영향 : {cashflow}억",
-                
-                font=dict(
-                    size=18,  # Set the font size here
-                    color="white",
-                    # format=",.0f",
-                )
-                )
-                fig.update_yaxes(showticklabels=False)
-                fig.update_layout(
-                xaxis = dict(
-                tickfont = dict(size=15)),
-                title_font_size = 25)
-                st.plotly_chart(fig, use_container_width=True)
-        st.text("목표대비 실적 그래프")
-
-    with tab2:
-        st.text("전체, 공연, 전시별 누적그래프")
-        st.text("전체, 공연, 전시별 월별 트랜드그래프") 
-
-        c_공연매출_ch = chart("매출",df_tem_ch, sort_sale222, "매출", "전체")   
-        st.altair_chart(c_공연매출_ch, use_container_width=True)
-        
-    
-    with tab3:
-        div = st.selectbox("구분손익", ["전체", "공연", "전시"])
-        col1, col2, col3 = st.columns(3)
-
-        if div == "전체":
-            st.header("전체손익")
-            df_손익_전체_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-            st.dataframe(df_손익_전체_누계,use_container_width=True)
-        if div == "공연":
-            st.header("공연손익")    
-            df_손익_공연2_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
-            st.dataframe(df_손익_공연2_누계,use_container_width=True)
-        # if st.button("전시"):
-        if div == "전시":
-            st.header("전시손익")    
-            df_손익_전시_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)
-            st.dataframe(df_손익_전시_누계,use_container_width=True)
-        
-        if "initial_rerun_done" not in st.session_state:
-            st.session_state.initial_rerun_done = True
-            st.rerun()
-            
-    with tab4:
-        div2 = st.selectbox("구분손익 ", ["전체", "공연", "전시"])
-        if div2 == "전체":
-            st.header("전체손익")
             df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-            st.dataframe(df_손익_전체_누계,use_container_width=True)
-        if div2 == "공연":
-            st.header("공연손익")    
-            df_손익_공연2_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
-            st.dataframe(df_손익_공연2_누계,use_container_width=True)
-        if div2 == "전시":
-            st.header("전시손익")    
-            df_손익_전시_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)
-            st.dataframe(df_손익_전시_누계,use_container_width=True)
-        if "initial_rerun_done" not in st.session_state:
-            st.session_state.initial_rerun_done = True
-            st.rerun()
+            # st.dataframe(df_손익_전체_누계)
 
-    with tab5:
+            ## 손익분야 증감확인
+            df_all_wf = df_all[df_all['대분류']=='손익']
+            df_all_wf = df_all_wf.loc[(df_all_wf['회계연도'].isin(targets)) & (df_all_wf['전기월']<=int(기준월))]
 
-        st.markdown('--------------')
-        st.header("재무상태")
-
-        st.error("bs테이블")
-
-        df_all_bs = df_all[df_all['손익구분'] == "BS"]
-
-        # ★감가상각누계액 제외 조건 반영 필요 ->
-        df_all_bs['누적금액'] = df_all_bs.groupby('보고반영')['금액2'].cumsum() #를 함수로 변환
-
-
-
-        st.dataframe(df_all_bs,use_container_width=True)
-        df_all_bs_보고반영 = df_all_bs.groupby(by=['중분류','세분류','bs분류'])['금액2'].sum()
-        st.text("groupby 1차")
-        st.dataframe(df_all_bs_보고반영, use_container_width= True)
-
-        df_all_bs = df_all_bs.reset_index()
-        df_all_bs_약식 = df_all_bs.pivot_table(index=['중분류','세분류',"bs분류"], columns=["기준일"], values="금액2",aggfunc="sum")
-        st.dataframe(df_all_bs_약식,use_container_width=True)
-
-        df_all_bs_약식 = round(df_all_bs_약식/1000000)
-        st.dataframe(df_all_bs_약식,use_container_width=True)
-
-        기준일 = str(기준년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
-        비교일 = str(비교년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
-
-        st.text(기준일)
-        st.text(비교일)
-
-        st.text("시점기준 불러오기")
-        listVars_bs=df_all_bs_약식.columns.get_level_values(0)
-
-
-        df_all_bs_약식.insert(0,f'{기준일}누계',df_all_bs_약식.loc[:,listVars_bs <= 기준일].sum(axis=1).fillna(''))
-        listVars_bs=df_all_bs_약식.columns.get_level_values(0)
-        df_all_bs_약식.insert(1,f'{비교일}누계',df_all_bs_약식.loc[:,listVars_bs <= 비교일].sum(axis=1).fillna(''))
-        증감 = df_all_bs_약식[f'{기준일}누계'] - df_all_bs_약식[f'{비교일}누계']
-        df_all_bs_약식.insert(2,'증감',증감)
-        df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
-
-
-        st.dataframe(df_all_bs_약식, use_container_width=True)
-
-        st.text("누계만 발라내기 - bs분류 일치화 필요")
-
-        df_all_bs_약식_누계 = df_all_bs_약식[[f'{비교일}누계',f'{기준일}누계','증감']]
-        df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-01누계', '누계')
-
-        df_all_bs_약식_누계_요약 = df_all_bs_약식_누계.groupby(by=['중분류','세분류']).sum([f'{비교일}누계',[f'{기준일}누계']])
-        df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_요약
-        st.text("중분류합계 테스트")
-
-        df_all_bs_약식_누계_요약.insert(0,'bs분류',"")
-        st.dataframe(df_all_bs_약식_누계_요약,use_container_width=True)
-
-        # df_all_bs_약식_누계 = round(df_all_bs_약식_누계/1000000)
-        df_all_bs_약식_누계_임시 = df_all_bs_약식_누계
-        st.dataframe(df_all_bs_약식_누계,use_container_width=True)
-
-        st.text("중분류합계 테스트 - 합계테이블 병합 테스트")
-        df_all_bs_약식_누계 = df_all_bs_약식_누계.reset_index()
-
-        df_all_bs_약식_누계_요약 = df_all_bs_약식_누계_요약.reset_index()
-        df_all_bs_약식_누계_병합 = pd.concat([df_all_bs_약식_누계,df_all_bs_약식_누계_요약])
-
-
-        df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index(['중분류','세분류','bs분류'])
-        df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.sort_index(axis=0, level=[0,1,2],ascending=[False,False,True])
-
-
-        st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
-
-
-
-        df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index()
-
-
-        st.text("t전")
-        st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
-
-
-        df_all_bs_약식_누계_병합_서식대상 = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']==""]
-
-        st.text("서식대상 필터 테스트")
-
-        st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
-
-
-        # 조건 1은 콜_행사가, 콜_수량합계 열에, 조건 2는 풋_행사가, 풋_수량합계 열에 적용 
-
-
-        st.text("서식대상 필터 테스트_apply후")
-        df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
-                    lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합_서식대상[df_all_bs_약식_누계_병합_서식대상['bs분류'] ==""].index,slice(None))
-                    # lambda _: "background-color: gray; ", subset=(['bs중분류','영업이익'], slice(None))
-                ).format(precision=0, thousands=',')
-
-
-        st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
-
-
-
-
-        # 증감내역 작성 테스트
-        #row string test
-
-        증감텍스트_list = df_all_bs_약식_누계_병합_서식대상['세분류'].unique()
-        st.text(증감텍스트_list)
-
-        row_s1 = df_all_bs_약식_누계_병합_서식대상.iloc[0].to_string()
-        st.text(row_s1)
-
-
-        # row_s2 = '   '.join(df_all_bs_약식_누계_병합_서식대상.iloc[0,1:].astype(str).format(precision=0, thousands=',')) -> .format(precision=0, thousands=',')) : error AttributeError: 'Series' object has no attribute 'format'
-        row_s2 = '   '.join(df_all_bs_약식_누계.iloc[0,1:].astype(str))
-        st.text(row_s2)
-
-        ####################################################################################################
-        st.text("df전체 텍스트 테스트")
-        df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약
-        df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_임시.reset_index()
-        df_all_bs_약식_누계_요약_증감내역['증감내역'] = ""
-        ##작동###
-
-
+            df_tem = df_all_wf[cond_전체]
+            df_tem = df_tem.groupby(['중분류','회계연도'])['금액2'].sum().unstack().reset_index() # -> 월을 그룹대상에서 빼야 당초 조회 월 누계로 작동
+            # df_tem = df_tem.set_index('중분류')
+            df_tem["전년비"] = df_tem[f"{기준년도}"]-df_tem[f"{비교년도}"]
+            temp_SORT1 = ['매출','사업비','인건비','일반관리비','건물관리비','지급임차료','기부금']
+            # df_tem = df_tem.reset_index()
+            df_tem = df_tem.set_index('중분류')
+            df_tem = df_tem.reindex(temp_SORT1)
+            df_tem.loc["영업이익"] = df_tem.iloc[0] - df_tem.iloc[1] - df_tem.iloc[2] - df_tem.iloc[3]- df_tem.iloc[4]- df_tem.iloc[5]
+            df_tem = df_tem.reset_index()
             
-        df_all_bs_약식_비유동자산 = df_all_bs_약식_누계_요약_증감대상[df_all_bs_약식_누계_요약_증감대상['세분류']=="비유동자산"]
-        st.dataframe(df_all_bs_약식_비유동자산,use_container_width=True)
 
-        ss = df_all_bs_약식_비유동자산.iloc[:,2:].to_string(header=False, index=False,index_names=False).split('\n')
-        vals = ['.'.join(ele.split()) for ele in ss]
+            # st.dataframe(df_tem)
+            기부금df = df_tem[df_tem['중분류']=="기부금"]
+            기부금증감 = (기부금df.iloc[0,3])/1000000
+            # st.text(기부금증감)
+            영업이익df = df_tem[df_tem['중분류']=="영업이익"]
+            영업이익변동 = round(영업이익df.iloc[0,3]/1000000)
+            # st.text(기부금증감)
 
-
-        st.dataframe(df_all_bs_약식_누계_임시,use_container_width=True)
-        st.text(ss)
-
-
-        df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.set_index('세분류')
-
-        df_all_bs_약식_누계_요약_증감내역.at["비유동자산", '증감내역'] = ss
-        st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
-
-
-        ####################################333
-        # t_구분 ="유동자산"
+            # 미지급등 = 당기현금 - 직전현금 - 기부금증감 - 영업이익변동 - 차입금
+            미지급등 = 당기현금 - 직전현금 - 기부금증감 - 영업이익변동 - 차입금
             
-        df_all_bs_약식_유동자산 = df_all_bs_약식_누계_요약_증감대상[df_all_bs_약식_누계_요약_증감대상['세분류']== "유동자산"]
-        ss = df_all_bs_약식_유동자산.iloc[:,2:].to_string(header=False, index=False,index_names=False).split('\n')
-        vals = ['.'.join(ele.split()) for ele in ss]
+            # st.text(미지급등)
+            
+            cfdata = {'전년동기현금': 직전현금, '기부금증감': 기부금증감,'영업활동효과': 영업이익변동,'차입금증감': 차입금,'미지금이연등': [미지급등],'당기말현금': 당기현금}
+            cfdata = pd.DataFrame(cfdata)
+            cfdata = cfdata.set_index('전년동기현금')
+            # cfdata.drop(columns = ['']) 
+            # cfdata = cfdata.loc[:, "c":"e":1]
+            # cfdata = cfdata.loc[:,0:]
+            # cfdata.loc[:, (cfdata != 0).any(axis=0)]
+            st.error("전년동기대비 Cashflow 변동 _ 단위: 백만")
+            st.dataframe(cfdata,use_container_width=True)
+            st.text("")
 
-        st.dataframe(df_all_bs_약식_유동자산,use_container_width=True)
+            col1b, col2b = st.columns(2)
+            with col1b:
+                st.error("서머리")
+                col1, col2, col3 = st.columns(3)
+                # st.text("11")
+                with col1:
+                    df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+                    # st.dataframe(df_손익_전체_누계,use_container_width=True)
+                    # st.dataframe(df_손익_전체_누계)
+                    st.header("전체")
+                    # st.markdown('<p class="blank-font"></p>', unsafe_allow_html=True)
+                    st.text('')
+                    st.metric("매출", f"{df_손익_전체_누계.iloc[0,1]:,.0f}",f"{df_손익_전체_누계.iloc[0,2]:,.0f}")
+                    st.text('')
+                    st.metric("사업비", f"{df_손익_전체_누계.iloc[1,1]:,.0f}",f"{df_손익_전체_누계.iloc[1,2]:,.0f}")
+                    st.text('')
+                    # st.markdown('#')
+                    st.metric("매출이익", f"{df_손익_전체_누계.iloc[2,1]:,.0f}",f"{df_손익_전체_누계.iloc[2,2]:,.0f}")
+                    판매관리비 = df_손익_전체_누계.iloc[3,1]+df_손익_전체_누계.iloc[4,1]+df_손익_전체_누계.iloc[5,1]+df_손익_전체_누계.iloc[6,1]
+                    판매관리비_증감 = df_손익_전체_누계.iloc[3,2]+df_손익_전체_누계.iloc[4,2]+df_손익_전체_누계.iloc[5,2]+df_손익_전체_누계.iloc[6,2]
+                    st.text('')
+                    st.metric("판매관리비",f"{판매관리비:,.0f}" ,f"{판매관리비_증감:,.0f}")
+                    st.text('')
+                    전체영업이익 = df_손익_전체_누계.iloc[7,1]
+                    st.metric("영업이익", f"{df_손익_전체_누계.iloc[7,1]:,.0f}",f"{df_손익_전체_누계.iloc[7,2]:,.0f}")
+                    st.text('')
+                    임차제외_영업이익 = df_손익_전체_누계.iloc[7,1]+df_손익_전체_누계.iloc[6,1]
+                    임차제외_영업이익_증감 = df_손익_전체_누계.iloc[7,2]+df_손익_전체_누계.iloc[6,2]
+                    st.metric("임차료제외영업이익", f"{임차제외_영업이익:,.0f}",f"{임차제외_영업이익_증감:,.0f}")
 
-        df_all_bs_약식_누계_요약_증감내역.at["유동자산", '증감내역'] = ss
+    
+                with col2:
+                    df_손익_공연2_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
+                    # st.dataframe(df_손익_공연2_누계,use_container_width=True)
+                    
+                    st.header("공연")
+                    st.text('')
+                    st.metric("매출", f"{df_손익_공연2_누계.iloc[0,1]:,.0f}",f"{df_손익_공연2_누계.iloc[0,2]:,.0f}")
+                    st.text('')
+                    st.metric("사업비", f"{df_손익_공연2_누계.iloc[1,1]:,.0f}",f"{df_손익_공연2_누계.iloc[1,2]:,.0f}")
+                    st.text('')
+                    st.metric("매출이익", f"{df_손익_공연2_누계.iloc[2,1]:,.0f}",f"{df_손익_공연2_누계.iloc[2,2]:,.0f}")
+                    공연_판매관리비 = df_손익_공연2_누계.iloc[3,1]+df_손익_공연2_누계.iloc[4,1]+df_손익_공연2_누계.iloc[5,1]+df_손익_공연2_누계.iloc[6,1]
+                    공연_판매관리비_증감 = df_손익_공연2_누계.iloc[3,2]+df_손익_공연2_누계.iloc[4,2]+df_손익_공연2_누계.iloc[5,2]+df_손익_공연2_누계.iloc[6,2]
+                    st.text('')
+                    st.metric("판매관리비",f"{공연_판매관리비:,.0f}" ,f"{공연_판매관리비_증감:,.0f}")
+                    st.text('')
+                    st.metric("영업이익", f"{df_손익_공연2_누계.iloc[7,1]:,.0f}",f"{df_손익_공연2_누계.iloc[7,2]:,.0f}")
+                    st.text('')
+                    임차제외_영업이익_공연 = df_손익_공연2_누계.iloc[7,1]+df_손익_공연2_누계.iloc[6,1]
+                    임차제외_영업이익_증감_공연 = df_손익_공연2_누계.iloc[7,2]+df_손익_공연2_누계.iloc[6,2]
+                    st.metric("임차료제외영업이익", f"{임차제외_영업이익_공연:,.0f}",f"{임차제외_영업이익_증감_공연:,.0f}")
 
-        ########################################
-        st.markdown(df_all_bs_약식_누계_요약_증감내역.to_html(escape=False),unsafe_allow_html=True)
+                with col3:
+                    df_손익_전시_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)
+                    st.header("전시")
+                    st.text('')
+                    st.metric("매출", f"{df_손익_전시_누계.iloc[0,1]:,.0f}",f"{df_손익_전시_누계.iloc[0,2]:,.0f}")
+                    st.text('')
+                    st.metric("사업비", f"{df_손익_전시_누계.iloc[1,1]:,.0f}",f"{df_손익_전시_누계.iloc[1,2]:,.0f}")
+                    st.text('')
+                    st.metric("매출이익", f"{df_손익_전시_누계.iloc[2,1]:,.0f}",f"{df_손익_전시_누계.iloc[2,2]:,.0f}")
+                    전시_판매관리비 = df_손익_전시_누계.iloc[3,1]+df_손익_전시_누계.iloc[4,1]+df_손익_전시_누계.iloc[5,1]+df_손익_전시_누계.iloc[6,1]
+                    전시_판매관리비_증감 = df_손익_전시_누계.iloc[3,2]+df_손익_전시_누계.iloc[4,2]+df_손익_전시_누계.iloc[5,2]+df_손익_전시_누계.iloc[6,2]
+                    st.text('')
+                    st.metric("판매관리비",f"{전시_판매관리비:,.0f}" ,f"{전시_판매관리비_증감:,.0f}")
+                    st.text('')
+                    st.metric("영업이익", f"{df_손익_전시_누계.iloc[7,1]:,.0f}",f"{df_손익_전시_누계.iloc[7,2]:,.0f}")
+                    st.text('')
+                    임차제외_영업이익_전시 = df_손익_전시_누계.iloc[7,1]+df_손익_전시_누계.iloc[6,1]
+                    임차제외_영업이익_증감_전시 = df_손익_전시_누계.iloc[7,2]+df_손익_전시_누계.iloc[6,2]
+                    st.metric("임차료제외영업이익", f"{임차제외_영업이익_전시:,.0f}",f"{임차제외_영업이익_증감_전시:,.0f}")
 
-        df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.reset_index()
+                with col2b:
+                    st.error(f"{기준년도}년 손익 Cash영향 (단위:억원)")
+                    df_all_wf = df_all[df_all['대분류']=='손익']
+                    df_all_wf = df_all_wf.loc[(df_all_wf['회계연도'].isin(targets)) & (df_all_wf['전기월']<=int(기준월))]
 
-        df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.astype({'2023-09누계':'int'}) 
-        st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
+                    df_tem = df_all_wf[cond_전체]
+                    df_tem = df_tem.groupby(['중분류','회계연도'])['금액2'].sum().unstack().reset_index() # -> 월을 그룹대상에서 빼야 당초 조회 월 누계로 작동
+                    df_tem = df_tem[['중분류',f'{기준년도}']]
+                    df_tem = df_tem.set_index('중분류')
+                    sort_wf = ['기부금','매출','사업비','인건비','일반관리비','건물관리비','지급임차료']
+                    df_tem = df_tem.reindex(sort_wf)
+                    df_tem[f'{기준년도}_N'] = 0
+                    df_tem = df_tem.reset_index()
 
-        df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-', '.')
-        df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('누계', '')
+                    def 금액작업(row):
+                        if row['중분류'] == '매출':
+                            val = round(row['2024']/100000000)
+                        elif row['중분류'] == '기부금':
+                            val = round(row['2024']/100000000)
+                        else :
+                            val = round(row['2024']/100000000*-1)
 
-        df_tt = df_all_bs_약식_누계
-        st.text("xddddd")
-        st.dataframe(df_tt,use_container_width=True)
+                        return val
 
-        st.text("new_data test")
-        df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('-', '')
-        df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('누계', '')
-        df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('202409', '_2024년')
-        df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('202309', '_2023년')
+                    # 함수적용
+                    df_tem[f'{기준년도}_N'] = df_tem.apply(금액작업, axis=1)
+                    df_tem = df_tem.set_index('중분류')
+                    기부금 = df_tem.iloc[0,1]
+                    # st.text(기부금)
+                    cashflow = 전체영업이익/100 + 기부금
+                    
 
-        df = df_all_bs_약식_누계_요약_증감내역
-        st.dataframe(df)
-        st.text(df.columns[5])
+                    fig = go.Figure(go.Waterfall(
+                        name ="손익흐름", orientation='v',
+                        x= df_tem.index, y=df_tem[f'{기준년도}_N'], 
+                        text=df_tem['2024_N'],textposition='outside',
+                        texttemplate='%{text:,}',
+                        increasing={'marker':{"color":"White"}},
+                        decreasing={'marker':{"color":"#967078"}},
+                        
+                    ))
+                    # https://docs.streamlit.io/develop/api-reference/widgets/st.color_picker
+                    fig.update_layout(height=800,title_text=f"전체현금흐름 영향 : {cashflow}억",
+                    
+                    font=dict(
+                        size=18,  # Set the font size here
+                        color="white",
+                        # format=",.0f",
+                    )
+                    )
+                    fig.update_yaxes(showticklabels=False)
+                    fig.update_layout(
+                    xaxis = dict(
+                    tickfont = dict(size=15)),
+                    title_font_size = 25)
+                    st.plotly_chart(fig, use_container_width=True)
+            st.text("목표대비 실적 그래프")
 
-        tt = str(df.columns[4])
-        st.text(tt)
-        df_all_bs_약식 = df_all_bs_약식.reset_index()
+        with tab2:
+            st.text("전체, 공연, 전시별 누적그래프")
+            st.text("전체, 공연, 전시별 월별 트랜드그래프") 
+
+            c_공연매출_ch = chart("매출",df_tem_ch, sort_sale222, "매출", "전체")   
+            st.altair_chart(c_공연매출_ch, use_container_width=True)
+            
+        
+        with tab3:
+            div = st.selectbox("구분손익", ["전체", "공연", "전시"])
+            col1, col2, col3 = st.columns(3)
+
+            if div == "전체":
+                st.header("전체손익")
+                df_손익_전체_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+                st.dataframe(df_손익_전체_누계,use_container_width=True)
+            if div == "공연":
+                st.header("공연손익")    
+                df_손익_공연2_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
+                st.dataframe(df_손익_공연2_누계,use_container_width=True)
+            # if st.button("전시"):
+            if div == "전시":
+                st.header("전시손익")    
+                df_손익_전시_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)
+                st.dataframe(df_손익_전시_누계,use_container_width=True)
+            
+            if "initial_rerun_done" not in st.session_state:
+                st.session_state.initial_rerun_done = True
+                st.rerun()
+                
+        with tab4:
+            div2 = st.selectbox("구분손익 ", ["전체", "공연", "전시"])
+            if div2 == "전체":
+                st.header("전체손익")
+                df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+                st.dataframe(df_손익_전체_누계,use_container_width=True)
+            if div2 == "공연":
+                st.header("공연손익")    
+                df_손익_공연2_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
+                st.dataframe(df_손익_공연2_누계,use_container_width=True)
+            if div2 == "전시":
+                st.header("전시손익")    
+                df_손익_전시_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)
+                st.dataframe(df_손익_전시_누계,use_container_width=True)
+            if "initial_rerun_done" not in st.session_state:
+                st.session_state.initial_rerun_done = True
+                st.rerun()
+
+        with tab5:
+
+            st.markdown('--------------')
+            st.header("재무상태")
+
+            st.error("bs테이블")
+
+            df_all_bs = df_all[df_all['손익구분'] == "BS"]
+
+            # ★감가상각누계액 제외 조건 반영 필요 ->
+            df_all_bs['누적금액'] = df_all_bs.groupby('보고반영')['금액2'].cumsum() #를 함수로 변환
 
 
-        st.text("test3")
-        df = pd.DataFrame(df_all_bs_약식_누계_요약_증감내역)
-        df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
 
-        df_all_bs_약식 = df_all_bs_약식.sort_values(기준일,ascending=False)
+            st.dataframe(df_all_bs,use_container_width=True)
+            df_all_bs_보고반영 = df_all_bs.groupby(by=['중분류','세분류','bs분류'])['금액2'].sum()
+            st.text("groupby 1차")
+            st.dataframe(df_all_bs_보고반영, use_container_width= True)
 
+            df_all_bs = df_all_bs.reset_index()
+            df_all_bs_약식 = df_all_bs.pivot_table(index=['중분류','세분류',"bs분류"], columns=["기준일"], values="금액2",aggfunc="sum")
+            st.dataframe(df_all_bs_약식,use_container_width=True)
 
-        #자산 sort
+            df_all_bs_약식 = round(df_all_bs_약식/1000000)
+            st.dataframe(df_all_bs_약식,use_container_width=True)
 
-        # df_all_bs_약식.reindex()
-        df_all_bs_약식_s = df_all_bs_약식.reset_index()
+            기준일 = str(기준년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
+            비교일 = str(비교년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
 
-        st.text("요약BS")
+            st.text(기준일)
+            st.text(비교일)
 
-        st.dataframe(df_all_bs_약식_s, use_container_width=True)
-
-
-
-        st.dataframe(df_all_bs_약식_s)
-
-
-        df_all_bs_약식.rename(columns = {기준일 : 기준일[0:7], 비교일 : 비교일[0:7]}, inplace = True)
-        st.dataframe(df_all_bs_약식,use_container_width=True)
+            st.text("시점기준 불러오기")
+            listVars_bs=df_all_bs_약식.columns.get_level_values(0)
 
 
-        st.dataframe(df_all_bs_약식,use_container_width=True)
+            df_all_bs_약식.insert(0,f'{기준일}누계',df_all_bs_약식.loc[:,listVars_bs <= 기준일].sum(axis=1).fillna(''))
+            listVars_bs=df_all_bs_약식.columns.get_level_values(0)
+            df_all_bs_약식.insert(1,f'{비교일}누계',df_all_bs_약식.loc[:,listVars_bs <= 비교일].sum(axis=1).fillna(''))
+            증감 = df_all_bs_약식[f'{기준일}누계'] - df_all_bs_약식[f'{비교일}누계']
+            df_all_bs_약식.insert(2,'증감',증감)
+            df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
 
+
+            st.dataframe(df_all_bs_약식, use_container_width=True)
+
+            st.text("누계만 발라내기 - bs분류 일치화 필요")
+
+            df_all_bs_약식_누계 = df_all_bs_약식[[f'{비교일}누계',f'{기준일}누계','증감']]
+            df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-01누계', '누계')
+
+            df_all_bs_약식_누계_요약 = df_all_bs_약식_누계.groupby(by=['중분류','세분류']).sum([f'{비교일}누계',[f'{기준일}누계']])
+            df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_요약
+            st.text("중분류합계 테스트")
+
+            df_all_bs_약식_누계_요약.insert(0,'bs분류',"")
+            st.dataframe(df_all_bs_약식_누계_요약,use_container_width=True)
+
+            # df_all_bs_약식_누계 = round(df_all_bs_약식_누계/1000000)
+            df_all_bs_약식_누계_임시 = df_all_bs_약식_누계
+            st.dataframe(df_all_bs_약식_누계,use_container_width=True)
+
+            st.text("중분류합계 테스트 - 합계테이블 병합 테스트")
+            df_all_bs_약식_누계 = df_all_bs_약식_누계.reset_index()
+
+            df_all_bs_약식_누계_요약 = df_all_bs_약식_누계_요약.reset_index()
+            df_all_bs_약식_누계_병합 = pd.concat([df_all_bs_약식_누계,df_all_bs_약식_누계_요약])
+
+
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index(['중분류','세분류','bs분류'])
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.sort_index(axis=0, level=[0,1,2],ascending=[False,False,True])
+
+
+            st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+
+
+
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index()
+
+
+            st.text("t전")
+            st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+
+
+            df_all_bs_약식_누계_병합_서식대상 = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']==""]
+
+            st.text("서식대상 필터 테스트")
+
+            st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
+
+
+            # 조건 1은 콜_행사가, 콜_수량합계 열에, 조건 2는 풋_행사가, 풋_수량합계 열에 적용 
+
+
+            st.text("서식대상 필터 테스트_apply후")
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
+                        lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합_서식대상[df_all_bs_약식_누계_병합_서식대상['bs분류'] ==""].index,slice(None))
+                        # lambda _: "background-color: gray; ", subset=(['bs중분류','영업이익'], slice(None))
+                    ).format(precision=0, thousands=',')
+
+
+            st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+
+
+
+
+            # 증감내역 작성 테스트
+            #row string test
+
+            증감텍스트_list = df_all_bs_약식_누계_병합_서식대상['세분류'].unique()
+            st.text(증감텍스트_list)
+
+            row_s1 = df_all_bs_약식_누계_병합_서식대상.iloc[0].to_string()
+            st.text(row_s1)
+
+
+            # row_s2 = '   '.join(df_all_bs_약식_누계_병합_서식대상.iloc[0,1:].astype(str).format(precision=0, thousands=',')) -> .format(precision=0, thousands=',')) : error AttributeError: 'Series' object has no attribute 'format'
+            row_s2 = '   '.join(df_all_bs_약식_누계.iloc[0,1:].astype(str))
+            st.text(row_s2)
+
+            ####################################################################################################
+            st.text("df전체 텍스트 테스트")
+            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약
+            df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_임시.reset_index()
+            df_all_bs_약식_누계_요약_증감내역['증감내역'] = ""
+            ##작동###
+
+
+                
+            df_all_bs_약식_비유동자산 = df_all_bs_약식_누계_요약_증감대상[df_all_bs_약식_누계_요약_증감대상['세분류']=="비유동자산"]
+            st.dataframe(df_all_bs_약식_비유동자산,use_container_width=True)
+
+            ss = df_all_bs_약식_비유동자산.iloc[:,2:].to_string(header=False, index=False,index_names=False).split('\n')
+            vals = ['.'.join(ele.split()) for ele in ss]
+
+
+            st.dataframe(df_all_bs_약식_누계_임시,use_container_width=True)
+            st.text(ss)
+
+
+            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.set_index('세분류')
+
+            df_all_bs_약식_누계_요약_증감내역.at["비유동자산", '증감내역'] = ss
+            st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
+
+
+            ####################################333
+            # t_구분 ="유동자산"
+                
+            df_all_bs_약식_유동자산 = df_all_bs_약식_누계_요약_증감대상[df_all_bs_약식_누계_요약_증감대상['세분류']== "유동자산"]
+            ss = df_all_bs_약식_유동자산.iloc[:,2:].to_string(header=False, index=False,index_names=False).split('\n')
+            vals = ['.'.join(ele.split()) for ele in ss]
+
+            st.dataframe(df_all_bs_약식_유동자산,use_container_width=True)
+
+            df_all_bs_약식_누계_요약_증감내역.at["유동자산", '증감내역'] = ss
+
+            ########################################
+            st.markdown(df_all_bs_약식_누계_요약_증감내역.to_html(escape=False),unsafe_allow_html=True)
+
+            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.reset_index()
+
+            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.astype({'2023-09누계':'int'}) 
+            st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
+
+            df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-', '.')
+            df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('누계', '')
+
+            df_tt = df_all_bs_약식_누계
+            st.text("xddddd")
+            st.dataframe(df_tt,use_container_width=True)
+
+            st.text("new_data test")
+            df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('-', '')
+            df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('누계', '')
+            df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('202409', '_2024년')
+            df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('202309', '_2023년')
+
+            df = df_all_bs_약식_누계_요약_증감내역
+            st.dataframe(df)
+            st.text(df.columns[5])
+
+            tt = str(df.columns[4])
+            st.text(tt)
+            df_all_bs_약식 = df_all_bs_약식.reset_index()
+
+
+            st.text("test3")
+            df = pd.DataFrame(df_all_bs_약식_누계_요약_증감내역)
+            df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
+
+            df_all_bs_약식 = df_all_bs_약식.sort_values(기준일,ascending=False)
+
+
+            #자산 sort
+
+            # df_all_bs_약식.reindex()
+            df_all_bs_약식_s = df_all_bs_약식.reset_index()
+
+            st.text("요약BS")
+
+            st.dataframe(df_all_bs_약식_s, use_container_width=True)
+
+
+
+            st.dataframe(df_all_bs_약식_s)
+
+
+            df_all_bs_약식.rename(columns = {기준일 : 기준일[0:7], 비교일 : 비교일[0:7]}, inplace = True)
+            st.dataframe(df_all_bs_약식,use_container_width=True)
+
+
+            st.dataframe(df_all_bs_약식,use_container_width=True)
+
+    if 디바이스 == "MOBILE":
+        st.text("준비중")
