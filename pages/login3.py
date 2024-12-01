@@ -12,10 +12,10 @@ import datetime
 import plotly.express as px
 import pandas as pd
 from altair import datum
-import warnings
+# import warnings
 # warnings.filterwarnings("ignore")
 # from streamlit_extras.metric_cards import style_metric_cards
-import seaborn as sns 
+# import seaborn as sns 
 import pickle
 from pathlib import Path
 import streamlit_authenticator as stauth
