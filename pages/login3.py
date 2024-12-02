@@ -1194,13 +1194,35 @@ if authentication_status:
         margin: auto;
     }
 
-    [data-testid="stMarkdownContainer"] > p {
+    [data-testid="stMarkdownContainer"] p {
         width: fit-content;
         margin: auto;
     }
 
-    
-    [data-testid="stMetricValue"] label {
+    [data-testid="stMarkdownContainer"] label {
+        width: fit-content;
+        margin: auto;
+    }
+
+    [data-testid="stHeadingWithActionElements"] div {
+        width: fit-content;
+        margin: auto;
+    }
+
+    [data-testid="stVerticalBlockBorderWrapper"] label {
+        width: fit-content;
+        margin: auto;
+    }
+
+    [data-testid="stVerticalBlockBorderWrapper"] div {
+        width: fit-content;
+        margin: auto;
+    }
+
+
+
+
+    [data-testid="stMetricValue"] div {
         width: fit-content;
         margin: auto;
     }
