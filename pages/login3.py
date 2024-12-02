@@ -1179,6 +1179,7 @@ if authentication_status:
     }
     </style>''', unsafe_allow_html=True)
 
+
     css='''
     [data-testid="stMarkdownContainer"] {
         width: fit-content;
@@ -1225,15 +1226,10 @@ if authentication_status:
         margin: auto;
     }
 
-
-
-
-    [data-testid="stMetricValue"] div {
-        width: fit-content;
-        margin: auto;
-    }
-
-
+    # [data-testid="stMetricValue"] div {
+    #     width: fit-content;
+    #     margin: auto;
+    # }
     '''
 
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
