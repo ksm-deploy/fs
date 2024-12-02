@@ -36,7 +36,7 @@ st.set_page_config(
 hide_streamlit_markers=False
 
 # st.write(f"Screen width is {streamlit_js_eval(js_expressions='screen.width', key = 'SCR')}")
-sc_t = int(f"{streamlit_js_eval(js_expressions='screen.width', key = 'SCR')}")
+sc_t = f"{streamlit_js_eval(js_expressions='screen.width', key = 'SCR')}"
 # type(sc_t)
 # sc_t = st.screen_width
 
