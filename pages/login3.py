@@ -1230,10 +1230,10 @@ if authentication_status:
             margin: auto;
         }
 
-        # [data-testid="stMetricValue"] div {
-        #     width: fit-content;
-        #     margin: auto;
-        # }
+        [data-testid="stMetricValue"] div {
+            width: fit-content;
+            margin: auto;
+        }
 
         </style>''', unsafe_allow_html=True)
                 
