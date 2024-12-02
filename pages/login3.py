@@ -946,8 +946,8 @@ if authentication_status:
 
 
             st.dataframe(df_all_bs_약식,use_container_width=True)
-    sc_t = f"{streamlit_js_eval(js_expressions='screen.width', key = 'SCR')}"
-    if int(sc_t) < 1500:
+    sc_t_2 = f"{streamlit_js_eval(js_expressions='screen.width', key = 'SCR')}"
+    if int(sc_t_2) < 1500:
         st.text("준비중")
         tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
