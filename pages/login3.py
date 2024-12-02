@@ -942,3 +942,152 @@ if authentication_status:
 
     if 디바이스 == "MOBILE":
         st.text("준비중")
+        tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
+        with tab1:
+            df_all_bs = df_all[df_all['손익구분'] == "BS"]
+
+            # ★감가상각누계액 제외 조건 반영 필요 ->
+            df_all_bs['누적금액'] = df_all_bs.groupby('보고반영')['금액2'].cumsum() #를 함수로 변환
+
+
+
+            # st.dataframe(df_all_bs,use_container_width=True)
+            df_all_bs_보고반영 = df_all_bs.groupby(by=['중분류','세분류','bs분류'])['금액2'].sum()
+            # st.text("groupby 1차")
+            # st.dataframe(df_all_bs_보고반영, use_container_width= True)
+
+            df_all_bs = df_all_bs.reset_index()
+            df_all_bs_약식 = df_all_bs.pivot_table(index=['중분류','세분류',"bs분류"], columns=["기준일"], values="금액2",aggfunc="sum")
+            # st.dataframe(df_all_bs_약식,use_container_width=True)
+
+            df_all_bs_약식 = round(df_all_bs_약식/1000000)
+            # st.dataframe(df_all_bs_약식,use_container_width=True)
+
+            기준일 = str(기준년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
+            비교일 = str(비교년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
+
+            # st.text(기준일)
+            # st.text(비교일)
+
+            # st.text("시점기준 불러오기")
+            listVars_bs=df_all_bs_약식.columns.get_level_values(0)
+
+
+            df_all_bs_약식.insert(0,f'{기준일}누계',df_all_bs_약식.loc[:,listVars_bs <= 기준일].sum(axis=1).fillna(''))
+            listVars_bs=df_all_bs_약식.columns.get_level_values(0)
+            df_all_bs_약식.insert(1,f'{비교일}누계',df_all_bs_약식.loc[:,listVars_bs <= 비교일].sum(axis=1).fillna(''))
+            증감 = df_all_bs_약식[f'{기준일}누계'] - df_all_bs_약식[f'{비교일}누계']
+            df_all_bs_약식.insert(2,'증감',증감)
+            df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
+
+
+            # st.dataframe(df_all_bs_약식, use_container_width=True)
+
+            # st.text("누계만 발라내기 - bs분류 일치화 필요")
+
+            df_all_bs_약식_누계 = df_all_bs_약식[[f'{비교일}누계',f'{기준일}누계','증감']]
+            df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-01누계', '누계')
+
+            df_all_bs_약식_누계_요약 = df_all_bs_약식_누계.groupby(by=['중분류','세분류']).sum([f'{비교일}누계',[f'{기준일}누계']])
+            df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_요약
+            # st.text("중분류합계 테스트")
+
+            df_all_bs_약식_누계_요약.insert(0,'bs분류',"")
+            # st.dataframe(df_all_bs_약식_누계_요약,use_container_width=True)
+
+            # df_all_bs_약식_누계 = round(df_all_bs_약식_누계/1000000)
+            df_all_bs_약식_누계_임시 = df_all_bs_약식_누계
+            # st.dataframe(df_all_bs_약식_누계,use_container_width=True)
+
+            # st.text("중분류합계 테스트 - 합계테이블 병합 테스트")
+            df_all_bs_약식_누계 = df_all_bs_약식_누계.reset_index()
+
+            df_all_bs_약식_누계_요약 = df_all_bs_약식_누계_요약.reset_index()
+            df_all_bs_약식_누계_병합 = pd.concat([df_all_bs_약식_누계,df_all_bs_약식_누계_요약])
+
+
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index(['중분류','세분류','bs분류'])
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.sort_index(axis=0, level=[0,1,2],ascending=[False,False,True])
+
+
+            # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+
+
+
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index()
+
+
+            # st.text("t전")
+            # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+
+
+            df_all_bs_약식_누계_병합_서식대상 = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']==""]
+
+            # st.text("서식대상 필터 테스트")
+
+            # st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
+
+
+            # 조건 1은 콜_행사가, 콜_수량합계 열에, 조건 2는 풋_행사가, 풋_수량합계 열에 적용 
+
+
+            # st.text("서식대상 필터 테스트_apply후")
+            # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
+            #             lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합_서식대상[df_all_bs_약식_누계_병합_서식대상['bs분류'] ==""].index,slice(None))
+            #             # lambda _: "background-color: gray; ", subset=(['bs중분류','영업이익'], slice(None))
+            #         ).format(precision=0, thousands=',')
+
+
+            # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+            ##bs분야 증감 확인
+            현금df = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']=="현금 및 등가물"]
+            # st.dataframe(현금df,use_container_width=True)
+            ####이후 bs수식으로 간호화 예정
+
+            직전현금 = 현금df.iloc[0,3]
+            당기현금 = 현금df.iloc[0,4]
+            차입금df = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']=="단기차입금"]
+            # st.dataframe(차입금df,use_container_width=True)
+            차입금 = 차입금df.iloc[0,5]
+
+            # st.text(직전현금)
+            # st.text(당기현금)
+
+            df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+            # st.dataframe(df_손익_전체_누계)
+
+            ## 손익분야 증감확인
+            df_all_wf = df_all[df_all['대분류']=='손익']
+            df_all_wf = df_all_wf.loc[(df_all_wf['회계연도'].isin(targets)) & (df_all_wf['전기월']<=int(기준월))]
+
+            df_tem = df_all_wf[cond_전체]
+            df_tem = df_tem.groupby(['중분류','회계연도'])['금액2'].sum().unstack().reset_index() # -> 월을 그룹대상에서 빼야 당초 조회 월 누계로 작동
+            # df_tem = df_tem.set_index('중분류')
+            df_tem["전년비"] = df_tem[f"{기준년도}"]-df_tem[f"{비교년도}"]
+            temp_SORT1 = ['매출','사업비','인건비','일반관리비','건물관리비','지급임차료','기부금']
+            # df_tem = df_tem.reset_index()
+            df_tem = df_tem.set_index('중분류')
+            df_tem = df_tem.reindex(temp_SORT1)
+            df_tem.loc["영업이익"] = df_tem.iloc[0] - df_tem.iloc[1] - df_tem.iloc[2] - df_tem.iloc[3]- df_tem.iloc[4]- df_tem.iloc[5]
+            df_tem = df_tem.reset_index()
+            
+
+            # st.dataframe(df_tem)
+            기부금df = df_tem[df_tem['중분류']=="기부금"]
+            기부금증감 = (기부금df.iloc[0,3])/1000000
+            # st.text(기부금증감)
+            영업이익df = df_tem[df_tem['중분류']=="영업이익"]
+            영업이익변동 = round(영업이익df.iloc[0,3]/1000000)
+            # st.text(기부금증감)
+
+            # 미지급등 = 당기현금 - 직전현금 - 기부금증감 - 영업이익변동 - 차입금
+            미지급등 = 당기현금 - 직전현금 - 기부금증감 - 영업이익변동 - 차입금
+            
+            # st.text(미지급등)
+            cfdata = {'전년동기현금': 직전현금, '기부금증감': 기부금증감,'영업활동효과': 영업이익변동,'차입금증감': 차입금,'미지금이연등': [미지급등],'당기말현금': 당기현금}
+            cfdata = pd.DataFrame(cfdata)
+            # cfdata = cfdata.set_index('전년동기현금')
+            cfdata = cfdata.T
+            st.error("전년동기대비 Cashflow 변동 _ 단위: 백만")
+            st.dataframe(cfdata,use_container_width=True)
+            st.text("")
