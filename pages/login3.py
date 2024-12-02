@@ -26,6 +26,7 @@ import plotly.graph_objects as go
 # import matplotlib.pyplot as plt 
 import os
 # import matplotlib.font_manager as fm
+from streamlit_js_eval import streamlit_js_eval
 
 st.set_page_config(
     page_title = "FINANCIAL Data Dashboard",
@@ -33,6 +34,9 @@ st.set_page_config(
     layout="wide"
     )
 hide_streamlit_markers=False
+
+# st.write(f"Screen width is {streamlit_js_eval(js_expressions='screen.width', key = 'SCR')}")
+sc_t = f"Screen width is {streamlit_js_eval(js_expressions='screen.width', key = 'SCR')}"
 
 hide_streamlit_style = """
     <style>
@@ -387,10 +391,10 @@ if authentication_status:
 
 
 
-    디바이스 = st.selectbox("CHOICE DEVICE",("DESKTOP","MOBILE"), index= None)
+    # 디바이스 = st.selectbox("CHOICE DEVICE",("DESKTOP","MOBILE"), index= None)
         # 비교년도 = int(기준년도)-1
 
-    if 디바이스 == "DESKTOP":
+    if sc_t >1500:
 
         tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
@@ -940,7 +944,7 @@ if authentication_status:
 
             st.dataframe(df_all_bs_약식,use_container_width=True)
 
-    if 디바이스 == "MOBILE":
+    if sc_t <=1500:
         st.text("준비중")
         tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
