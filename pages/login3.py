@@ -395,8 +395,9 @@ if authentication_status:
 
     # 디바이스 = st.selectbox("CHOICE DEVICE",("DESKTOP","MOBILE"), index= None)
         # 비교년도 = int(기준년도)-1
-
-    if int(sc_t) >= 1500:
+    st.text(int(sc_t))
+    st.text(int(sc_t)>1500)
+    if int(sc_t) > 1500:
 
         tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
@@ -945,8 +946,8 @@ if authentication_status:
 
 
             st.dataframe(df_all_bs_약식,use_container_width=True)
-
-    if int(sc_t) <1500:
+    sc_t = f"{streamlit_js_eval(js_expressions='screen.width', key = 'SCR')}"
+    if int(sc_t) < 1500:
         st.text("준비중")
         tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
