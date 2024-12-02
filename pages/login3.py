@@ -1172,3 +1172,43 @@ if authentication_status:
         min-width: calc(33% - 1rem) !important;
     }
     </style>''', unsafe_allow_html=True)
+
+    css='''
+    [data-testid="stMarkdownContainer"] {
+        width: fit-content;
+        margin: auto;
+    }
+
+    [data-testid="stElementContainer"] > div {
+        width: fit-content;
+        margin: auto;
+    }
+
+    [data-testid="stMetricValue"] label {
+        width: fit-content;
+        margin: auto;
+    }
+
+    [data-testid="stHeadingWithActionElements"] label {
+        width: fit-content;
+        margin: auto;
+    }
+
+    [data-testid="stMarkdownContainer"] > p {
+        width: fit-content;
+        margin: auto;
+    }
+
+    
+    [data-testid="stMetricValue"] label {
+        width: fit-content;
+        margin: auto;
+    }
+
+
+    '''
+
+# I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
+st.markdown(f'<style>{css}</style>',unsafe_allow_html=True)
+    # https://discuss.streamlit.io/t/center-text-in-st-metric/28579/7
+# https://discuss.streamlit.io/t/is-there-a-way-to-center-all-the-elements-in-st-metric/35136
