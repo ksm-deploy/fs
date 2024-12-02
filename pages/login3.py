@@ -1170,17 +1170,17 @@ if authentication_status:
                 임차제외_영업이익_전시 = df_손익_전시_누계.iloc[7,1]+df_손익_전시_누계.iloc[6,1]
                 임차제외_영업이익_증감_전시 = df_손익_전시_누계.iloc[7,2]+df_손익_전시_누계.iloc[6,2]
                 st.metric("임차료제외영업이익", f"{임차제외_영업이익_전시:,.0f}",f"{임차제외_영업이익_증감_전시:,.0f}")
+    # st.write('''<style>
+
+    # [data-testid="column"] {
+    #     width: calc(33.3333% - 1rem) !important;
+    #     flex: 1 1 calc(33.3333% - 1rem) !important;
+    #     min-width: calc(33% - 1rem) !important;
+    # }
+    # </style>''', unsafe_allow_html=True)
+
+
     st.write('''<style>
-
-    [data-testid="column"] {
-        width: calc(33.3333% - 1rem) !important;
-        flex: 1 1 calc(33.3333% - 1rem) !important;
-        min-width: calc(33% - 1rem) !important;
-    }
-    </style>''', unsafe_allow_html=True)
-
-
-    css='''
     [data-testid="stMarkdownContainer"] {
         width: fit-content;
         margin: auto;
@@ -1230,9 +1230,11 @@ if authentication_status:
     #     width: fit-content;
     #     margin: auto;
     # }
-    '''
+
+    </style>''', unsafe_allow_html=True)
+             
 
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
-st.markdown(f'<style>{css}</style>',unsafe_allow_html=True)
+# st.markdown(f'<style>{css}</style>',unsafe_allow_html=True)
     # https://discuss.streamlit.io/t/center-text-in-st-metric/28579/7
 # https://discuss.streamlit.io/t/is-there-a-way-to-center-all-the-elements-in-st-metric/35136
