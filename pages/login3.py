@@ -1308,7 +1308,7 @@ if authentication_status:
         )
         fig.update_yaxes(showticklabels=False)
         fig.update_layout(
-        dragmode = "orbit",
+        dragmode = "turntable",
         # ['orbit', 'turntable', 'zoom', 'pan', False]
 
         xaxis = dict(
