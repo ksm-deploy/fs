@@ -1279,7 +1279,7 @@ if authentication_status:
             texttemplate='%{text:,}',
             increasing={'marker':{"color":"White"}},
             decreasing={'marker':{"color":"#967078"}},
-            
+            width=800,
         ))
         # https://docs.streamlit.io/develop/api-reference/widgets/st.color_picker
         fig.update_layout(height=800,title_text=f"전체현금흐름 영향 : {cashflow}억",
@@ -1295,7 +1295,8 @@ if authentication_status:
         xaxis = dict(
         tickfont = dict(size=15)),
         title_font_size = 25)
-        st.plotly_chart(fig, use_container_width=True)
+
+        st.plotly_chart(fig)
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
 # st.markdown(f'<style>{css}</style>',unsafe_allow_html=True)
     # https://discuss.streamlit.io/t/center-text-in-st-metric/28579/7
