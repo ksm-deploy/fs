@@ -1314,9 +1314,10 @@ if authentication_status:
         xaxis = dict(
         tickfont = dict(size=15)),
         title_font_size = 25)
+
         # fig.layout.xaxis.fixedrange = True
-        # fig.layout.yaxis.fixedrange = True
-        fig.update_layout(dragmode = 'orbit')
+        fig.layout.yaxis.fixedrange = True
+        fig.update_layout(dragmode = False)
         st.plotly_chart(fig)
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
 # st.markdown(f'<style>{css}</style>',unsafe_allow_html=True)
