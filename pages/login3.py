@@ -954,7 +954,7 @@ if authentication_status:
         # st.text("준비중")
         # st.text(sc_t)
     
-        st.text("---")    
+        st.text("------")    
         tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
             df_all_bs = df_all[df_all['손익구분'] == "BS"]
