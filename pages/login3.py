@@ -953,11 +953,18 @@ if authentication_status:
     if int(sc_t) < 1500:
         # st.text("준비중")
         # st.text(sc_t)
-        st.set_page_config(
-        page_title = "FINANCIAL Data Dashboard",
-        page_icon = "Active",        
-        layout="centered"
-        )
+        def _max_width_():
+            max_width_str = f"max-width: 1000px;"
+            st.markdown(
+                f"""
+            <style>
+            .reportview-container .main .block-container{{
+                {max_width_str}
+            }}
+            </style>    
+            """,
+                unsafe_allow_html=True,
+            )
         
         tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
