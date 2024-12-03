@@ -954,7 +954,7 @@ if authentication_status:
         # st.text("준비중")
         # st.text(sc_t)
         def _max_width_():
-            max_width_str = f"max-width: 400px;"
+            max_width_str = f"max-width: 40px;"
             st.markdown(
                 f"""
             <style>
@@ -966,7 +966,7 @@ if authentication_status:
                 unsafe_allow_html=True,
             )
         _max_width_()
-        
+
         tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
             df_all_bs = df_all[df_all['손익구분'] == "BS"]
