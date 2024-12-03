@@ -1311,15 +1311,16 @@ if authentication_status:
         
         # ['orbit', 'turntable', 'zoom', 'pan', False]
         # drawrect, select
-        # zoom，pan，select，lasso，orbit，turntable，False
+        # drawcicle, drawclosepath, zoom，pan，select，lasso，orbit，turntable，False
         # https://jeunna.tistory.com/107
+        # https://plotly.net/reference/plotly-net-styleparam-dragmode.html
         xaxis = dict(
         tickfont = dict(size=15)),
         title_font_size = 25)
 
         # fig.layout.xaxis.fixedrange = True
         # fig.layout.yaxis.fixedrange = False
-        fig.update_layout(dragmode = False)
+        fig.update_layout(dragmode = "DrawOpenPath")
         fig.update_layout(xaxis_rangeslider_visible = False)
         st.plotly_chart(fig)
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
