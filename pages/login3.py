@@ -1316,7 +1316,7 @@ if authentication_status:
         title_font_size = 25)
 
         # fig.layout.xaxis.fixedrange = True
-        # fig.layout.yaxis.fixedrange = True
+        fig.layout.yaxis.fixedrange = False
         fig.update_layout(dragmode = False)
         fig.update_layout(xaxis_rangeslider_visible=False)
         st.plotly_chart(fig)
