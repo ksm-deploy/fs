@@ -1319,7 +1319,7 @@ if authentication_status:
 
         # fig.layout.xaxis.fixedrange = True
         # fig.layout.yaxis.fixedrange = False
-        fig.update_layout(dragmode = 'lasso')
+        fig.update_layout(dragmode = 'click')
         fig.update_layout(xaxis_rangeslider_visible = False)
         st.plotly_chart(fig)
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
