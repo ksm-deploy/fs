@@ -1308,9 +1308,9 @@ if authentication_status:
         )
         fig.update_yaxes(showticklabels=False)
         fig.update_layout(
-        dragmode = "turntable",
+        dragmode = "pan",
         # ['orbit', 'turntable', 'zoom', 'pan', False]
-
+        # https://jeunna.tistory.com/107
         xaxis = dict(
         tickfont = dict(size=15)),
         title_font_size = 25)
