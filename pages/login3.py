@@ -1282,7 +1282,7 @@ if authentication_status:
             
         ))
         # https://docs.streamlit.io/develop/api-reference/widgets/st.color_picker
-        fig.update_layout(height=800,title_text=f"전체현금흐름 영향 : {cashflow}억",width=50,
+        fig.update_layout(height=800,title_text=f"전체현금흐름 영향 : {cashflow}억",width=80,
         
         font=dict(
             size=18,  # Set the font size here
@@ -1295,6 +1295,8 @@ if authentication_status:
         xaxis = dict(
         tickfont = dict(size=15)),
         title_font_size = 25)
+        fig.layout.xaxis.fixedrange = True,
+        fig.layout.yaxis.fixedrange = True
 
         st.plotly_chart(fig)
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
