@@ -1310,6 +1310,7 @@ if authentication_status:
         fig.update_layout(
         
         # ['orbit', 'turntable', 'zoom', 'pan', False]
+        # drawrect, select
         # https://jeunna.tistory.com/107
         xaxis = dict(
         tickfont = dict(size=15)),
@@ -1317,7 +1318,7 @@ if authentication_status:
 
         # fig.layout.xaxis.fixedrange = True
         # fig.layout.yaxis.fixedrange = False
-        fig.update_layout(dragmode = 'select')
+        fig.update_layout(dragmode = 'drawrect')
         fig.update_layout(xaxis_rangeslider_visible = False)
         st.plotly_chart(fig)
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
