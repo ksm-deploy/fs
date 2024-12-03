@@ -965,6 +965,7 @@ if authentication_status:
             """,
                 unsafe_allow_html=True,
             )
+        _max_width_()
         
         tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
