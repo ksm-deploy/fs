@@ -1316,7 +1316,7 @@ if authentication_status:
         title_font_size = 25)
         # fig.layout.xaxis.fixedrange = True
         # fig.layout.yaxis.fixedrange = True
-        fig.update_layout(dragmode = 'turntable')
+        fig.update_layout(dragmode = 'orbit')
         st.plotly_chart(fig)
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
 # st.markdown(f'<style>{css}</style>',unsafe_allow_html=True)
