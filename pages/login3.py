@@ -1110,8 +1110,16 @@ if authentication_status:
             # https://github.com/streamlit/streamlit/issues/5003
             st.write("------")    
             col1, col2, col3 = st.columns(3)
-            with st.container(align='left'):
-                    # st.text("11")
+            with st.container():
+
+                st.markdown('''
+                <style>
+                .stApp [data-testid="stHeader"] {visibility: hidden;}
+                .block-container {
+                        margin-left: 0 !important;
+                }
+                </style>
+                ''', unsafe_allow_html=True)
                 with col1:
                     df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
                     # st.dataframe(df_손익_전체_누계,use_container_width=True)
