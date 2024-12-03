@@ -1110,136 +1110,137 @@ if authentication_status:
             # https://github.com/streamlit/streamlit/issues/5003
             st.write("------")    
             col1, col2, col3 = st.columns(3)
-                # st.text("11")
-            with col1:
-                df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-                # st.dataframe(df_손익_전체_누계,use_container_width=True)
-                # st.dataframe(df_손익_전체_누계)
-                st.header("전체")
-                # st.markdown('<p class="blank-font"></p>', unsafe_allow_html=True)
-                # st.text('')
-                st.metric("매출", f"{df_손익_전체_누계.iloc[0,1]:,.0f}",f"{df_손익_전체_누계.iloc[0,2]:,.0f}")
-                # st.text('')
-                st.metric("사업비", f"{df_손익_전체_누계.iloc[1,1]:,.0f}",f"{df_손익_전체_누계.iloc[1,2]:,.0f}")
-                # st.text('')
-                # st.markdown('#')
-                st.metric("매출이익", f"{df_손익_전체_누계.iloc[2,1]:,.0f}",f"{df_손익_전체_누계.iloc[2,2]:,.0f}")
-                판매관리비 = df_손익_전체_누계.iloc[3,1]+df_손익_전체_누계.iloc[4,1]+df_손익_전체_누계.iloc[5,1]+df_손익_전체_누계.iloc[6,1]
-                판매관리비_증감 = df_손익_전체_누계.iloc[3,2]+df_손익_전체_누계.iloc[4,2]+df_손익_전체_누계.iloc[5,2]+df_손익_전체_누계.iloc[6,2]
-                # st.text('')
-                st.metric("판매관리비",f"{판매관리비:,.0f}" ,f"{판매관리비_증감:,.0f}")
-                # st.text('')
-                전체영업이익 = df_손익_전체_누계.iloc[7,1]
-                st.metric("영업이익", f"{df_손익_전체_누계.iloc[7,1]:,.0f}",f"{df_손익_전체_누계.iloc[7,2]:,.0f}")
-                # st.text('')
-                임차제외_영업이익 = df_손익_전체_누계.iloc[7,1]+df_손익_전체_누계.iloc[6,1]
-                임차제외_영업이익_증감 = df_손익_전체_누계.iloc[7,2]+df_손익_전체_누계.iloc[6,2]
-                st.metric("임차료제외영업이익", f"{임차제외_영업이익:,.0f}",f"{임차제외_영업이익_증감:,.0f}")
+            with st.container:
+                    # st.text("11")
+                with col1:
+                    df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+                    # st.dataframe(df_손익_전체_누계,use_container_width=True)
+                    # st.dataframe(df_손익_전체_누계)
+                    st.header("전체")
+                    # st.markdown('<p class="blank-font"></p>', unsafe_allow_html=True)
+                    # st.text('')
+                    st.metric("매출", f"{df_손익_전체_누계.iloc[0,1]:,.0f}",f"{df_손익_전체_누계.iloc[0,2]:,.0f}")
+                    # st.text('')
+                    st.metric("사업비", f"{df_손익_전체_누계.iloc[1,1]:,.0f}",f"{df_손익_전체_누계.iloc[1,2]:,.0f}")
+                    # st.text('')
+                    # st.markdown('#')
+                    st.metric("매출이익", f"{df_손익_전체_누계.iloc[2,1]:,.0f}",f"{df_손익_전체_누계.iloc[2,2]:,.0f}")
+                    판매관리비 = df_손익_전체_누계.iloc[3,1]+df_손익_전체_누계.iloc[4,1]+df_손익_전체_누계.iloc[5,1]+df_손익_전체_누계.iloc[6,1]
+                    판매관리비_증감 = df_손익_전체_누계.iloc[3,2]+df_손익_전체_누계.iloc[4,2]+df_손익_전체_누계.iloc[5,2]+df_손익_전체_누계.iloc[6,2]
+                    # st.text('')
+                    st.metric("판매관리비",f"{판매관리비:,.0f}" ,f"{판매관리비_증감:,.0f}")
+                    # st.text('')
+                    전체영업이익 = df_손익_전체_누계.iloc[7,1]
+                    st.metric("영업이익", f"{df_손익_전체_누계.iloc[7,1]:,.0f}",f"{df_손익_전체_누계.iloc[7,2]:,.0f}")
+                    # st.text('')
+                    임차제외_영업이익 = df_손익_전체_누계.iloc[7,1]+df_손익_전체_누계.iloc[6,1]
+                    임차제외_영업이익_증감 = df_손익_전체_누계.iloc[7,2]+df_손익_전체_누계.iloc[6,2]
+                    st.metric("임차료제외영업이익", f"{임차제외_영업이익:,.0f}",f"{임차제외_영업이익_증감:,.0f}")
 
 
-            with col2:
-                df_손익_공연2_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
-                # st.dataframe(df_손익_공연2_누계,use_container_width=True)
-                
-                st.header("공연")
-                # st.text('')
-                st.metric("매출", f"{df_손익_공연2_누계.iloc[0,1]:,.0f}",f"{df_손익_공연2_누계.iloc[0,2]:,.0f}")
-                # st.text('')
-                st.metric("사업비", f"{df_손익_공연2_누계.iloc[1,1]:,.0f}",f"{df_손익_공연2_누계.iloc[1,2]:,.0f}")
-                # st.text('')
-                st.metric("매출이익", f"{df_손익_공연2_누계.iloc[2,1]:,.0f}",f"{df_손익_공연2_누계.iloc[2,2]:,.0f}")
-                공연_판매관리비 = df_손익_공연2_누계.iloc[3,1]+df_손익_공연2_누계.iloc[4,1]+df_손익_공연2_누계.iloc[5,1]+df_손익_공연2_누계.iloc[6,1]
-                공연_판매관리비_증감 = df_손익_공연2_누계.iloc[3,2]+df_손익_공연2_누계.iloc[4,2]+df_손익_공연2_누계.iloc[5,2]+df_손익_공연2_누계.iloc[6,2]
-                # st.text('')
-                st.metric("판매관리비",f"{공연_판매관리비:,.0f}" ,f"{공연_판매관리비_증감:,.0f}")
-                # st.text('')
-                st.metric("영업이익", f"{df_손익_공연2_누계.iloc[7,1]:,.0f}",f"{df_손익_공연2_누계.iloc[7,2]:,.0f}")
-                # st.text('')
-                임차제외_영업이익_공연 = df_손익_공연2_누계.iloc[7,1]+df_손익_공연2_누계.iloc[6,1]
-                임차제외_영업이익_증감_공연 = df_손익_공연2_누계.iloc[7,2]+df_손익_공연2_누계.iloc[6,2]
-                st.metric("임차료제외영업이익", f"{임차제외_영업이익_공연:,.0f}",f"{임차제외_영업이익_증감_공연:,.0f}")
+                with col2:
+                    df_손익_공연2_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
+                    # st.dataframe(df_손익_공연2_누계,use_container_width=True)
+                    
+                    st.header("공연")
+                    # st.text('')
+                    st.metric("매출", f"{df_손익_공연2_누계.iloc[0,1]:,.0f}",f"{df_손익_공연2_누계.iloc[0,2]:,.0f}")
+                    # st.text('')
+                    st.metric("사업비", f"{df_손익_공연2_누계.iloc[1,1]:,.0f}",f"{df_손익_공연2_누계.iloc[1,2]:,.0f}")
+                    # st.text('')
+                    st.metric("매출이익", f"{df_손익_공연2_누계.iloc[2,1]:,.0f}",f"{df_손익_공연2_누계.iloc[2,2]:,.0f}")
+                    공연_판매관리비 = df_손익_공연2_누계.iloc[3,1]+df_손익_공연2_누계.iloc[4,1]+df_손익_공연2_누계.iloc[5,1]+df_손익_공연2_누계.iloc[6,1]
+                    공연_판매관리비_증감 = df_손익_공연2_누계.iloc[3,2]+df_손익_공연2_누계.iloc[4,2]+df_손익_공연2_누계.iloc[5,2]+df_손익_공연2_누계.iloc[6,2]
+                    # st.text('')
+                    st.metric("판매관리비",f"{공연_판매관리비:,.0f}" ,f"{공연_판매관리비_증감:,.0f}")
+                    # st.text('')
+                    st.metric("영업이익", f"{df_손익_공연2_누계.iloc[7,1]:,.0f}",f"{df_손익_공연2_누계.iloc[7,2]:,.0f}")
+                    # st.text('')
+                    임차제외_영업이익_공연 = df_손익_공연2_누계.iloc[7,1]+df_손익_공연2_누계.iloc[6,1]
+                    임차제외_영업이익_증감_공연 = df_손익_공연2_누계.iloc[7,2]+df_손익_공연2_누계.iloc[6,2]
+                    st.metric("임차료제외영업이익", f"{임차제외_영업이익_공연:,.0f}",f"{임차제외_영업이익_증감_공연:,.0f}")
 
-            with col3:
-                df_손익_전시_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)
-                st.header("전시")
-                # st.text('')
-                st.metric("매출", f"{df_손익_전시_누계.iloc[0,1]:,.0f}",f"{df_손익_전시_누계.iloc[0,2]:,.0f}")
-                # st.text('')
-                st.metric("사업비", f"{df_손익_전시_누계.iloc[1,1]:,.0f}",f"{df_손익_전시_누계.iloc[1,2]:,.0f}")
-                # st.text('')
-                st.metric("매출이익", f"{df_손익_전시_누계.iloc[2,1]:,.0f}",f"{df_손익_전시_누계.iloc[2,2]:,.0f}")
-                전시_판매관리비 = df_손익_전시_누계.iloc[3,1]+df_손익_전시_누계.iloc[4,1]+df_손익_전시_누계.iloc[5,1]+df_손익_전시_누계.iloc[6,1]
-                전시_판매관리비_증감 = df_손익_전시_누계.iloc[3,2]+df_손익_전시_누계.iloc[4,2]+df_손익_전시_누계.iloc[5,2]+df_손익_전시_누계.iloc[6,2]
-                # st.text('')
-                st.metric("판매관리비",f"{전시_판매관리비:,.0f}" ,f"{전시_판매관리비_증감:,.0f}")
-                # st.text('')
-                st.metric("영업이익", f"{df_손익_전시_누계.iloc[7,1]:,.0f}",f"{df_손익_전시_누계.iloc[7,2]:,.0f}")
-                # st.text('')
-                임차제외_영업이익_전시 = df_손익_전시_누계.iloc[7,1]+df_손익_전시_누계.iloc[6,1]
-                임차제외_영업이익_증감_전시 = df_손익_전시_누계.iloc[7,2]+df_손익_전시_누계.iloc[6,2]
-                st.metric("임차료제외영업이익", f"{임차제외_영업이익_전시:,.0f}",f"{임차제외_영업이익_증감_전시:,.0f}")
-        st.write('''<style>
+                with col3:
+                    df_손익_전시_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)
+                    st.header("전시")
+                    # st.text('')
+                    st.metric("매출", f"{df_손익_전시_누계.iloc[0,1]:,.0f}",f"{df_손익_전시_누계.iloc[0,2]:,.0f}")
+                    # st.text('')
+                    st.metric("사업비", f"{df_손익_전시_누계.iloc[1,1]:,.0f}",f"{df_손익_전시_누계.iloc[1,2]:,.0f}")
+                    # st.text('')
+                    st.metric("매출이익", f"{df_손익_전시_누계.iloc[2,1]:,.0f}",f"{df_손익_전시_누계.iloc[2,2]:,.0f}")
+                    전시_판매관리비 = df_손익_전시_누계.iloc[3,1]+df_손익_전시_누계.iloc[4,1]+df_손익_전시_누계.iloc[5,1]+df_손익_전시_누계.iloc[6,1]
+                    전시_판매관리비_증감 = df_손익_전시_누계.iloc[3,2]+df_손익_전시_누계.iloc[4,2]+df_손익_전시_누계.iloc[5,2]+df_손익_전시_누계.iloc[6,2]
+                    # st.text('')
+                    st.metric("판매관리비",f"{전시_판매관리비:,.0f}" ,f"{전시_판매관리비_증감:,.0f}")
+                    # st.text('')
+                    st.metric("영업이익", f"{df_손익_전시_누계.iloc[7,1]:,.0f}",f"{df_손익_전시_누계.iloc[7,2]:,.0f}")
+                    # st.text('')
+                    임차제외_영업이익_전시 = df_손익_전시_누계.iloc[7,1]+df_손익_전시_누계.iloc[6,1]
+                    임차제외_영업이익_증감_전시 = df_손익_전시_누계.iloc[7,2]+df_손익_전시_누계.iloc[6,2]
+                    st.metric("임차료제외영업이익", f"{임차제외_영업이익_전시:,.0f}",f"{임차제외_영업이익_증감_전시:,.0f}")
+            st.write('''<style>
 
-        [data-testid="column"] {
-            width: calc(33.3333% - 1rem) !important;
-            flex: 1 1 calc(33.3333% - 1rem) !important;
-            min-width: calc(33.3333% - 1rem) !important;
-        }
-        </style>''', unsafe_allow_html=True)
+            [data-testid="column"] {
+                width: calc(33.3333% - 1rem) !important;
+                flex: 1 1 calc(33.3333% - 1rem) !important;
+                min-width: calc(33.3333% - 1rem) !important;
+            }
+            </style>''', unsafe_allow_html=True)
 
 
-        st.write('''<style>
-        [data-testid="stMarkdownContainer"] {
-            width: fit-content;
-            margin: auto;
-        }
+            st.write('''<style>
+            [data-testid="stMarkdownContainer"] {
+                width: fit-content;
+                margin: auto;
+            }
 
-        [data-testid="stElementContainer"] > div {
-            width: fit-content;
-            margin: auto;
-        }
+            [data-testid="stElementContainer"] > div {
+                width: fit-content;
+                margin: auto;
+            }
 
-        [data-testid="stMetricValue"] label {
-            width: fit-content;
-            margin: auto;
-        }
+            [data-testid="stMetricValue"] label {
+                width: fit-content;
+                margin: auto;
+            }
 
-        [data-testid="stHeadingWithActionElements"] label {
-            width: fit-content;
-            margin: auto;
-        }
+            [data-testid="stHeadingWithActionElements"] label {
+                width: fit-content;
+                margin: auto;
+            }
 
-        [data-testid="stMarkdownContainer"] p {
-            width: fit-content;
-            margin: auto;
-        }
+            [data-testid="stMarkdownContainer"] p {
+                width: fit-content;
+                margin: auto;
+            }
 
-        [data-testid="stMarkdownContainer"] label {
-            width: fit-content;
-            margin: auto;
-        }
+            [data-testid="stMarkdownContainer"] label {
+                width: fit-content;
+                margin: auto;
+            }
 
-        [data-testid="stHeadingWithActionElements"] div {
-            width: fit-content;
-            margin: auto;
-        }
+            [data-testid="stHeadingWithActionElements"] div {
+                width: fit-content;
+                margin: auto;
+            }
 
-        [data-testid="stVerticalBlockBorderWrapper"] label {
-            width: fit-content;
-            margin: auto;
-        }
+            [data-testid="stVerticalBlockBorderWrapper"] label {
+                width: fit-content;
+                margin: auto;
+            }
 
-        [data-testid="stVerticalBlockBorderWrapper"] div {
-            width: fit-content;
-            margin: auto;
-        }
+            [data-testid="stVerticalBlockBorderWrapper"] div {
+                width: fit-content;
+                margin: auto;
+            }
 
-        [data-testid="stMetricValue"] div {
-            width: fit-content;
-            margin: auto;
-        }
+            [data-testid="stMetricValue"] div {
+                width: fit-content;
+                margin: auto;
+            }
 
-        </style>''', unsafe_allow_html=True)
+            </style>''', unsafe_allow_html=True)
         st.write("------")                
         st.error(f"{기준년도}년 손익 Cash영향 (단위:억원)")
         df_all_wf = df_all[df_all['대분류']=='손익']
