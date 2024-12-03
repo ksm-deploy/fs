@@ -1314,8 +1314,8 @@ if authentication_status:
         xaxis = dict(
         tickfont = dict(size=15)),
         title_font_size = 25)
-        fig.layout.xaxis.fixedrange = True
-        fig.layout.yaxis.fixedrange = True
+        # fig.layout.xaxis.fixedrange = True
+        # fig.layout.yaxis.fixedrange = True
 
         st.plotly_chart(fig)
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
