@@ -1204,58 +1204,58 @@ if authentication_status:
             </style>''', unsafe_allow_html=True)
 
 
-            st.write('''<style>
-            [data-testid="stMarkdownContainer"] {
-                width: fit-content;
-                margin: auto;
-            }
+            # st.write('''<style>
+            # [data-testid="stMarkdownContainer"] {
+            #     width: fit-content;
+            #     margin: auto;
+            # }
 
-            [data-testid="stElementContainer"] > div {
-                width: fit-content;
-                margin: auto;
-            }
+            # [data-testid="stElementContainer"] > div {
+            #     width: fit-content;
+            #     margin: auto;
+            # }
 
-            [data-testid="stMetricValue"] label {
-                width: fit-content;
-                margin: auto;
-            }
+            # [data-testid="stMetricValue"] label {
+            #     width: fit-content;
+            #     margin: auto;
+            # }
 
-            [data-testid="stHeadingWithActionElements"] label {
-                width: fit-content;
-                margin: auto;
-            }
+            # [data-testid="stHeadingWithActionElements"] label {
+            #     width: fit-content;
+            #     margin: auto;
+            # }
 
-            [data-testid="stMarkdownContainer"] p {
-                width: fit-content;
-                margin: auto;
-            }
+            # [data-testid="stMarkdownContainer"] p {
+            #     width: fit-content;
+            #     margin: auto;
+            # }
 
-            [data-testid="stMarkdownContainer"] label {
-                width: fit-content;
-                margin: auto;
-            }
+            # [data-testid="stMarkdownContainer"] label {
+            #     width: fit-content;
+            #     margin: auto;
+            # }
 
-            [data-testid="stHeadingWithActionElements"] div {
-                width: fit-content;
-                margin: auto;
-            }
+            # [data-testid="stHeadingWithActionElements"] div {
+            #     width: fit-content;
+            #     margin: auto;
+            # }
 
-            [data-testid="stVerticalBlockBorderWrapper"] label {
-                width: fit-content;
-                margin: auto;
-            }
+            # [data-testid="stVerticalBlockBorderWrapper"] label {
+            #     width: fit-content;
+            #     margin: auto;
+            # }
 
-            [data-testid="stVerticalBlockBorderWrapper"] div {
-                width: fit-content;
-                margin: auto;
-            }
+            # [data-testid="stVerticalBlockBorderWrapper"] div {
+            #     width: fit-content;
+            #     margin: auto;
+            # }
 
-            [data-testid="stMetricValue"] div {
-                width: fit-content;
-                margin: auto;
-            }
+            # [data-testid="stMetricValue"] div {
+            #     width: fit-content;
+            #     margin: auto;
+            # }
 
-            </style>''', unsafe_allow_html=True)
+            # </style>''', unsafe_allow_html=True)
         st.write("------")                
         st.error(f"{기준년도}년 손익 Cash영향 (단위:억원)")
         df_all_wf = df_all[df_all['대분류']=='손익']
