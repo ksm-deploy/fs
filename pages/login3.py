@@ -954,7 +954,7 @@ if authentication_status:
         # st.text("준비중")
         # st.text(sc_t)
         def _max_width_():
-            max_width_str = f"max-width: 1000px;"
+            max_width_str = f"max-width: 400px;"
             st.markdown(
                 f"""
             <style>
