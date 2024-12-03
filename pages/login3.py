@@ -953,19 +953,17 @@ if authentication_status:
     if int(sc_t) < 1500:
         # st.text("준비중")
         # st.text(sc_t)
-        def _max_width_():
-            max_width_str = f"max-width: 40px;"
-            st.markdown(
-                f"""
-            <style>
-            .reportview-container .main .block-container{{
-                {max_width_str}
-            }}
-            </style>    
-            """,
-                unsafe_allow_html=True,
-            )
-        _max_width_()
+        # def _max_width_():
+        #     max_width_str = f"max-width: 40px;"
+        st.markdown(
+        '''
+        <style>
+        section.main > div {max-width:75rem}
+        </style>
+        ''',
+            unsafe_allow_html=True,
+        )
+        # _max_width_()
 
         tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
