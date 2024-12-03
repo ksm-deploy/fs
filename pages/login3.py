@@ -949,9 +949,12 @@ if authentication_status:
     # sc_t_2 = f"{streamlit_js_eval(js_expressions='screen.width', key = 'SCR')}"
     # sc_t = f"{streamlit_js_eval(js_expressions='screen.width', key1 = 'SCR')}"
     
+
     if int(sc_t) < 1500:
         # st.text("준비중")
         # st.text(sc_t)
+    
+        st.text("---")    
         tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
             df_all_bs = df_all[df_all['손익구분'] == "BS"]
