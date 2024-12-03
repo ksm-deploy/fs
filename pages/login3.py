@@ -1114,10 +1114,7 @@ if authentication_status:
 
                 st.markdown('''
                 <style>
-                .stApp [data-testid="stHeader"] {visibility: hidden;}
-                .block-container {
-                        margin-left: 0 !important;
-                }
+                div[class^='block-container'] { padding-left: 1rem; } 
                 </style>
                 ''', unsafe_allow_html=True)
                 with col1:
