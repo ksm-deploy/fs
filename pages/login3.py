@@ -1308,6 +1308,7 @@ if authentication_status:
         )
         fig.update_yaxes(showticklabels=False)
         fig.update_layout(
+        dragmode = "select",
         xaxis = dict(
         tickfont = dict(size=15)),
         title_font_size = 25)
