@@ -1305,7 +1305,7 @@ if authentication_status:
             st.caption(f"수입 : {수입}") # 디자인 필요
             
         with col2:
-            st.caption(f"지출 : {지출}") # 디자인 필요
+            st.container(f"지출 : {지출}") # 디자인 필요
         # st.text(매출)
         chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
 	    x=alt.X('중분류', sort=None, title=""), y=alt.Y('2024_N',axis=alt.Axis(labels=False)),  color=alt.Color('2024_N',legend=None))
