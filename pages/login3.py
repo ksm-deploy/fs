@@ -1287,7 +1287,21 @@ if authentication_status:
         # st.text(기부금)
         cashflow = 전체영업이익/100 + 기부금
         
-        st.dataframe(df_tem)        
+        st.dataframe(df_tem)      
+
+        bars = alt.Chart(df_tem).mark_bar(color="steelblue").encode(
+            x="중분류",
+            # y="일평균관람객:Q",
+            y=alt.Y("금액:Q",axis=alt.Axis(labels=False)),
+
+            # color='일평균관람객'
+            # text="관람객",
+            color=alt.Color('일평균관람객', legend=alt.Legend(
+            orient='top',
+            legendX=130, legendY=-40,
+            direction='horizontal',
+            titleAnchor='middle'))
+        ).properties(height=500)  
 
 
         # # waterfall scroll안되서 생략
