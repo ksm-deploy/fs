@@ -1297,8 +1297,8 @@ if authentication_status:
             # text="관람객",
             color=alt.Color('2024_N', legend=alt.Legend(
             orient='top',
-            legendX=130, legendY=-40,
-            direction='horizontal',
+            # legendX=130, legendY=-40,
+            # direction='horizontal',
             titleAnchor='middle'))
         ).properties(height=500)  
 
