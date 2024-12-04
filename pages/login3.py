@@ -1256,68 +1256,70 @@ if authentication_status:
             # }
 
             # </style>''', unsafe_allow_html=True)
-        st.write("------")                
-        st.error(f"{기준년도}년 손익 Cash영향 (단위:억원)")
-        df_all_wf = df_all[df_all['대분류']=='손익']
-        df_all_wf = df_all_wf.loc[(df_all_wf['회계연도'].isin(targets)) & (df_all_wf['전기월']<=int(기준월))]
+            st.write("------")                
+            st.error(f"{기준년도}년 손익 Cash영향 (단위:억원)")
+            df_all_wf = df_all[df_all['대분류']=='손익']
+            df_all_wf = df_all_wf.loc[(df_all_wf['회계연도'].isin(targets)) & (df_all_wf['전기월']<=int(기준월))]
 
-        df_tem = df_all_wf[cond_전체]
-        df_tem = df_tem.groupby(['중분류','회계연도'])['금액2'].sum().unstack().reset_index() # -> 월을 그룹대상에서 빼야 당초 조회 월 누계로 작동
-        df_tem = df_tem[['중분류',f'{기준년도}']]
-        df_tem = df_tem.set_index('중분류')
-        sort_wf = ['기부금','매출','사업비','인건비','일반관리비','건물관리비','지급임차료']
-        df_tem = df_tem.reindex(sort_wf)
-        df_tem[f'{기준년도}_N'] = 0
-        df_tem = df_tem.reset_index()
+            df_tem = df_all_wf[cond_전체]
+            df_tem = df_tem.groupby(['중분류','회계연도'])['금액2'].sum().unstack().reset_index() # -> 월을 그룹대상에서 빼야 당초 조회 월 누계로 작동
+            df_tem = df_tem[['중분류',f'{기준년도}']]
+            df_tem = df_tem.set_index('중분류')
+            sort_wf = ['기부금','매출','사업비','인건비','일반관리비','건물관리비','지급임차료']
+            df_tem = df_tem.reindex(sort_wf)
+            df_tem[f'{기준년도}_N'] = 0
+            df_tem = df_tem.reset_index()
 
-        def 금액작업(row):
-            if row['중분류'] == '매출':
-                val = round(row['2024']/100000000)
-            elif row['중분류'] == '기부금':
-                val = round(row['2024']/100000000)
-            else :
-                val = round(row['2024']/100000000*-1)
+            def 금액작업(row):
+                if row['중분류'] == '매출':
+                    val = round(row['2024']/100000000)
+                elif row['중분류'] == '기부금':
+                    val = round(row['2024']/100000000)
+                else :
+                    val = round(row['2024']/100000000*-1)
 
-            return val
+                return val
 
         # 함수적용
-        df_tem[f'{기준년도}_N'] = df_tem.apply(금액작업, axis=1)
-        df_tem = df_tem.set_index('중분류')
-        기부금 = df_tem.iloc[0,1]
-        # st.text(기부금)
-        cashflow = 전체영업이익/100 + 기부금
-        df_tem = df_tem.reset_index()
-        # st.dataframe(df_tem)
+            df_tem[f'{기준년도}_N'] = df_tem.apply(금액작업, axis=1)
+            df_tem = df_tem.set_index('중분류')
+            기부금 = df_tem.iloc[0,1]
+            # st.text(기부금)
+            cashflow = 전체영업이익/100 + 기부금
+            df_tem = df_tem.reset_index()
+            # st.dataframe(df_tem)
 
-        기부금 = df_tem.iloc[0,2]
-        매출 = df_tem.iloc[1,2]
-        사업비 = df_tem.iloc[2,2]
-        인건비 = df_tem.iloc[3,2]
-        일반관리비 = df_tem.iloc[4,2]
-        건물관리비 = df_tem.iloc[5,2]
-        지급임차료 = df_tem.iloc[6,2]
-        수입 = 기부금 + 매출
-        지출 = 사업비 + 인건비+일반관리비+건물관리비+지급임차료
-        손익효과 = 지출 + 수입
+            기부금 = df_tem.iloc[0,2]
+            매출 = df_tem.iloc[1,2]
+            사업비 = df_tem.iloc[2,2]
+            인건비 = df_tem.iloc[3,2]
+            일반관리비 = df_tem.iloc[4,2]
+            건물관리비 = df_tem.iloc[5,2]
+            지급임차료 = df_tem.iloc[6,2]
+            수입 = 기부금 + 매출
+            지출 = 사업비 + 인건비+일반관리비+건물관리비+지급임차료
+            손익효과 = 지출 + 수입
 
         # st.markdown('<style>.stMarkdown > div { border: 2px solid #000; }</style>', unsafe_allow_html=True)
-        col1, col2 = st.columns(2)
-        with col1:
+            col1, col2 = st.columns(2)
+            with col1:
             # c = st.empty()
-            st.info(f"수입 : {수입}") # 디자인 필요
-        with col2:
-            st.info(f"지출 : {지출}") # 디자인 필요
+                st.info(f"수입 : {수입}") # 디자인 필요
+            with col2:
+                st.info(f"지출 : {지출}") # 디자인 필요
         # st.text(매출)
-        chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
-        x=alt.X('중분류', sort=None, title=""), y=alt.Y('2024_N',axis=alt.Axis(labels=False)),  color=alt.Color('2024_N',legend=None))
-    # ,trendline="ols"
-        text = alt.Chart(df_tem).mark_text(dx=0, dy=0, align='center',baseline='bottom',color='white', size=13).encode(
-        # x=alt.X('일차', sort=None), y='일평균관람객',  detail='일평균관람객', text=alt.Text('일평균관람객:Q'))
-        x=alt.X('중분류', sort=None, title=""),  y=alt.Y('2024_N',axis=alt.Axis(labels=False), title=""),  detail='2024_N', text=alt.Text('2024_N:Q'))
+            chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
+            x=alt.X('중분류', sort=None, title=""), y=alt.Y('2024_N',axis=alt.Axis(labels=False)),  color=alt.Color('2024_N',legend=None))
+        # ,trendline="ols"
+            text = alt.Chart(df_tem).mark_text(dx=0, dy=0, align='center',baseline='bottom',color='white', size=13).encode(
+            # x=alt.X('일차', sort=None), y='일평균관람객',  detail='일평균관람객', text=alt.Text('일평균관람객:Q'))
+            x=alt.X('중분류', sort=None, title=""),  y=alt.Y('2024_N',axis=alt.Axis(labels=False), title=""),  detail='2024_N', text=alt.Text('2024_N:Q'))
 
     # chart.update_layout(font=dict(size=14))
         
-        st.altair_chart(chart+text, use_container_width=True)
+            st.altair_chart(chart+text, use_container_width=True)
+        with tab2:
+        
         # st.altair_chart(bars, use_container_width=True)
 
         # # waterfall scroll안되서 생략
