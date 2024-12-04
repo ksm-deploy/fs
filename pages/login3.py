@@ -1292,11 +1292,11 @@ if authentication_status:
         bars = alt.Chart(df_tem).mark_bar(color="steelblue").encode(
             x="중분류",
             # y="일평균관람객:Q",
-            y=alt.Y("금액:Q",axis=alt.Axis(labels=False)),
+            y=alt.Y("2024_N:Q",axis=alt.Axis(labels=False)),
 
             # color='일평균관람객'
             # text="관람객",
-            color=alt.Color('일평균관람객', legend=alt.Legend(
+            color=alt.Color('2024_N', legend=alt.Legend(
             orient='top',
             legendX=130, legendY=-40,
             direction='horizontal',
