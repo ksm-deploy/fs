@@ -1300,11 +1300,11 @@ if authentication_status:
         지출 = 사업비 + 인건비+일반관리비+건물관리비+지급임차료
         손익효과 = 지출 + 수입
 
+        st.markdown('<style>.stMarkdown > div { border: 2px solid #000; }</style>', unsafe_allow_html=True)
         col1, col2 = st.columns(2)
         with col1:
             c = st.empty()
             c.caption(f"수입 : {수입}") # 디자인 필요
-            
         with col2:
             st.caption(f"지출 : {지출}") # 디자인 필요
         # st.text(매출)
