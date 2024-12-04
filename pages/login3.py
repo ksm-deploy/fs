@@ -1290,10 +1290,9 @@ if authentication_status:
         st.dataframe(df_tem)      
 
         bars = alt.Chart(df_tem).mark_bar(color="steelblue").encode(
-            x="중분류",
+            x=df_tem.index,
             # y="일평균관람객:Q",
             y=alt.Y("2024_N:Q",axis=alt.Axis(labels=False)),
-
             # color='일평균관람객'
             # text="관람객",
             color=alt.Color('2024_N', legend=alt.Legend(
@@ -1302,6 +1301,7 @@ if authentication_status:
             direction='horizontal',
             titleAnchor='middle'))
         ).properties(height=500)  
+
         st.altair_chart(bars, use_container_width=True)
 
         # # waterfall scroll안되서 생략
