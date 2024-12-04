@@ -1319,48 +1319,12 @@ if authentication_status:
         
             st.altair_chart(chart+text, use_container_width=True)
         
-        # with tab2:
+        with tab2:
+            st.text("전체, 공연, 전시별 누적그래프")
+            st.text("전체, 공연, 전시별 월별 트랜드그래프") 
+
+            c_공연매출_ch = chart("매출",df_tem_ch, sort_sale222, "매출", "전체")   
+            st.altair_chart(c_공연매출_ch, use_container_width=True)
         
-        # st.altair_chart(bars, use_container_width=True)
-
-        # # waterfall scroll안되서 생략
-        # fig = go.Figure(go.Waterfall(
-        #     name ="손익흐름", orientation='v',
-        #     x= df_tem.index, y=df_tem[f'{기준년도}_N'], 
-        #     text=df_tem['2024_N'],textposition='outside',
-        #     texttemplate='%{text:,}',
-        #     increasing={'marker':{"color":"White"}},
-        #     decreasing={'marker':{"color":"#967078"}},
-            
-        # ))
         
-        # fig.update_layout(height=700,title_text=f"전체현금흐름 영향 : {cashflow}억",width=330,dragmode = "pan",
-        # font=dict(
-        #     size=18,  # Set the font size here
-        #     color="white",
-        #     # format=",.0f",
-        # )
-        # )
-        # fig.update_yaxes(showticklabels=False)
-        # fig.update_layout(
         
-        # xaxis = dict(
-        # tickfont = dict(size=15)),
-        # title_font_size = 25)
-        # fig.update_layout(dragmode = "pan")
-
-
-
-        # fig.layout.xaxis.fixedrange = True
-
-        # st.plotly_chart(fig)
-        # ['orbit', 'turntable', 'zoom', 'pan', False]
-        # drawrect, select
-        # drawcicle, drawclosepath, zoom，pan，select，lasso，orbit，turntable，False
-        # https://jeunna.tistory.com/107
-        # https://plotly.net/reference/plotly-net-styleparam-dragmode.html
-
-# I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
-# st.markdown(f'<style>{css}</style>',unsafe_allow_html=True)
-    # https://discuss.streamlit.io/t/center-text-in-st-metric/28579/7
-# https://discuss.streamlit.io/t/is-there-a-way-to-center-all-the-elements-in-st-metric/35136
