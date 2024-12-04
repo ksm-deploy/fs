@@ -1321,7 +1321,11 @@ if authentication_status:
         # fig.layout.xaxis.fixedrange = True
         # fig.layout.yaxis.fixedrange = False
         fig.update_layout(dragmode = "pan")
-        fig.update_layout(xaxis_rangeslider_visible = False)
+        # fig.update_layout(xaxis_rangeslider_visible = False)
+        # var hasHover = require('has-hover')
+        # Plotly.newPlot(gd, [/**/], {/**/}, {
+        # scrollZoom: !hasHover
+        # })
         st.plotly_chart(fig)
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
 # st.markdown(f'<style>{css}</style>',unsafe_allow_html=True)
