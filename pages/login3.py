@@ -1322,9 +1322,17 @@ if authentication_status:
         with tab2:
             st.text("전체, 공연, 전시별 누적그래프")
             st.text("전체, 공연, 전시별 월별 트랜드그래프") 
+            df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+            st.dataframe(df_손익_전체_누계)
 
-            c_공연매출_ch = chart("매출",df_tem_ch, sort_sale222, "매출", "전체")   
+
             st.altair_chart(c_공연매출_ch, use_container_width=True)
+            chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
+            x=alt.X('중분류', sort=None, title=""), y=alt.Y('2024_N',axis=alt.Axis(labels=False)),  color=alt.Color('2024_N',legend=None))
+            text = alt.Chart(df_tem).mark_text(dx=0, dy=0, align='center',baseline='bottom',color='white', size=13).encode(
+            x=alt.X('중분류', sort=None, title=""),  y=alt.Y('2024_N',axis=alt.Axis(labels=False), title=""),  detail='2024_N', text=alt.Text('2024_N:Q'))
+
         
+            st.altair_chart(chart+text, use_container_width=True)
         
         
