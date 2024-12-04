@@ -1318,7 +1318,8 @@ if authentication_status:
     # chart.update_layout(font=dict(size=14))
         
             st.altair_chart(chart+text, use_container_width=True)
-        with tab2:
+        
+        # with tab2:
         
         # st.altair_chart(bars, use_container_width=True)
 
