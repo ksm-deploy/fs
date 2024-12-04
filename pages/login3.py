@@ -1287,7 +1287,17 @@ if authentication_status:
         # st.text(기부금)
         cashflow = 전체영업이익/100 + 기부금
         df_tem = df_tem.reset_index()
-        st.dataframe(df_tem)      
+        st.dataframe(df_tem)
+
+        기부금 = df_tem.iloc[df_tem['중분류']=='기부금'][0,2]
+        매출 = df_tem[df_tem['중분류']=='매출'][0,2]
+        # 사업비 = df_tem[df_tem['중분류']=='기부금'][0,2]
+        # 인건비 = df_tem[df_tem['중분류']=='기부금'][0,2]
+        # 일반관리비 = df_tem[df_tem['중분류']=='기부금'][0,2]
+        # 건물관리비 = df_tem[df_tem['중분류']=='기부금'][0,2]
+        # 지급임차료 = df_tem[df_tem['중분류']=='기부금'][0,2]
+        st.text(기부금)
+        st.text(매출)
         chart = alt.Chart(df_tem, title='TTT').mark_bar().encode(
 	    x=alt.X('중분류', sort=None), y=alt.Y('2024_N'),  color='2024_N')
     # ,trendline="ols"
