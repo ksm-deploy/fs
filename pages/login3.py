@@ -1286,23 +1286,19 @@ if authentication_status:
         기부금 = df_tem.iloc[0,1]
         # st.text(기부금)
         cashflow = 전체영업이익/100 + 기부금
-        
+        df_tem = df_tem.reset_index()
         st.dataframe(df_tem)      
+        chart = alt.Chart(df_tem, title='TTT').mark_bar().encode(
+	    x=alt.X('중분류', sort=None), y=alt.Y('2024_N'),  color='2024_N')
+    # ,trendline="ols"
+        text = alt.Chart(df_tem).mark_text(dx=0, dy=0, align='center',baseline='bottom',color='white', size=13).encode(
+	    # x=alt.X('일차', sort=None), y='일평균관람객',  detail='일평균관람객', text=alt.Text('일평균관람객:Q'))
+	    x=alt.X('중분류', sort=None),  y=alt.Y('2024_N'),  detail='2024_N', text=alt.Text('2024_N:Q'))
 
-        bars = alt.Chart(df_tem).mark_bar(color="steelblue").encode(
-            x=df_tem.index,
-            # y="일평균관람객:Q",
-            y=alt.Y("2024_N:Q",axis=alt.Axis(labels=False)),
-            # color='일평균관람객'
-            # text="관람객",
-            color=alt.Color('2024_N', legend=alt.Legend(
-            orient='top',
-            # legendX=130, legendY=-40,
-            # direction='horizontal',
-            titleAnchor='middle'))
-        ).properties(height=500)  
-
-        st.altair_chart(bars, use_container_width=True)
+# chart.update_layout(font=dict(size=14))
+    
+        st.altair_chart(chart+text, use_container_width=True)
+        # st.altair_chart(bars, use_container_width=True)
 
         # # waterfall scroll안되서 생략
         # fig = go.Figure(go.Waterfall(
