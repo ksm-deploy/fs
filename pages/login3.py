@@ -1302,7 +1302,7 @@ if authentication_status:
             direction='horizontal',
             titleAnchor='middle'))
         ).properties(height=500)  
-
+        st.altair_chart(bars, use_container_width=True)
 
         # # waterfall scroll안되서 생략
         # fig = go.Figure(go.Waterfall(
