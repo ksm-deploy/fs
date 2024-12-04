@@ -1298,8 +1298,8 @@ if authentication_status:
             
         ))
         # https://docs.streamlit.io/develop/api-reference/widgets/st.color_picker
-        fig.update_layout(height=700,title_text=f"전체현금흐름 영향 : {cashflow}억",width=330,dragmode = "pan",
         
+        fig.update_layout(height=700,title_text=f"전체현금흐름 영향 : {cashflow}억",width=330,dragmode = "pan",
         font=dict(
             size=18,  # Set the font size here
             color="white",
@@ -1317,7 +1317,7 @@ if authentication_status:
         xaxis = dict(
         tickfont = dict(size=15)),
         title_font_size = 25)
-        fig.update_layout(dragmode = False)
+        fig.update_layout(dragmode = "pan")
 
 
 
