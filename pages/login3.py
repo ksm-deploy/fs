@@ -1321,8 +1321,8 @@ if authentication_status:
 
 
 
-        # fig.layout.xaxis.fixedrange = True
-        fig.layout.yaxis.fixedrange = True 
+        fig.layout.xaxis.fixedrange = True
+        # fig.layout.yaxis.fixedrange = True 
         # fig.update_layout(xaxis_rangeslider_visible = False)
         # var hasHover = require('has-hover')
         # Plotly.newPlot(gd, [/**/], {/**/}, {
