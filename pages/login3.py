@@ -1317,16 +1317,18 @@ if authentication_status:
         xaxis = dict(
         tickfont = dict(size=15)),
         title_font_size = 25)
+        # fig.update_layout(dragmode = "pan")
+
+
 
         # fig.layout.xaxis.fixedrange = True
         # fig.layout.yaxis.fixedrange = False
-        fig.update_layout(dragmode = "pan")
         # fig.update_layout(xaxis_rangeslider_visible = False)
         # var hasHover = require('has-hover')
         # Plotly.newPlot(gd, [/**/], {/**/}, {
         # scrollZoom: !hasHover
         # })
-        st.plotly_chart(fig)
+        st.plotly_chart(fig,dragmode = "pan")
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
 # st.markdown(f'<style>{css}</style>',unsafe_allow_html=True)
     # https://discuss.streamlit.io/t/center-text-in-st-metric/28579/7
