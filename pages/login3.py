@@ -1287,7 +1287,7 @@ if authentication_status:
         # st.text(기부금)
         cashflow = 전체영업이익/100 + 기부금
         df_tem = df_tem.reset_index()
-        st.dataframe(df_tem)
+        # st.dataframe(df_tem)
 
         기부금 = df_tem.iloc[0,2]
         매출 = df_tem.iloc[1,2]
