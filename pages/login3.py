@@ -1287,48 +1287,46 @@ if authentication_status:
         # st.text(기부금)
         cashflow = 전체영업이익/100 + 기부금
         
+        st.dataframe(df_tem)        
 
-        fig = go.Figure(go.Waterfall(
-            name ="손익흐름", orientation='v',
-            x= df_tem.index, y=df_tem[f'{기준년도}_N'], 
-            text=df_tem['2024_N'],textposition='outside',
-            texttemplate='%{text:,}',
-            increasing={'marker':{"color":"White"}},
-            decreasing={'marker':{"color":"#967078"}},
+
+        # # waterfall scroll안되서 생략
+        # fig = go.Figure(go.Waterfall(
+        #     name ="손익흐름", orientation='v',
+        #     x= df_tem.index, y=df_tem[f'{기준년도}_N'], 
+        #     text=df_tem['2024_N'],textposition='outside',
+        #     texttemplate='%{text:,}',
+        #     increasing={'marker':{"color":"White"}},
+        #     decreasing={'marker':{"color":"#967078"}},
             
-        ))
-        # https://docs.streamlit.io/develop/api-reference/widgets/st.color_picker
+        # ))
         
-        fig.update_layout(height=700,title_text=f"전체현금흐름 영향 : {cashflow}억",width=330,dragmode = "pan",
-        font=dict(
-            size=18,  # Set the font size here
-            color="white",
-            # format=",.0f",
-        )
-        )
-        fig.update_yaxes(showticklabels=False)
-        fig.update_layout(
+        # fig.update_layout(height=700,title_text=f"전체현금흐름 영향 : {cashflow}억",width=330,dragmode = "pan",
+        # font=dict(
+        #     size=18,  # Set the font size here
+        #     color="white",
+        #     # format=",.0f",
+        # )
+        # )
+        # fig.update_yaxes(showticklabels=False)
+        # fig.update_layout(
         
+        # xaxis = dict(
+        # tickfont = dict(size=15)),
+        # title_font_size = 25)
+        # fig.update_layout(dragmode = "pan")
+
+
+
+        # fig.layout.xaxis.fixedrange = True
+
+        # st.plotly_chart(fig)
         # ['orbit', 'turntable', 'zoom', 'pan', False]
         # drawrect, select
         # drawcicle, drawclosepath, zoom，pan，select，lasso，orbit，turntable，False
         # https://jeunna.tistory.com/107
         # https://plotly.net/reference/plotly-net-styleparam-dragmode.html
-        xaxis = dict(
-        tickfont = dict(size=15)),
-        title_font_size = 25)
-        fig.update_layout(dragmode = "pan")
 
-
-
-        fig.layout.xaxis.fixedrange = True
-        # fig.layout.yaxis.fixedrange = True 
-        # fig.update_layout(xaxis_rangeslider_visible = False)
-        # var hasHover = require('has-hover')
-        # Plotly.newPlot(gd, [/**/], {/**/}, {
-        # scrollZoom: !hasHover
-        # })
-        st.plotly_chart(fig)
 # I usually dump any scripts at the bottom of the page to avoid adding unwanted blank lines
 # st.markdown(f'<style>{css}</style>',unsafe_allow_html=True)
     # https://discuss.streamlit.io/t/center-text-in-st-metric/28579/7
