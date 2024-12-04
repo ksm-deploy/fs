@@ -1306,7 +1306,7 @@ if authentication_status:
         with col2:
             st.text(f"지출 : {지출}")
         # st.text(매출)
-        chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}').mark_bar().encode(
+        chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}').properties(height=500).mark_bar().encode(
 	    x=alt.X('중분류', sort=None), y=alt.Y('2024_N'),  color='2024_N')
     # ,trendline="ols"
         text = alt.Chart(df_tem).mark_text(dx=0, dy=0, align='center',baseline='bottom',color='white', size=13).encode(
@@ -1315,7 +1315,7 @@ if authentication_status:
 
 # chart.update_layout(font=dict(size=14))
     
-        st.altair_chart(chart+text, use_container_width=True, height=100)
+        st.altair_chart(chart+text, use_container_width=True)
         # st.altair_chart(bars, use_container_width=True)
 
         # # waterfall scroll안되서 생략
