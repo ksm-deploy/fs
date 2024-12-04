@@ -1295,10 +1295,10 @@ if authentication_status:
             texttemplate='%{text:,}',
             increasing={'marker':{"color":"White"}},
             decreasing={'marker':{"color":"#967078"}},
-            dragmode = "pan",
+            
         ))
         # https://docs.streamlit.io/develop/api-reference/widgets/st.color_picker
-        fig.update_layout(height=700,title_text=f"전체현금흐름 영향 : {cashflow}억",width=330,
+        fig.update_layout(height=700,title_text=f"전체현금흐름 영향 : {cashflow}억",width=330,dragmode = "pan",
         
         font=dict(
             size=18,  # Set the font size here
