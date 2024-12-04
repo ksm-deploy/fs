@@ -1289,8 +1289,8 @@ if authentication_status:
         df_tem = df_tem.reset_index()
         st.dataframe(df_tem)
 
-        기부금 = df_tem.iloc[df_tem['중분류']=='기부금'][0,2]
-        매출 = df_tem[df_tem['중분류']=='매출'][0,2]
+        기부금 = df_tem.iloc[0,1]
+        매출 = df_tem.iloc[1,1]
         # 사업비 = df_tem[df_tem['중분류']=='기부금'][0,2]
         # 인건비 = df_tem[df_tem['중분류']=='기부금'][0,2]
         # 일반관리비 = df_tem[df_tem['중분류']=='기부금'][0,2]
