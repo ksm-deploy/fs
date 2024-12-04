@@ -1299,8 +1299,12 @@ if authentication_status:
         수입 = 기부금 + 매출
         지출 = 사업비 + 인건비+일반관리비+건물관리비+지급임차료
         손익효과 = 지출 + 수입
-        st.text(f"수입 : {수입}")
-        st.text(f"지출 : {지출}")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.text(f"수입 : {수입}")
+        with col2:
+            st.text(f"지출 : {지출}")
         # st.text(매출)
         chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}').mark_bar().encode(
 	    x=alt.X('중분류', sort=None), y=alt.Y('2024_N'),  color='2024_N')
