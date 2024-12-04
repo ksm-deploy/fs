@@ -1296,8 +1296,8 @@ if authentication_status:
         일반관리비 = df_tem.iloc[4,2]
         건물관리비 = df_tem.iloc[5,2]
         지급임차료 = df_tem.iloc[6,2]
-        
-        st.text(f"수입 : {기부금}+{매출}")
+        수입 = 기부금 + 매출
+        st.text(f"수입 : {수입}")
         st.text(매출)
         chart = alt.Chart(df_tem, title='TTT').mark_bar().encode(
 	    x=alt.X('중분류', sort=None), y=alt.Y('2024_N'),  color='2024_N')
