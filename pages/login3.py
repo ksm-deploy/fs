@@ -1336,6 +1336,7 @@ if authentication_status:
             if 사업구분 == "전시":
                 df_손익_전시_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)
                 st.dataframe(df_손익_전시_누계, use_container_width=True)
+            # 셀렉트 박스 새로고침 방지
             if "initial_rerun_done" not in st.session_state:
                 st.session_state.initial_rerun_done = True
                 st.rerun()
@@ -1350,8 +1351,9 @@ if authentication_status:
             if 사업구분2 == "전체":
                 df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
-            
-            
+                df_손익_전체_누계 = df_손익_전체_누계.drop(['23년','24년', '증감'], axis = 1)
+                st.dataframe(df_손익_전체_누계, use_container_width=True)
+
             # if 사업구분 == "공연":
             #     df_손익_공연2_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
             #     st.dataframe(df_손익_공연2_누계, use_container_width=True)
