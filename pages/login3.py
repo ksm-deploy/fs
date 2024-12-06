@@ -1356,15 +1356,25 @@ if authentication_status:
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
                 df_손익_전체_누계 = df_손익_전체_누계.unstack().reset_index()
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
-                중분류_전체 = df_손익_전체_누계['중분류'].unique()
+                # 중분류_전체 = 
                 # st.text(중분류_전체)
                 st.text("항목을 선택하시오")
-                대상항목 = st.multiselect("대상항목선택",중분류_전체,default=[])
-
+                # 멀티셀렉트 
+                # 대상항목 = st.multiselect("대상항목선택",df_손익_전체_누계['중분류'].unique(),default=[])
+                # 단순셀렉트
+                대상항목 = st.st.selectbox("CHOICE DEVICE",df_손익_전체_누계['중분류'].unique(), index= None)
                 #멀티셀렉트 데이터프레임 연동
                 df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].isin(대상항목)]
                 # df[df['LABELS'].str.contains(select_labels)]
                 
+                # 데이터 프레임 으로 년, 월, 일 날자형식으로 컬럼 삽입
+                # 일자 컬럼과
+                # 데이터 프레임 리네님 0 : 금액
+
+                # 차트 작성 - 세로방향
+
+
+
                 st.dataframe(df_손익_전체_누계_trand)
             # if 사업구분 == "공연":
             #     df_손익_공연2_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
