@@ -1357,6 +1357,7 @@ if authentication_status:
                 df_손익_전체_누계 = df_손익_전체_누계.unstack().reset_index()
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
                 중분류_전체 = df_손익_전체_누계['중분류'].unique()
+                st.text(중분류_전체)
                 st.multiselect(중분류_전체)
 
 
