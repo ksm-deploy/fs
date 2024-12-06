@@ -965,7 +965,7 @@ if authentication_status:
         )
         # _max_width_()
 
-        tab1, tab2, tab3, tab4, tab5 = st.tabs(['🏳 DASHBOARD', '🏳 PL_Graph','🏳 PL', '🏳 PL trend', '🏳 B/S'])
+        tab1, tab2, tab3, tab4 = st.tabs(['🏳 DASHBOARD', '🏳 PL', '🏳 PL trend', '🏳 B/S'])
         with tab1:
             df_all_bs = df_all[df_all['손익구분'] == "BS"]
 
@@ -1326,14 +1326,15 @@ if authentication_status:
             df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
             st.dataframe(df_손익_전체_누계)
 
+            
 
-            st.altair_chart(c_공연매출_ch, use_container_width=True)
-            chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
-            x=alt.X('중분류', sort=None, title=""), y=alt.Y('2024_N',axis=alt.Axis(labels=False)),  color=alt.Color('2024_N',legend=None))
-            text = alt.Chart(df_tem).mark_text(dx=0, dy=0, align='center',baseline='bottom',color='white', size=13).encode(
-            x=alt.X('중분류', sort=None, title=""),  y=alt.Y('2024_N',axis=alt.Axis(labels=False), title=""),  detail='2024_N', text=alt.Text('2024_N:Q'))
+            # st.altair_chart(c_공연매출_ch, use_container_width=True)
+            # chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
+            # x=alt.X('중분류', sort=None, title=""), y=alt.Y('2024_N',axis=alt.Axis(labels=False)),  color=alt.Color('2024_N',legend=None))
+            # text = alt.Chart(df_tem).mark_text(dx=0, dy=0, align='center',baseline='bottom',color='white', size=13).encode(
+            # x=alt.X('중분류', sort=None, title=""),  y=alt.Y('2024_N',axis=alt.Axis(labels=False), title=""),  detail='2024_N', text=alt.Text('2024_N:Q'))
 
         
-            st.altair_chart(chart+text, use_container_width=True)
+            # st.altair_chart(chart+text, use_container_width=True)
         
         
