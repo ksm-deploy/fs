@@ -1345,7 +1345,7 @@ if authentication_status:
             
             
             st.info("사업별손익")
-            사업구분2 = st.selectbox("사업구분선택",("전체","공연","전시"), index= None)
+            사업구분2 = st.selectbox("사업구분선택 ",("전체","공연","전시"), index= None)
 
             if 사업구분2 == "전체":
                 df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
