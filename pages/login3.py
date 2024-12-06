@@ -1358,10 +1358,11 @@ if authentication_status:
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
                 중분류_전체 = df_손익_전체_누계['중분류'].unique()
                 # st.text(중분류_전체)
-                대상항목 = st.multiselect("대상항목선택",중분류_전체,default=[])
                 st.text("항목을 선택하시오")
+                대상항목 = st.multiselect("대상항목선택",중분류_전체,default=[])
 
-                df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].str.contains(대상항목)]
+                #멀티셀렉트 데이터프레임 연동
+                df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].isin(대상항목)]
                 # df[df['LABELS'].str.contains(select_labels)]
                 
                 st.dataframe(df_손익_전체_누계_trand)
