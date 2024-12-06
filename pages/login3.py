@@ -1364,7 +1364,9 @@ if authentication_status:
                 # 단순셀렉트
                 대상항목 = st.selectbox("CHOICE DEVICE",df_손익_전체_누계['중분류'].unique(), index= None)
                 #멀티셀렉트 데이터프레임 연동
-                df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].isin(대상항목)]
+                # df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].isin(대상항목)]
+                df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'] ==대상항목]
+                
                 # df[df['LABELS'].str.contains(select_labels)]
                 
                 # 데이터 프레임 으로 년, 월, 일 날자형식으로 컬럼 삽입
