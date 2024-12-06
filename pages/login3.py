@@ -1323,10 +1323,17 @@ if authentication_status:
             st.text("전체, 공연, 전시별 누적그래프")
             st.text("전체, 공연, 전시별 월별 트랜드그래프") 
             
-            df_손익_전체_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-            st.dataframe(df_손익_전체_누계, use_container_width=True)
+            사업구분 = st.selectbox("사업구분",("전체","공연","전시"), index= None)
 
-
+            if 사업구분 == "전체":
+                df_손익_전체_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+                st.dataframe(df_손익_전체_누계, use_container_width=True)
+            if 사업구분 == "공연":
+                df_손익_공연2_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
+                st.dataframe(df_손익_공연2_누계, use_container_width=True)
+            if 사업구분 == "전시":
+                df_손익_전시_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)
+                st.dataframe(df_손익_전시_누계, use_container_width=True)
 
             # st.altair_chart(c_공연매출_ch, use_container_width=True)
             # chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
