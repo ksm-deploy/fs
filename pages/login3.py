@@ -1320,9 +1320,11 @@ if authentication_status:
             st.altair_chart(chart+text, use_container_width=True)
         
         with tab2:
-            st.text("전체, 공연, 전시별 누적그래프")
-            st.text("전체, 공연, 전시별 월별 트랜드그래프") 
+            # st.text("전체, 공연, 전시별 누적그래프")
+            # st.text("전체, 공연, 전시별 월별 트랜드그래프") 
             
+            
+            st.info("사업별손익")
             사업구분 = st.selectbox("사업구분",("전체","공연","전시"), index= None)
 
             if 사업구분 == "전체":
@@ -1337,7 +1339,7 @@ if authentication_status:
             if "initial_rerun_done" not in st.session_state:
                 st.session_state.initial_rerun_done = True
                 st.rerun()
-                
+
             # st.altair_chart(c_공연매출_ch, use_container_width=True)
             # chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
             # x=alt.X('중분류', sort=None, title=""), y=alt.Y('2024_N',axis=alt.Axis(labels=False)),  color=alt.Color('2024_N',legend=None))
