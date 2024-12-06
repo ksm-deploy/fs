@@ -1350,9 +1350,14 @@ if authentication_status:
 
             if 사업구분2 == "전체":
                 df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-                st.dataframe(df_손익_전체_누계, use_container_width=True)
+                # st.dataframe(df_손익_전체_누계, use_container_width=True)
+                # 컬럼중 누계컬럼 dorp
                 df_손익_전체_누계 = df_손익_전체_누계.drop([f'비교년도',f'기준년도', '증감'], axis = 1)
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
+                df_손익_전체_누계 = df_손익_전체_누계.unstack().reset_index()
+                st.dataframe(df_손익_전체_누계, use_container_width=True)
+
+
 
             # if 사업구분 == "공연":
             #     df_손익_공연2_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
