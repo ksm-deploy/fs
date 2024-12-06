@@ -1358,7 +1358,10 @@ if authentication_status:
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
                 
                 #일자 컬럼 생성 - 타입일자
-                df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계['회계연도'].astype(str) + df_손익_전체_누계['전기월'].astype(str), format='%Y%m')
+                # https://www.marsja.se/combine-year-and-month-columns-in-pandas/
+                # df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계['회계연도'].astype(str) + df_손익_전체_누계['전기월'].astype(str), format='%Y%m')
+                df_손익_전체_누계['일자'] = pd.PeriodIndex(pd.to_datetime(df_손익_전체_누계[['회계연도','전기월']].assign(day=1)),freq='M')
+
                 # 년월까지만 보이게 컬럼변경
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
 
