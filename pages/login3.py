@@ -1334,7 +1334,10 @@ if authentication_status:
             if 사업구분 == "전시":
                 df_손익_전시_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)
                 st.dataframe(df_손익_전시_누계, use_container_width=True)
-
+            if "initial_rerun_done" not in st.session_state:
+                st.session_state.initial_rerun_done = True
+                st.rerun()
+                
             # st.altair_chart(c_공연매출_ch, use_container_width=True)
             # chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
             # x=alt.X('중분류', sort=None, title=""), y=alt.Y('2024_N',axis=alt.Axis(labels=False)),  color=alt.Color('2024_N',legend=None))
