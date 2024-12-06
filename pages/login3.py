@@ -1357,21 +1357,22 @@ if authentication_status:
                 df_손익_전체_누계 = df_손익_전체_누계.unstack().reset_index()
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
                 
+                df_손익_전체_누계 = df_손익_전체_누계.astype({'회계연도':'str','전기월':'str'})
                 #일자 컬럼 생성 - 타입일자
                 # https://www.marsja.se/combine-year-and-month-columns-in-pandas/
-                # df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계['회계연도'].astype(str) + df_손익_전체_누계['전기월'].astype(str), format='%Y%m')
+                df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계['회계연도'].astype(str) + df_손익_전체_누계['전기월'].astype(str), format='%Y%m')
                 # df_손익_전체_누계['일자'] = pd.PeriodIndex(pd.to_datetime(df_손익_전체_누계[['회계연도','전기월']].assign(day=1)),freq='M')
 
                 # df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계[['회계연도','전기월']].str.assign(day=1)).dt.to_period('M')
 
 
 
-                df_손익_전체_누계['일자'] = pd.PeriodIndex(
+                # df_손익_전체_누계['일자'] = pd.PeriodIndex(
                     
-                    year = df_손익_전체_누계['회계연도'],
-                    month = df_손익_전체_누계['전기월'],
-                    freq='M',
-                    )
+                #     year = df_손익_전체_누계['회계연도'],
+                #     month = df_손익_전체_누계['전기월'],
+                #     freq='M',
+                #     )
 
 
 
