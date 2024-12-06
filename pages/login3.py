@@ -1366,7 +1366,7 @@ if authentication_status:
 
 
 
-                df_손익_전체_누계['일자'] = pd.to_datetime(
+                df_손익_전체_누계['일자'] = pd.PeriodIndex(
                     
                     year = df_손익_전체_누계['회계연도'],
                     month = df_손익_전체_누계['전기월'],
