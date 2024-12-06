@@ -1356,6 +1356,14 @@ if authentication_status:
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
                 df_손익_전체_누계 = df_손익_전체_누계.unstack().reset_index()
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
+                
+                #일자 컬럼 생성 - 타입일자
+                df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계['Year'].astype(str) + 
+                df_손익_전체_누계['Month'].astype(str), format='%Y%m')
+                # 년월까지만 보이게 컬럼변경
+                st.dataframe(df_손익_전체_누계, use_container_width=True)
+
+                
                 # 중분류_전체 = 
                 # st.text(중분류_전체)
                 st.text("항목을 선택하시오")
