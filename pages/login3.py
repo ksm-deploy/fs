@@ -1357,10 +1357,10 @@ if authentication_status:
                 df_손익_전체_누계 = df_손익_전체_누계.unstack().reset_index()
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
                 중분류_전체 = df_손익_전체_누계['중분류'].unique()
-                st.text(중분류_전체)
-                st.multiselect("대상항목선택",중분류_전체)
-
-
+                # st.text(중분류_전체)
+                대상항목 = st.multiselect("대상항목선택",중분류_전체)
+                df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'] == 대상항목]
+                st.dataframe(df_손익_전체_누계_trand)
             # if 사업구분 == "공연":
             #     df_손익_공연2_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
             #     st.dataframe(df_손익_공연2_누계, use_container_width=True)
