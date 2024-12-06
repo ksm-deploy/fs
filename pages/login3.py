@@ -1361,7 +1361,7 @@ if authentication_status:
                 대상항목 = st.multiselect("대상항목선택",중분류_전체,default=[])
                 st.text("항목을 선택하시오")
 
-                df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류']].str.contains(대상항목)
+                df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].str.contains(대상항목)]
                 # df[df['LABELS'].str.contains(select_labels)]
                 
                 st.dataframe(df_손익_전체_누계_trand)
