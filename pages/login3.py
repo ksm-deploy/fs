@@ -227,10 +227,10 @@ if authentication_status:
             df_tem = df_tem.reindex(cost_SORT2)
             listVars=df_tem.columns.get_level_values(0)
             
-            df_tem.insert(0,f'비교년도',df_tem.loc[:,listVars=='2023'].sum(axis=1).fillna(''))
+            df_tem.insert(0,f'비교년도',df_tem.loc[:,listVars==비교년도].sum(axis=1).fillna(''))
             df_tem.rename(columns={'':'누계'}, inplace=True)
             listVars=df_tem.columns.get_level_values(0)
-            df_tem.insert(1,f'기준년도',df_tem.loc[:,listVars=='2024'].sum(axis=1).fillna(''))
+            df_tem.insert(1,f'기준년도',df_tem.loc[:,listVars==기준년도].sum(axis=1).fillna(''))
             df_tem.rename(columns={'':'누계'}, inplace=True)
 
 
