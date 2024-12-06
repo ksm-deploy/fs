@@ -1370,7 +1370,8 @@ if authentication_status:
                     
                     year = df_손익_전체_누계['회계연도'],
                     month = df_손익_전체_누계['전기월'],
-                    freq='M')
+                    freq='M',
+                    )
 
 
 
