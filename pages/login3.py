@@ -1398,7 +1398,7 @@ if authentication_status:
                 # df_all_bs_약식.rename(columns = {기준일 : 기준일[0:7], 비교일 : 비교일[0:7]}, inplace = True)
                 
                 c__m전체매출= alt.Chart(df_손익_전체_누계_trand).mark_bar().encode(
-                x=alt.X('일자:O', title=""),
+                x=alt.X('일자:N', title=""),
                 y=alt.Y('금액:Q'),
                 color=('금액:Q')
                 # color=alt.Color('금액:Q', scale=alt.Scale(domain=domain_1, range=range_1), legend = None),
