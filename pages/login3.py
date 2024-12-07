@@ -1367,7 +1367,7 @@ if authentication_status:
 
                 # df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계[['회계연도','전기월']].str.assign(day=1)).dt.to_period('M')
 
-                df_손익_전체_누계['일자'] = df_손익_전체_누계['일자'].astype(str).dt.strftime("%Y/%m")
+                df_손익_전체_누계['일자'] = df_손익_전체_누계['일자'].dt.strftime("%Y/%m")
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
                 
                 # df_손익_전체_누계['일자'].strftime('%Y-%m-%d')
