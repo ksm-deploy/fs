@@ -1354,17 +1354,17 @@ if authentication_status:
                 st.text("unstack 테스트")
                 st.dataframe(key1, use_container_width=True)
                 
-                df_구분손익누계 = df_구분손익누계.astype({'회계연도':'str','전기월':'str'})
+                key1 = key1.astype({'회계연도':'str','전기월':'str'})
                 #일자 컬럼 생성 - 타입일자
                 # https://www.marsja.se/combine-year-and-month-columns-in-pandas/
-                df_구분손익누계['일자'] = pd.to_datetime(df_구분손익누계['회계연도'].astype(str) + df_손익_전체_누계['전기월'].astype(str), format='%Y%m')
+                key1['일자'] = pd.to_datetime(key1['회계연도'].astype(str) + key1['전기월'].astype(str), format='%Y%m')
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 
                 # df_손익_전체_누계['일자'] = pd.PeriodIndex(pd.to_datetime(df_손익_전체_누계[['회계연도','전기월']].assign(day=1)),freq='M')
 
                 # df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계[['회계연도','전기월']].str.assign(day=1)).dt.to_period('M')
 
-                df_구분손익누계['일자'] = df_구분손익누계['일자'].dt.strftime("%Y/%m")
+                key1['일자'] = key1['일자'].dt.strftime("%Y/%m")
                 # st.dataframe(df_구분손익누계, use_container_width=True)
                 
                 # df_손익_전체_누계['일자'].strftime('%Y-%m-%d')
@@ -1396,12 +1396,12 @@ if authentication_status:
                 # 대상항목 = st.selectbox("항목선택",df_구분손익누계['중분류'].unique(), index= None)
                 #멀티셀렉트 데이터프레임 연동
                 # df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].isin(대상항목)]
-                df_구분손익누계_trand = df_구분손익누계[df_구분손익누계['중분류'] ==대상항목]
-                df_구분손익누계_trand.rename(columns = {0 : '금액'}, inplace = True)
+                key1 = key1[key1['중분류'] ==대상항목]
+                key1.rename(columns = {0 : '금액'}, inplace = True)
                 # st.dataframe(df_손익_전체_누계_trand)
                 # df_all_bs_약식.rename(columns = {기준일 : 기준일[0:7], 비교일 : 비교일[0:7]}, inplace = True)
                 
-                c__m구분손익= alt.Chart(df_구분손익누계_trand).mark_bar().encode(
+                c__m구분손익= alt.Chart(key1).mark_bar().encode(
                 x=alt.X('일자:N', title=""),
                 y=alt.Y('금액:Q'),
                 color=('금액:Q')
