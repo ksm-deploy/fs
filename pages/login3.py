@@ -1511,10 +1511,10 @@ if authentication_status:
                         # lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""],slice(None))
                         
 
-                    ).format(precision=0, thousands=',').hide_index().render()
+                    ).format(precision=0, thousands=',')
             
-            st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
-            
+            st.dataframe(df_all_bs_약식_누계_병합,hide_index=True,use_container_width=True)
+            #★ style bar study 필요
 
             # 조건부 전체행 컬러변경2
             # def highlight_survived(s):
