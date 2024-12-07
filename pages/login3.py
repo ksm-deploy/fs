@@ -1496,7 +1496,7 @@ if authentication_status:
             st.text("bs세분류요약")
             # st.text("서식대상 필터 테스트_apply후")
             # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
-            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.drop(columns='중분류') 
+            # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.drop(columns='중분류') 
             
             
             
