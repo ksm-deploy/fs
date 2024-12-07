@@ -1344,11 +1344,12 @@ if authentication_status:
             # st.text("전체, 공연, 전시별 누적그래프")
             # st.text("전체, 공연, 전시별 월별 트랜드그래프") 
             
+            global 사업구분2, 대상항목
             def m_chart(key1, 대상항목):    
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 # 컬럼중 누계컬럼 dorp
                 df_구분손익누계 = key1.drop([f'비교년도',f'기준년도', '증감'], axis = 1)
-                # st.dataframe(df_손익_전체_누계, use_container_width=True)
+                st.dataframe(df_손익_전체_누계, use_container_width=True)
                 df_구분손익누계 = df_구분손익누계.unstack().reset_index()
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 
@@ -1417,7 +1418,6 @@ if authentication_status:
 
             
             st.info("사업별손익")
-            global 사업구분2, 대상항목
             사업구분2 = st.selectbox("사업구분선택 ",("전체","공연","전시"), index= None)
             대상항목 = st.selectbox("항목선택",["매출","사업비","인건비","일반관리비","건물관리비","지급임차료","영업이익"], index= None)
             if 사업구분2 == "전체":
