@@ -1349,7 +1349,7 @@ if authentication_status:
                 # 컬럼중 누계컬럼 dorp
                 key1 = key1.drop([f'비교년도',f'기준년도', '증감'], axis = 1)
                 key1 = key1.unstack().reset_index()
-                st.text("unstack 테스트")
+                st.caption('<div style="text-align: right">단위: 백만원</div>', unsafe_allow_html=True)
                 key1 = key1.astype({'회계연도':'str','전기월':'str'})
                 #일자 컬럼 생성 - 타입일자
                 # https://www.marsja.se/combine-year-and-month-columns-in-pandas/
