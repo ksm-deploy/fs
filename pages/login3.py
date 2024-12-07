@@ -1374,7 +1374,7 @@ if authentication_status:
                 # df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계[['회계연도','전기월']].str.assign(day=1)).dt.to_period('M')
 
                 df_구분손익누계['일자'] = df_구분손익누계['일자'].dt.strftime("%Y/%m")
-                st.dataframe(df_구분손익누계, use_container_width=True)
+                # st.dataframe(df_구분손익누계, use_container_width=True)
                 
                 # df_손익_전체_누계['일자'].strftime('%Y-%m-%d')
 
@@ -1390,7 +1390,7 @@ if authentication_status:
 
                 # 년월까지만 보이게 컬럼변경
                 st.text("일자_년월 테스트")
-                st.dataframe(df_손익_전체_누계, use_container_width=True)
+                # st.dataframe(df_손익_전체_누계, use_container_width=True)
 
                 
                 # 중분류_전체 = 
@@ -1407,7 +1407,7 @@ if authentication_status:
                 # df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].isin(대상항목)]
                 df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'] ==대상항목]
                 df_손익_전체_누계_trand.rename(columns = {0 : '금액'}, inplace = True)
-                st.dataframe(df_손익_전체_누계_trand)
+                # st.dataframe(df_손익_전체_누계_trand)
                 # df_all_bs_약식.rename(columns = {기준일 : 기준일[0:7], 비교일 : 비교일[0:7]}, inplace = True)
                 
                 c__m전체매출= alt.Chart(df_손익_전체_누계_trand).mark_bar().encode(
