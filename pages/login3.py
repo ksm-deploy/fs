@@ -1485,8 +1485,8 @@ if authentication_status:
 
             df_all_bs_약식_누계_병합_서식대상 = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']==""]
 
-            # st.text("서식대상 필터 테스트")
-
+            st.text("bs요약")
+            df_all_bs_약식_누계_병합_서식대상= df_all_bs_약식_누계_병합_서식대상.drop(columns=['중분류','bs분류'])
             st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
 
 
