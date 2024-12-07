@@ -1386,11 +1386,11 @@ if authentication_status:
                 # 멀티셀렉트 
                 # 대상항목 = st.multiselect("대상항목선택",df_손익_전체_누계['중분류'].unique(),default=[])
                 # 단순셀렉트
-                # default_ix = '매출'
-                대상항목 = st.selectbox("항목선택",df_손익_전체_누계['중분류'].unique(), index = '매출')
+                default_ix = '매출'
+                대상항목 = st.selectbox("항목선택",df_손익_전체_누계['중분류'].unique(), index= None)
                 #멀티셀렉트 데이터프레임 연동
                 # df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].isin(대상항목)]
-                df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'] == 대상항목]
+                df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'] ==대상항목]
                 
                 # df[df['LABELS'].str.contains(select_labels)]
                 
