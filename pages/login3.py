@@ -1494,7 +1494,7 @@ if authentication_status:
 
 
             # st.text("서식대상 필터 테스트_apply후")
-            # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('중분류')
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reindex('중분류')
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
                         lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합_서식대상[df_all_bs_약식_누계_병합_서식대상['bs분류'] ==""].index,slice(None))
                         # lambda _: "background-color: gray; ", subset=(['bs중분류','영업이익'], slice(None))
