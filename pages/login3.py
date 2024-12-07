@@ -1443,9 +1443,9 @@ if authentication_status:
             df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
 
 
-            st.dataframe(df_all_bs_약식, use_container_width=True)
+            # st.dataframe(df_all_bs_약식, use_container_width=True)
 
-            st.text("누계만 발라내기 - bs분류 일치화 필요")
+            # st.text("누계만 발라내기 - bs분류 일치화 필요")
 
             df_all_bs_약식_누계 = df_all_bs_약식[[f'{비교일}누계',f'{기준일}누계','증감']]
             df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-01누계', '누계')
