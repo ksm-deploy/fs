@@ -1503,8 +1503,8 @@ if authentication_status:
             
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('세분류')
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
-                        # lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""].index,slice(None))
-                        lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""].index)
+                        lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""].index,slice(None))
+                        # lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""].index)
                         # lambda _: "background-color: gray; ", subset=(['bs중분류','영업이익'], slice(None))
                     ).format(precision=0, thousands=',')
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.drop
