@@ -1344,10 +1344,10 @@ if authentication_status:
             # st.text("전체, 공연, 전시별 누적그래프")
             # st.text("전체, 공연, 전시별 월별 트랜드그래프") 
             
-            def m_chart():    
+            def m_chart(key1):    
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 # 컬럼중 누계컬럼 dorp
-                df_구분손익누계 = df_구분손익누계.drop([f'비교년도',f'기준년도', '증감'], axis = 1)
+                df_구분손익누계 = key1.drop([f'비교년도',f'기준년도', '증감'], axis = 1)
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 df_구분손익누계 = df_구분손익누계.unstack().reset_index()
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
@@ -1421,13 +1421,13 @@ if authentication_status:
 
             if 사업구분2 == "전체":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-                m_chart()
+                m_chart(df_손익_전체_누계)
             if 사업구분2 == "공연":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)    
-                m_chart()
+                m_chart(df_손익_공연2_누계)
             if 사업구분2 == "전시":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)    
-                m_chart()
+                m_chart(df_손익_전시_누계)
             
                 # 차트 입력
 
