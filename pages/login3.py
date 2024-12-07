@@ -1500,18 +1500,19 @@ if authentication_status:
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.drop(columns='중분류') 
             
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index()
-            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('세분류')
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('세분류')
 
 
 
             # 조건부 전체행컬러 변경
+            # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('세분류')
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
-                        # lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""].index,slice(None))
-                        lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""],slice(None))
+                        lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""].index,slice(None))
+                        # lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""],slice(None))
                         
 
                     ).format(precision=0, thousands=',')
+            
             st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
             
 
