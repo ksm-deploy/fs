@@ -1507,11 +1507,11 @@ if authentication_status:
             # 조건부 전체행컬러 변경
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('세분류')
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
-                        lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""].index,slice(None))
+                        lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""].index,slice(None).hide_index().render())
                         # lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""],slice(None))
                         
 
-                    ).format(precision=0, thousands=',').hide_index().render()
+                    ).format(precision=0, thousands=',')
             
             st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
             
