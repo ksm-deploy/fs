@@ -1346,43 +1346,16 @@ if authentication_status:
             
             global 사업구분2, 대상항목
             def m_chart(key1, 대상항목):    
-                # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 # 컬럼중 누계컬럼 dorp
                 key1 = key1.drop([f'비교년도',f'기준년도', '증감'], axis = 1)
-                # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 key1 = key1.unstack().reset_index()
                 st.text("unstack 테스트")
-                # st.dataframe(key1, use_container_width=True)
-                
                 key1 = key1.astype({'회계연도':'str','전기월':'str'})
                 #일자 컬럼 생성 - 타입일자
                 # https://www.marsja.se/combine-year-and-month-columns-in-pandas/
                 key1['일자'] = pd.to_datetime(key1['회계연도'].astype(str) + key1['전기월'].astype(str), format='%Y%m')
-                # st.dataframe(df_손익_전체_누계, use_container_width=True)
-                
-                # df_손익_전체_누계['일자'] = pd.PeriodIndex(pd.to_datetime(df_손익_전체_누계[['회계연도','전기월']].assign(day=1)),freq='M')
-
-                # df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계[['회계연도','전기월']].str.assign(day=1)).dt.to_period('M')
-
                 key1['일자'] = key1['일자'].dt.strftime("%Y/%m")
                 # st.dataframe(df_구분손익누계, use_container_width=True)
-                
-                # df_손익_전체_누계['일자'].strftime('%Y-%m-%d')
-
-
-                # df_손익_전체_누계['일자'] = pd.PeriodIndex(
-                    
-                #     year = df_손익_전체_누계['회계연도'],
-                #     month = df_손익_전체_누계['전기월'],
-                #     freq='M',
-                #     )
-
-
-
-                # 년월까지만 보이게 컬럼변경
-                # st.text("일자_년월 테스트")
-                # st.dataframe(df_손익_전체_누계, use_container_width=True)
-
                 
                 # 중분류_전체 = 
                 # st.text(중분류_전체)
@@ -1407,13 +1380,8 @@ if authentication_status:
                 color=('금액:Q')
                 # color=alt.Color('금액:Q', scale=alt.Scale(domain=domain_1, range=range_1), legend = None),
                 )
-                # text = c__m전체매출.mark_text(
-                #     dy = alt.ExprRef(alt.expr.if_(alt.datum.금액 >= 0, -10, 10)),
-                #     fontSize=18).encode(text=alt.Text("금액3:Q", format=",.0f"))
-                # c_공연매출_ch = alt.layer(c_공연매출, text, data=df_tem_ch).facet(
-                # column=alt.Column( '중분류').configure_facet(spacing=50).configure_mark(    
-                #         ))
-
+                text = alt.Chart(c__m구분손익).mark_text(dx=0, dy=0, align='center',baseline='bottom',color='white', size=13).encode(
+                x=alt.X('일자', sort=None, title=""),  y=alt.Y('금액',axis=alt.Axis(labels=False), title=""),  detail='금액', text=alt.Text('금액:Q'))
                 # st.altair_chart(chart+text, use_container_width=True)
                 st.altair_chart(c__m구분손익, use_container_width=True)
 
@@ -1423,14 +1391,6 @@ if authentication_status:
             대상항목 = st.selectbox("항목선택",["매출","사업비","인건비","일반관리비","건물관리비","지급임차료","영업이익"], index= None)
             if 사업구분2 == "전체":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-                # st.dataframe(df_구분손익누계)
-                # st.text("항목을 선택하시오")
-                # 멀티셀렉트 
-                # 대상항목 = st.multiselect("대상항목선택",df_손익_전체_누계['중분류'].unique(),default=[])
-                # 단순셀렉트
-                # default_ix = '매출'
-                # ★최초 디폴드 값 설정 추가 필요 study
-                # 대상항목 = st.selectbox("항목선택",df_구분손익누계['중분류'].unique(), index= None)
                 m_chart(df_손익_전체_누계, 대상항목)
             
             if 사업구분2 == "공연":
