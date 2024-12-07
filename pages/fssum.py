@@ -1396,7 +1396,7 @@ if authentication_status:
             global 사업구분2, 대상항목
             def m_chart(key1, 대상항목):    
                 # 컬럼중 누계컬럼 dorp
-                key1 = key1.drop([f'비교년도',f'기준년도', '증감'], axis = 1)
+                key1 = key1.drop([f'{비교년도}',f'{기준년도}', '증감'], axis = 1)
                 key1 = key1.unstack().reset_index()
                 st.caption('<div style="text-align: right">단위: 백만원</div>', unsafe_allow_html=True)
                 key1 = key1.astype({'회계연도':'str','전기월':'str'})
