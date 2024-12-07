@@ -1509,7 +1509,7 @@ if authentication_status:
                     ).format(precision=0, thousands=',')
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.drop
             # df_all_bs_약식_누계_병합.style.hide_index()
-            # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index('세분류')
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reindex('세분류')
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.hide(axis='index')
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합['세분류':]
             st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
