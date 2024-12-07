@@ -1387,13 +1387,28 @@ if authentication_status:
                 # 대상항목 = st.multiselect("대상항목선택",df_손익_전체_누계['중분류'].unique(),default=[])
                 # 단순셀렉트
                 default_ix = '매출'
-                # 최초 디폴드 값 설정 추가 필요 study
+                # ★최초 디폴드 값 설정 추가 필요 study
 
                 대상항목 = st.selectbox("항목선택",df_손익_전체_누계['중분류'].unique(), index= None)
                 #멀티셀렉트 데이터프레임 연동
                 # df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].isin(대상항목)]
                 df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'] ==대상항목]
-                
+                df_손익_전체_누계_trand.rename(columns = {0 : '금액'}, inplace = True)
+                # df_all_bs_약식.rename(columns = {기준일 : 기준일[0:7], 비교일 : 비교일[0:7]}, inplace = True)
+                c__m전체매출= alt.Chart(df_손익_전체_누계_trand).mark_bar().encode(
+                x=alt.X('일자:O', title=""),
+                y=alt.Y('금액:Q'),
+                color=alt.Color('일자:O', scale=alt.Scale(domain=domain_1, range=range_1), legend = None),
+                )
+                text = c__m전체매출.mark_text(
+                    dy = alt.ExprRef(alt.expr.if_(alt.datum.금액 >= 0, -10, 10)),
+                    fontSize=18).encode(text=alt.Text("금액3:Q", format=",.0f"))
+                c_공연매출_ch = alt.layer(c_공연매출, text, data=df_tem_ch).facet(
+                column=alt.Column( '중분류').configure_facet(spacing=50).configure_mark(    
+                        ))
+
+                st.altair_chart(chart+text, use_container_width=True)
+
                 # 차트 입력
 
                 # df[df['LABELS'].str.contains(select_labels)]
