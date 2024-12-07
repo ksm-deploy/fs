@@ -1438,7 +1438,7 @@ if authentication_status:
 
 
 
-                st.dataframe(df_손익_전체_누계_trand)
+                # st.dataframe(df_손익_전체_누계_trand)
             # if 사업구분 == "공연":
             #     df_손익_공연2_누계 = templit("누계손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)
             #     st.dataframe(df_손익_공연2_누계, use_container_width=True)
