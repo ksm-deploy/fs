@@ -1512,8 +1512,9 @@ if authentication_status:
                         
 
                     ).format(precision=0, thousands=',')
-            
-            st.dataframe(df_all_bs_약식_누계_병합,hide_index=True,use_container_width=True)
+            st.dataframe(df_all_bs_약식_누계_병합,hide_index=True, width=300)
+            # st.dataframe(df_all_bs_약식_누계_병합,hide_index=True,use_container_width=True)
+
             #★ style bar study 필요
 
             # 조건부 전체행 컬러변경2
