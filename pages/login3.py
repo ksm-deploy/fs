@@ -1377,6 +1377,7 @@ if authentication_status:
 
 
                 # 년월까지만 보이게 컬럼변경
+                st.text("일자_년월 테스트")
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
 
                 
