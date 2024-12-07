@@ -1389,7 +1389,7 @@ if authentication_status:
                 default_ix = '매출'
                 # 최초 디폴드 값 설정 추가 필요 study
 
-                대상항목 = st.selectbox("항목선택",df_손익_전체_누계['중분류'].unique(), index= default_ix)
+                대상항목 = st.selectbox("항목선택",df_손익_전체_누계['중분류'].unique(), index= None)
                 #멀티셀렉트 데이터프레임 연동
                 # df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].isin(대상항목)]
                 df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'] ==대상항목]
