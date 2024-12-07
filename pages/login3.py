@@ -1387,11 +1387,15 @@ if authentication_status:
                 # 대상항목 = st.multiselect("대상항목선택",df_손익_전체_누계['중분류'].unique(),default=[])
                 # 단순셀렉트
                 default_ix = '매출'
-                대상항목 = st.selectbox("항목선택",df_손익_전체_누계['중분류'].unique(), index= None)
+                # 최초 디폴드 값 설정 추가 필요 study
+
+                대상항목 = st.selectbox("항목선택",df_손익_전체_누계['중분류'].unique(), index= default_ix)
                 #멀티셀렉트 데이터프레임 연동
                 # df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].isin(대상항목)]
                 df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'] ==대상항목]
                 
+                # 차트 입력
+
                 # df[df['LABELS'].str.contains(select_labels)]
                 
                 # 데이터 프레임 으로 년, 월, 일 날자형식으로 컬럼 삽입
