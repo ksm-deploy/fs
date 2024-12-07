@@ -1509,7 +1509,14 @@ if authentication_status:
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
             #             lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""].index,slice(None))
             #         ).format(precision=0, thousands=',')
+            # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
             
+
+            # 조건부 전체행 컬러변경2
+            def highlight_survived(s):
+                return ['background-color: green']*len(s) if s.bs분류 else ['background-color: red']*len(s)
+
+            st.dataframe(df_all_bs_약식_누계_병합.style.apply(highlight_survived, axis=1))
 
 
                         # lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""].index)
@@ -1520,7 +1527,8 @@ if authentication_status:
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reindex('세분류')
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.hide(axis='index')
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합['세분류':]
-            st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+
+
 
 
 
