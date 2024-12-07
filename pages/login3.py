@@ -1431,7 +1431,7 @@ if authentication_status:
             # st.text(기준일)
             # st.text(비교일)
 
-            st.text("시점기준 불러오기")
+            # st.text("시점기준 불러오기")
             listVars_bs=df_all_bs_약식.columns.get_level_values(0)
 
 
@@ -1443,7 +1443,7 @@ if authentication_status:
             df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
 
 
-            # st.dataframe(df_all_bs_약식, use_container_width=True)
+            st.dataframe(df_all_bs_약식, use_container_width=True)
 
             st.text("누계만 발라내기 - bs분류 일치화 필요")
 
@@ -1494,7 +1494,7 @@ if authentication_status:
 
 
             # st.text("서식대상 필터 테스트_apply후")
-            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('중분류')
+            # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('중분류')
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
                         lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합_서식대상[df_all_bs_약식_누계_병합_서식대상['bs분류'] ==""].index,slice(None))
                         # lambda _: "background-color: gray; ", subset=(['bs중분류','영업이익'], slice(None))
