@@ -1519,7 +1519,7 @@ if authentication_status:
             def color_survived(val):
                 color = 'green' if val else 'red'
                 return f'background-color: {color}'
-            st.dataframe(df_all_bs_약식_누계_병합.style.applymap(color_survived, subset=['Survived']))
+            st.dataframe(df_all_bs_약식_누계_병합.style.applymap(color_survived, subset=['bs분류']))
 
             # st.dataframe(df_all_bs_약식_누계_병합.style.apply(highlight_survived, axis=1))
 
