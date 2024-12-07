@@ -1400,14 +1400,15 @@ if authentication_status:
                 y=alt.Y('금액:Q'),
                 color=alt.Color('일자:O', scale=alt.Scale(domain=domain_1, range=range_1), legend = None),
                 )
-                text = c__m전체매출.mark_text(
-                    dy = alt.ExprRef(alt.expr.if_(alt.datum.금액 >= 0, -10, 10)),
-                    fontSize=18).encode(text=alt.Text("금액3:Q", format=",.0f"))
-                c_공연매출_ch = alt.layer(c_공연매출, text, data=df_tem_ch).facet(
-                column=alt.Column( '중분류').configure_facet(spacing=50).configure_mark(    
-                        ))
+                # text = c__m전체매출.mark_text(
+                #     dy = alt.ExprRef(alt.expr.if_(alt.datum.금액 >= 0, -10, 10)),
+                #     fontSize=18).encode(text=alt.Text("금액3:Q", format=",.0f"))
+                # c_공연매출_ch = alt.layer(c_공연매출, text, data=df_tem_ch).facet(
+                # column=alt.Column( '중분류').configure_facet(spacing=50).configure_mark(    
+                #         ))
 
-                st.altair_chart(chart+text, use_container_width=True)
+                # st.altair_chart(chart+text, use_container_width=True)
+                st.altair_chart(chart, use_container_width=True)
 
                 # 차트 입력
 
