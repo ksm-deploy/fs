@@ -1499,7 +1499,7 @@ if authentication_status:
             # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.drop(columns='중분류') 
             
-            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index()
+            # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index()
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('세분류')
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('세분류')
 
