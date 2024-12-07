@@ -1489,6 +1489,7 @@ if authentication_status:
             df_all_bs_약식_누계_병합_서식대상= df_all_bs_약식_누계_병합_서식대상.drop(columns=['중분류','bs분류'])
             # df_all_bs_약식_누계_병합_서식대상 = df_all_bs_약식_누계_병합_서식대상.reindex('세분류')
             st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index()
 
 
             # 조건 1은 콜_행사가, 콜_수량합계 열에, 조건 2는 풋_행사가, 풋_수량합계 열에 적용 
@@ -1496,7 +1497,7 @@ if authentication_status:
             st.text("bs세분류요약")
             # st.text("서식대상 필터 테스트_apply후")
             # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
-            # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.drop(columns='중분류') 
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.drop(columns='중분류') 
             
             
             
