@@ -1487,7 +1487,7 @@ if authentication_status:
 
             # st.text("서식대상 필터 테스트")
 
-            # st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
+            st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
 
 
             # 조건 1은 콜_행사가, 콜_수량합계 열에, 조건 2는 풋_행사가, 풋_수량합계 열에 적용 
