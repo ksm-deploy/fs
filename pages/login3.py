@@ -1399,7 +1399,7 @@ if authentication_status:
                 c__m전체매출= alt.Chart(df_손익_전체_누계_trand).mark_bar().encode(
                 x=alt.X('일자:O', title=""),
                 y=alt.Y('금액:Q'),
-                color=alt.Color('일자:O', scale=alt.Scale(domain=domain_1, range=range_1), legend = None),
+                color=alt.Color('금액:Q', scale=alt.Scale(domain=domain_1, range=range_1), legend = None),
                 )
                 # text = c__m전체매출.mark_text(
                 #     dy = alt.ExprRef(alt.expr.if_(alt.datum.금액 >= 0, -10, 10)),
