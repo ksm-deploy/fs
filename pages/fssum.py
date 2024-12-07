@@ -231,7 +231,7 @@ if authentication_status:
             df_tem = df_tem.reindex(cost_SORT2)
             listVars=df_tem.columns.get_level_values(0)
             
-
+            global 비교년, 기준년
             # st.text(비교년도)
             비교년 = str(비교년도)[2:4]+"년"
             # st.text(비교년)
@@ -1402,7 +1402,7 @@ if authentication_status:
             def m_chart(key1, 대상항목):    
                 # 컬럼중 누계컬럼 dorp
                 st.dataframe(key1)
-                key1 = key1.drop([f'{비교년도}',f'{기준년도}', '증감'], axis = 1)
+                key1 = key1.drop([f'{비교년}',f'{기준년}', '증감'], axis = 1)
                 key1 = key1.unstack().reset_index()
                 st.caption('<div style="text-align: right">단위: 백만원</div>', unsafe_allow_html=True)
                 key1 = key1.astype({'회계연도':'str','전기월':'str'})
