@@ -1404,9 +1404,9 @@ if authentication_status:
                 st.session_state.initial_rerun_done = True
                 st.rerun()
 
+        with tab4:
 
-
-
+            st.dataframe(df_all_bs_약식_s, use_container_width=True)
 
 
 
