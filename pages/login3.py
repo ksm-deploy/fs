@@ -1349,26 +1349,32 @@ if authentication_status:
             사업구분2 = st.selectbox("사업구분선택 ",("전체","공연","전시"), index= None)
 
             if 사업구분2 == "전체":
-                df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+                df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+            if 사업구분2 == "공연":
+                df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)    
+            if 사업구분2 == "전시":
+                df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)    
+                
+                
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 # 컬럼중 누계컬럼 dorp
-                df_손익_전체_누계 = df_손익_전체_누계.drop([f'비교년도',f'기준년도', '증감'], axis = 1)
-                st.dataframe(df_손익_전체_누계, use_container_width=True)
-                df_손익_전체_누계 = df_손익_전체_누계.unstack().reset_index()
-                st.dataframe(df_손익_전체_누계, use_container_width=True)
+                df_구분손익누계 = df_구분손익누계.drop([f'비교년도',f'기준년도', '증감'], axis = 1)
+                # st.dataframe(df_손익_전체_누계, use_container_width=True)
+                df_구분손익누계 = df_구분손익누계.unstack().reset_index()
+                # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 
-                df_손익_전체_누계 = df_손익_전체_누계.astype({'회계연도':'str','전기월':'str'})
+                df_구분손익누계 = df_구분손익누계.astype({'회계연도':'str','전기월':'str'})
                 #일자 컬럼 생성 - 타입일자
                 # https://www.marsja.se/combine-year-and-month-columns-in-pandas/
-                df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계['회계연도'].astype(str) + df_손익_전체_누계['전기월'].astype(str), format='%Y%m')
-                st.dataframe(df_손익_전체_누계, use_container_width=True)
+                df_구분손익누계['일자'] = pd.to_datetime(df_구분손익누계['회계연도'].astype(str) + df_손익_전체_누계['전기월'].astype(str), format='%Y%m')
+                # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 
                 # df_손익_전체_누계['일자'] = pd.PeriodIndex(pd.to_datetime(df_손익_전체_누계[['회계연도','전기월']].assign(day=1)),freq='M')
 
                 # df_손익_전체_누계['일자'] = pd.to_datetime(df_손익_전체_누계[['회계연도','전기월']].str.assign(day=1)).dt.to_period('M')
 
-                df_손익_전체_누계['일자'] = df_손익_전체_누계['일자'].dt.strftime("%Y/%m")
-                st.dataframe(df_손익_전체_누계, use_container_width=True)
+                df_구분손익누계['일자'] = df_구분손익누계['일자'].dt.strftime("%Y/%m")
+                st.dataframe(df_구분손익누계, use_container_width=True)
                 
                 # df_손익_전체_누계['일자'].strftime('%Y-%m-%d')
 
