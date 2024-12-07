@@ -1374,7 +1374,7 @@ if authentication_status:
                 # st.dataframe(df_손익_전체_누계_trand)
                 # df_all_bs_약식.rename(columns = {기준일 : 기준일[0:7], 비교일 : 비교일[0:7]}, inplace = True)
                 
-                c__m구분손익= alt.Chart(key1).mark_bar().encode(
+                c__m구분손익= alt.Chart(key1).mark_line().encode(
                 x=alt.X('일자:N', title=""),
                 y=alt.Y('금액:Q',axis=alt.Axis(labels=False)),
                 color=alt.Color('금액',legend=None)
