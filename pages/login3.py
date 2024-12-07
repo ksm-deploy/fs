@@ -1418,7 +1418,7 @@ if authentication_status:
             
             st.info("사업별손익")
             사업구분2 = st.selectbox("사업구분선택 ",("전체","공연","전시"), index= None)
-
+            대상항목 = st.selectbox("항목선택",["매출,사업비,인건비,일반관리비,건물관리비,지급임차료,영업이익"], index= None)
             if 사업구분2 == "전체":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
                 st.dataframe(df_구분손익누계)
@@ -1426,10 +1426,11 @@ if authentication_status:
                 # 멀티셀렉트 
                 # 대상항목 = st.multiselect("대상항목선택",df_손익_전체_누계['중분류'].unique(),default=[])
                 # 단순셀렉트
-                default_ix = '매출'
+                # default_ix = '매출'
                 # ★최초 디폴드 값 설정 추가 필요 study
-                대상항목 = st.selectbox("항목선택",df_구분손익누계['중분류'].unique(), index= None)
+                # 대상항목 = st.selectbox("항목선택",df_구분손익누계['중분류'].unique(), index= None)
                 m_chart(df_손익_전체_누계, 대상항목)
+            
             if 사업구분2 == "공연":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)    
                 m_chart(df_손익_공연2_누계)
