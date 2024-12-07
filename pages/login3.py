@@ -1351,6 +1351,7 @@ if authentication_status:
                 df_구분손익누계 = key1.drop([f'비교년도',f'기준년도', '증감'], axis = 1)
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 df_구분손익누계 = df_구분손익누계.unstack().reset_index()
+                st.text("unstack 테스트")
                 st.dataframe(df_손익_전체_누계, use_container_width=True)
                 
                 df_구분손익누계 = df_구분손익누계.astype({'회계연도':'str','전기월':'str'})
