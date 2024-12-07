@@ -1421,6 +1421,7 @@ if authentication_status:
 
             if 사업구분2 == "전체":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+                st.dataframe(df_구분손익누계)
                 m_chart(df_손익_전체_누계)
             if 사업구분2 == "공연":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)    
