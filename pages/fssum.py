@@ -109,6 +109,10 @@ if authentication_status:
         # 기준년도, 기준월 INPUT BOX 입력 받기
         기준년도 = st.text_input("년도", "2024")
         비교년도 = int(기준년도)-1
+    
+        기준년도2 = 기준년도
+        비교년도2 = 비교년도
+    
     with cols[1]:    
         기준월 = st.text_input("월", 9)
 
@@ -1393,16 +1397,17 @@ if authentication_status:
             # st.text("전체, 공연, 전시별 누적그래프")
             # st.text("전체, 공연, 전시별 월별 트랜드그래프") 
             
+
             global 사업구분2, 대상항목
             def m_chart(key1, 대상항목):    
                 # 컬럼중 누계컬럼 dorp
-                key1 = key1.drop([f'{비교년도}',f'{기준년도}', '증감'], axis = 1)
+                key1 = key1.drop([f'{비교년도2}',f'{기준년도2}', '증감'], axis = 1)
                 key1 = key1.unstack().reset_index()
                 st.caption('<div style="text-align: right">단위: 백만원</div>', unsafe_allow_html=True)
                 key1 = key1.astype({'회계연도':'str','전기월':'str'})
                 #일자 컬럼 생성 - 타입일자
                 # https://www.marsja.se/combine-year-and-month-columns-in-pandas/
-                st.dataframe(key1)
+                # st.dataframe(key1)
                 key1['일자'] = pd.to_datetime(key1['회계연도'].astype(str) + key1['전기월'].astype(str), format='%Y%m')
                 key1['일자'] = key1['일자'].dt.strftime("%Y/%m")
                 # st.dataframe(df_구분손익누계, use_container_width=True)
