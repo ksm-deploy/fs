@@ -1514,7 +1514,7 @@ if authentication_status:
 
             # 조건부 전체행 컬러변경2
             def highlight_survived(s):
-                return ['background-color: green']*len(s) if s.bs분류 else ['background-color: red']*len(s)
+                return ['background-color: green']*len(s) if s.bs분류 =="" else ['background-color: red']*len(s)
             st.dataframe(df_all_bs_약식_누계_병합.style.apply(highlight_survived, axis=0))
 
             # def color_survived(val):
