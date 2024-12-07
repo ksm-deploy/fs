@@ -1381,7 +1381,7 @@ if authentication_status:
                 # color=alt.Color('금액:Q', scale=alt.Scale(domain=domain_1, range=range_1), legend = None),
                 )
                 text = alt.Chart(key1).mark_text(dx=0, dy=0, align='center',baseline='bottom',color='white', size=13).encode(
-                x=alt.X('일자', sort=None, title=""),  y=alt.Y('금액',axis=alt.Axis(labels=False), title=""),  detail='금액', text=alt.Text('금액:Q'))
+                x=alt.X('일자', sort=None, title=""),  y=alt.Y('금액',axis=alt.Axis(labels=False), title=""),  detail='금액', text=alt.Text('금액:Q',format=",.0f"))
                 # st.altair_chart(chart+text, use_container_width=True)
                 # st.altair_chart(c__m구분손익, use_container_width=True)
                 st.altair_chart(c__m구분손익+text, use_container_width=True)
