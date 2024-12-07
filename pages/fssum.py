@@ -1402,6 +1402,7 @@ if authentication_status:
                 key1 = key1.astype({'회계연도':'str','전기월':'str'})
                 #일자 컬럼 생성 - 타입일자
                 # https://www.marsja.se/combine-year-and-month-columns-in-pandas/
+                st.dataframe(key1)
                 key1['일자'] = pd.to_datetime(key1['회계연도'].astype(str) + key1['전기월'].astype(str), format='%Y%m')
                 key1['일자'] = key1['일자'].dt.strftime("%Y/%m")
                 # st.dataframe(df_구분손익누계, use_container_width=True)
