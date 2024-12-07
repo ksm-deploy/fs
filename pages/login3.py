@@ -1500,7 +1500,7 @@ if authentication_status:
                         # lambda _: "background-color: gray; ", subset=(['bs중분류','영업이익'], slice(None))
                     ).format(precision=0, thousands=',')
 
-            df_all_bs_약식_누계_병합.style.hide_index()
+            # df_all_bs_약식_누계_병합.style.hide_index()
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('중분류')
             st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
 
