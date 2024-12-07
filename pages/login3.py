@@ -1391,16 +1391,35 @@ if authentication_status:
             사업구분2 = st.selectbox("사업구분선택 ",("전체","공연","전시"), index= None)
             대상항목 = st.selectbox("항목선택",["매출","사업비","인건비","일반관리비","건물관리비","지급임차료","영업이익"], index= None)
             if 사업구분2 == "전체":
-                df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-                m_chart(df_손익_전체_누계, 대상항목)
-            
+                df_손익_전체_누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+                m_chart(df_손익_전체_누계, 대상항목)           
             if 사업구분2 == "공연":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)    
                 m_chart(df_손익_공연2_누계, 대상항목)
             if 사업구분2 == "전시":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)    
                 m_chart(df_손익_전시_누계, 대상항목)
-            
+
+            if "initial_rerun_done" not in st.session_state:
+                st.session_state.initial_rerun_done = True
+                st.rerun()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 # 차트 입력
 
                 # df[df['LABELS'].str.contains(select_labels)]
@@ -1431,9 +1450,6 @@ if authentication_status:
             
             
             
-            if "initial_rerun_done" not in st.session_state:
-                st.session_state.initial_rerun_done = True
-                st.rerun()
 
             # st.altair_chart(c_공연매출_ch, use_container_width=True)
             # chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
