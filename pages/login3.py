@@ -74,8 +74,8 @@ if authentication_status == None:
     st.error("please enter your name and pw")
 if authentication_status:
     # st.header("hellow")
-    cols = st.columns(7)
-    with cols[6]:
+    cols = st.columns(6)
+    with cols[5]:
         authenticator.logout("logout","main")    
 
     @st.cache_data
