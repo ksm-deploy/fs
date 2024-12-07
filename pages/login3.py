@@ -1376,8 +1376,8 @@ if authentication_status:
                 
                 c__m구분손익= alt.Chart(key1).mark_bar().encode(
                 x=alt.X('일자:N', title=""),
-                y=alt.Y('금액:Q'),
-                color=('금액:Q')
+                y=alt.Y('금액:Q',axis=alt.Axis(labels=False)),
+                color=alt.Color('금액',legend=None)
                 # color=alt.Color('금액:Q', scale=alt.Scale(domain=domain_1, range=range_1), legend = None),
                 )
                 text = alt.Chart(c__m구분손익).mark_text(dx=0, dy=0, align='center',baseline='bottom',color='white', size=13).encode(
