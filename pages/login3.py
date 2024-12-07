@@ -747,25 +747,25 @@ if authentication_status:
 
 
 
-            # st.dataframe(df_all_bs,use_container_width=True)
+            st.dataframe(df_all_bs,use_container_width=True)
             df_all_bs_보고반영 = df_all_bs.groupby(by=['중분류','세분류','bs분류'])['금액2'].sum()
-            # st.text("groupby 1차")
-            # st.dataframe(df_all_bs_보고반영, use_container_width= True)
+            st.text("groupby 1차")
+            st.dataframe(df_all_bs_보고반영, use_container_width= True)
 
             df_all_bs = df_all_bs.reset_index()
             df_all_bs_약식 = df_all_bs.pivot_table(index=['중분류','세분류',"bs분류"], columns=["기준일"], values="금액2",aggfunc="sum")
-            # st.dataframe(df_all_bs_약식,use_container_width=True)
+            st.dataframe(df_all_bs_약식,use_container_width=True)
 
             df_all_bs_약식 = round(df_all_bs_약식/1000000)
-            # st.dataframe(df_all_bs_약식,use_container_width=True)
+            st.dataframe(df_all_bs_약식,use_container_width=True)
 
             기준일 = str(기준년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
             비교일 = str(비교년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
 
-            # st.text(기준일)
-            # st.text(비교일)
+            st.text(기준일)
+            st.text(비교일)
 
-            # st.text("시점기준 불러오기")
+            st.text("시점기준 불러오기")
             listVars_bs=df_all_bs_약식.columns.get_level_values(0)
 
 
@@ -777,25 +777,25 @@ if authentication_status:
             df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
 
 
-            # st.dataframe(df_all_bs_약식, use_container_width=True)
+            st.dataframe(df_all_bs_약식, use_container_width=True)
 
-            # st.text("누계만 발라내기 - bs분류 일치화 필요")
+            st.text("누계만 발라내기 - bs분류 일치화 필요")
 
             df_all_bs_약식_누계 = df_all_bs_약식[[f'{비교일}누계',f'{기준일}누계','증감']]
             df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-01누계', '누계')
 
             df_all_bs_약식_누계_요약 = df_all_bs_약식_누계.groupby(by=['중분류','세분류']).sum([f'{비교일}누계',[f'{기준일}누계']])
             df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_요약
-            # st.text("중분류합계 테스트")
+            st.text("중분류합계 테스트")
 
             df_all_bs_약식_누계_요약.insert(0,'bs분류',"")
-            # st.dataframe(df_all_bs_약식_누계_요약,use_container_width=True)
+            st.dataframe(df_all_bs_약식_누계_요약,use_container_width=True)
 
             # df_all_bs_약식_누계 = round(df_all_bs_약식_누계/1000000)
             df_all_bs_약식_누계_임시 = df_all_bs_약식_누계
-            # st.dataframe(df_all_bs_약식_누계,use_container_width=True)
+            st.dataframe(df_all_bs_약식_누계,use_container_width=True)
 
-            # st.text("중분류합계 테스트 - 합계테이블 병합 테스트")
+            st.text("중분류합계 테스트 - 합계테이블 병합 테스트")
             df_all_bs_약식_누계 = df_all_bs_약식_누계.reset_index()
 
             df_all_bs_약식_누계_요약 = df_all_bs_약식_누계_요약.reset_index()
@@ -806,22 +806,22 @@ if authentication_status:
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.sort_index(axis=0, level=[0,1,2],ascending=[False,False,True])
 
 
-            # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+            st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
 
 
 
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index()
 
 
-            # st.text("t전")
-            # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+            st.text("t전")
+            st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
 
 
             df_all_bs_약식_누계_병합_서식대상 = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']==""]
 
-            # st.text("서식대상 필터 테스트")
+            st.text("서식대상 필터 테스트")
 
-            # st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
+            st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
 
 
             # 조건 1은 콜_행사가, 콜_수량합계 열에, 조건 2는 풋_행사가, 풋_수량합계 열에 적용 
@@ -842,110 +842,110 @@ if authentication_status:
             # 증감내역 작성 테스트
             #row string test
 
-            # 증감텍스트_list = df_all_bs_약식_누계_병합_서식대상['세분류'].unique()
-            # st.text(증감텍스트_list)
+            증감텍스트_list = df_all_bs_약식_누계_병합_서식대상['세분류'].unique()
+            st.text(증감텍스트_list)
 
-            # row_s1 = df_all_bs_약식_누계_병합_서식대상.iloc[0].to_string()
-            # st.text(row_s1)
+            row_s1 = df_all_bs_약식_누계_병합_서식대상.iloc[0].to_string()
+            st.text(row_s1)
 
 
-            # # row_s2 = '   '.join(df_all_bs_약식_누계_병합_서식대상.iloc[0,1:].astype(str).format(precision=0, thousands=',')) -> .format(precision=0, thousands=',')) : error AttributeError: 'Series' object has no attribute 'format'
-            # row_s2 = '   '.join(df_all_bs_약식_누계.iloc[0,1:].astype(str))
-            # st.text(row_s2)
+            # row_s2 = '   '.join(df_all_bs_약식_누계_병합_서식대상.iloc[0,1:].astype(str).format(precision=0, thousands=',')) -> .format(precision=0, thousands=',')) : error AttributeError: 'Series' object has no attribute 'format'
+            row_s2 = '   '.join(df_all_bs_약식_누계.iloc[0,1:].astype(str))
+            st.text(row_s2)
 
-            # ####################################################################################################
-            # st.text("df전체 텍스트 테스트")
-            # df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약
-            # df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_임시.reset_index()
-            # df_all_bs_약식_누계_요약_증감내역['증감내역'] = ""
-            # ##작동###
+            ####################################################################################################
+            st.text("df전체 텍스트 테스트")
+            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약
+            df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_임시.reset_index()
+            df_all_bs_약식_누계_요약_증감내역['증감내역'] = ""
+            ##작동###
 
 
                 
-            # df_all_bs_약식_비유동자산 = df_all_bs_약식_누계_요약_증감대상[df_all_bs_약식_누계_요약_증감대상['세분류']=="비유동자산"]
-            # st.dataframe(df_all_bs_약식_비유동자산,use_container_width=True)
+            df_all_bs_약식_비유동자산 = df_all_bs_약식_누계_요약_증감대상[df_all_bs_약식_누계_요약_증감대상['세분류']=="비유동자산"]
+            st.dataframe(df_all_bs_약식_비유동자산,use_container_width=True)
 
-            # ss = df_all_bs_약식_비유동자산.iloc[:,2:].to_string(header=False, index=False,index_names=False).split('\n')
-            # vals = ['.'.join(ele.split()) for ele in ss]
-
-
-            # st.dataframe(df_all_bs_약식_누계_임시,use_container_width=True)
-            # st.text(ss)
+            ss = df_all_bs_약식_비유동자산.iloc[:,2:].to_string(header=False, index=False,index_names=False).split('\n')
+            vals = ['.'.join(ele.split()) for ele in ss]
 
 
-            # df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.set_index('세분류')
-
-            # df_all_bs_약식_누계_요약_증감내역.at["비유동자산", '증감내역'] = ss
-            # st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
+            st.dataframe(df_all_bs_약식_누계_임시,use_container_width=True)
+            st.text(ss)
 
 
-            # ####################################333
-            # # t_구분 ="유동자산"
+            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.set_index('세분류')
+
+            df_all_bs_약식_누계_요약_증감내역.at["비유동자산", '증감내역'] = ss
+            st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
+
+
+            ####################################333
+            # t_구분 ="유동자산"
                 
-            # df_all_bs_약식_유동자산 = df_all_bs_약식_누계_요약_증감대상[df_all_bs_약식_누계_요약_증감대상['세분류']== "유동자산"]
-            # ss = df_all_bs_약식_유동자산.iloc[:,2:].to_string(header=False, index=False,index_names=False).split('\n')
-            # vals = ['.'.join(ele.split()) for ele in ss]
+            df_all_bs_약식_유동자산 = df_all_bs_약식_누계_요약_증감대상[df_all_bs_약식_누계_요약_증감대상['세분류']== "유동자산"]
+            ss = df_all_bs_약식_유동자산.iloc[:,2:].to_string(header=False, index=False,index_names=False).split('\n')
+            vals = ['.'.join(ele.split()) for ele in ss]
 
-            # st.dataframe(df_all_bs_약식_유동자산,use_container_width=True)
+            st.dataframe(df_all_bs_약식_유동자산,use_container_width=True)
 
-            # df_all_bs_약식_누계_요약_증감내역.at["유동자산", '증감내역'] = ss
+            df_all_bs_약식_누계_요약_증감내역.at["유동자산", '증감내역'] = ss
 
-            # ########################################
-            # st.markdown(df_all_bs_약식_누계_요약_증감내역.to_html(escape=False),unsafe_allow_html=True)
+            ########################################
+            st.markdown(df_all_bs_약식_누계_요약_증감내역.to_html(escape=False),unsafe_allow_html=True)
 
-            # df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.reset_index()
+            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.reset_index()
 
-            # df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.astype({'2023-09누계':'int'}) 
-            # st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
+            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.astype({'2023-09누계':'int'}) 
+            st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
 
-            # df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-', '.')
-            # df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('누계', '')
+            df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-', '.')
+            df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('누계', '')
 
-            # df_tt = df_all_bs_약식_누계
-            # st.text("xddddd")
-            # st.dataframe(df_tt,use_container_width=True)
+            df_tt = df_all_bs_약식_누계
+            st.text("xddddd")
+            st.dataframe(df_tt,use_container_width=True)
 
-            # st.text("new_data test")
-            # df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('-', '')
-            # df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('누계', '')
-            # df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('202409', '_2024년')
-            # df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('202309', '_2023년')
+            st.text("new_data test")
+            df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('-', '')
+            df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('누계', '')
+            df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('202409', '_2024년')
+            df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('202309', '_2023년')
 
-            # df = df_all_bs_약식_누계_요약_증감내역
-            # st.dataframe(df)
-            # st.text(df.columns[5])
+            df = df_all_bs_약식_누계_요약_증감내역
+            st.dataframe(df)
+            st.text(df.columns[5])
 
-            # tt = str(df.columns[4])
-            # st.text(tt)
-            # df_all_bs_약식 = df_all_bs_약식.reset_index()
-
-
-            # st.text("test3")
-            # df = pd.DataFrame(df_all_bs_약식_누계_요약_증감내역)
-            # df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
-
-            # df_all_bs_약식 = df_all_bs_약식.sort_values(기준일,ascending=False)
+            tt = str(df.columns[4])
+            st.text(tt)
+            df_all_bs_약식 = df_all_bs_약식.reset_index()
 
 
-            # #자산 sort
+            st.text("test3")
+            df = pd.DataFrame(df_all_bs_약식_누계_요약_증감내역)
+            df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
 
-            # # df_all_bs_약식.reindex()
-            # df_all_bs_약식_s = df_all_bs_약식.reset_index()
-
-            # st.text("요약BS")
-
-            # st.dataframe(df_all_bs_약식_s, use_container_width=True)
+            df_all_bs_약식 = df_all_bs_약식.sort_values(기준일,ascending=False)
 
 
+            #자산 sort
 
-            # st.dataframe(df_all_bs_약식_s)
+            # df_all_bs_약식.reindex()
+            df_all_bs_약식_s = df_all_bs_약식.reset_index()
+
+            st.text("요약BS")
+
+            st.dataframe(df_all_bs_약식_s, use_container_width=True)
 
 
-            # df_all_bs_약식.rename(columns = {기준일 : 기준일[0:7], 비교일 : 비교일[0:7]}, inplace = True)
-            # st.dataframe(df_all_bs_약식,use_container_width=True)
+
+            st.dataframe(df_all_bs_약식_s)
 
 
-            # st.dataframe(df_all_bs_약식,use_container_width=True)
+            df_all_bs_약식.rename(columns = {기준일 : 기준일[0:7], 비교일 : 비교일[0:7]}, inplace = True)
+            st.dataframe(df_all_bs_약식,use_container_width=True)
+
+
+            st.dataframe(df_all_bs_약식,use_container_width=True)
     # sc_t_2 = f"{streamlit_js_eval(js_expressions='screen.width', key = 'SCR')}"
     # sc_t = f"{streamlit_js_eval(js_expressions='screen.width', key1 = 'SCR')}"
     
@@ -1413,23 +1413,23 @@ if authentication_status:
 
 
 
-            st.dataframe(df_all_bs,use_container_width=True)
+            # st.dataframe(df_all_bs,use_container_width=True)
             df_all_bs_보고반영 = df_all_bs.groupby(by=['중분류','세분류','bs분류'])['금액2'].sum()
-            st.text("groupby 1차")
-            st.dataframe(df_all_bs_보고반영, use_container_width= True)
+            # st.text("groupby 1차")
+            # st.dataframe(df_all_bs_보고반영, use_container_width= True)
 
             df_all_bs = df_all_bs.reset_index()
             df_all_bs_약식 = df_all_bs.pivot_table(index=['중분류','세분류',"bs분류"], columns=["기준일"], values="금액2",aggfunc="sum")
-            st.dataframe(df_all_bs_약식,use_container_width=True)
+            # st.dataframe(df_all_bs_약식,use_container_width=True)
 
             df_all_bs_약식 = round(df_all_bs_약식/1000000)
-            st.dataframe(df_all_bs_약식,use_container_width=True)
+            # st.dataframe(df_all_bs_약식,use_container_width=True)
 
             기준일 = str(기준년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
             비교일 = str(비교년도) + "-" + str(기준월.rjust(2,'0')) + "-" + "01"
 
-            st.text(기준일)
-            st.text(비교일)
+            # st.text(기준일)
+            # st.text(비교일)
 
             st.text("시점기준 불러오기")
             listVars_bs=df_all_bs_약식.columns.get_level_values(0)
@@ -1443,7 +1443,7 @@ if authentication_status:
             df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
 
 
-            st.dataframe(df_all_bs_약식, use_container_width=True)
+            # st.dataframe(df_all_bs_약식, use_container_width=True)
 
             st.text("누계만 발라내기 - bs분류 일치화 필요")
 
@@ -1452,16 +1452,16 @@ if authentication_status:
 
             df_all_bs_약식_누계_요약 = df_all_bs_약식_누계.groupby(by=['중분류','세분류']).sum([f'{비교일}누계',[f'{기준일}누계']])
             df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_요약
-            st.text("중분류합계 테스트")
+            # st.text("중분류합계 테스트")
 
             df_all_bs_약식_누계_요약.insert(0,'bs분류',"")
-            st.dataframe(df_all_bs_약식_누계_요약,use_container_width=True)
+            # st.dataframe(df_all_bs_약식_누계_요약,use_container_width=True)
 
             # df_all_bs_약식_누계 = round(df_all_bs_약식_누계/1000000)
             df_all_bs_약식_누계_임시 = df_all_bs_약식_누계
-            st.dataframe(df_all_bs_약식_누계,use_container_width=True)
+            # st.dataframe(df_all_bs_약식_누계,use_container_width=True)
 
-            st.text("중분류합계 테스트 - 합계테이블 병합 테스트")
+            # st.text("중분류합계 테스트 - 합계테이블 병합 테스트")
             df_all_bs_약식_누계 = df_all_bs_약식_누계.reset_index()
 
             df_all_bs_약식_누계_요약 = df_all_bs_약식_누계_요약.reset_index()
@@ -1472,28 +1472,28 @@ if authentication_status:
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.sort_index(axis=0, level=[0,1,2],ascending=[False,False,True])
 
 
-            st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+            # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
 
 
 
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.reset_index()
 
 
-            st.text("t전")
-            st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
+            # st.text("t전")
+            # st.dataframe(df_all_bs_약식_누계_병합,use_container_width=True)
 
 
             df_all_bs_약식_누계_병합_서식대상 = df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류']==""]
 
-            st.text("서식대상 필터 테스트")
+            # st.text("서식대상 필터 테스트")
 
-            st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
+            # st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
 
 
             # 조건 1은 콜_행사가, 콜_수량합계 열에, 조건 2는 풋_행사가, 풋_수량합계 열에 적용 
 
 
-            st.text("서식대상 필터 테스트_apply후")
+            # st.text("서식대상 필터 테스트_apply후")
             df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
                         lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합_서식대상[df_all_bs_약식_누계_병합_서식대상['bs분류'] ==""].index,slice(None))
                         # lambda _: "background-color: gray; ", subset=(['bs중분류','영업이익'], slice(None))
@@ -1508,41 +1508,110 @@ if authentication_status:
             # 증감내역 작성 테스트
             #row string test
 
-            증감텍스트_list = df_all_bs_약식_누계_병합_서식대상['세분류'].unique()
-            st.text(증감텍스트_list)
+            # 증감텍스트_list = df_all_bs_약식_누계_병합_서식대상['세분류'].unique()
+            # st.text(증감텍스트_list)
 
-            row_s1 = df_all_bs_약식_누계_병합_서식대상.iloc[0].to_string()
-            st.text(row_s1)
+            # row_s1 = df_all_bs_약식_누계_병합_서식대상.iloc[0].to_string()
+            # st.text(row_s1)
 
 
-            # row_s2 = '   '.join(df_all_bs_약식_누계_병합_서식대상.iloc[0,1:].astype(str).format(precision=0, thousands=',')) -> .format(precision=0, thousands=',')) : error AttributeError: 'Series' object has no attribute 'format'
-            row_s2 = '   '.join(df_all_bs_약식_누계.iloc[0,1:].astype(str))
-            st.text(row_s2)
+            # # row_s2 = '   '.join(df_all_bs_약식_누계_병합_서식대상.iloc[0,1:].astype(str).format(precision=0, thousands=',')) -> .format(precision=0, thousands=',')) : error AttributeError: 'Series' object has no attribute 'format'
+            # row_s2 = '   '.join(df_all_bs_약식_누계.iloc[0,1:].astype(str))
+            # st.text(row_s2)
 
-            ####################################################################################################
-            st.text("df전체 텍스트 테스트")
-            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약
-            df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_임시.reset_index()
-            df_all_bs_약식_누계_요약_증감내역['증감내역'] = ""
-            ##작동###
+            # ####################################################################################################
+            # st.text("df전체 텍스트 테스트")
+            # df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약
+            # df_all_bs_약식_누계_요약_증감대상 = df_all_bs_약식_누계_임시.reset_index()
+            # df_all_bs_약식_누계_요약_증감내역['증감내역'] = ""
+            # ##작동###
 
 
                 
-            df_all_bs_약식_비유동자산 = df_all_bs_약식_누계_요약_증감대상[df_all_bs_약식_누계_요약_증감대상['세분류']=="비유동자산"]
-            st.dataframe(df_all_bs_약식_비유동자산,use_container_width=True)
+            # df_all_bs_약식_비유동자산 = df_all_bs_약식_누계_요약_증감대상[df_all_bs_약식_누계_요약_증감대상['세분류']=="비유동자산"]
+            # st.dataframe(df_all_bs_약식_비유동자산,use_container_width=True)
 
-            ss = df_all_bs_약식_비유동자산.iloc[:,2:].to_string(header=False, index=False,index_names=False).split('\n')
-            vals = ['.'.join(ele.split()) for ele in ss]
-
-
-            st.dataframe(df_all_bs_약식_누계_임시,use_container_width=True)
-            st.text(ss)
+            # ss = df_all_bs_약식_비유동자산.iloc[:,2:].to_string(header=False, index=False,index_names=False).split('\n')
+            # vals = ['.'.join(ele.split()) for ele in ss]
 
 
-            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.set_index('세분류')
+            # st.dataframe(df_all_bs_약식_누계_임시,use_container_width=True)
+            # st.text(ss)
 
-            df_all_bs_약식_누계_요약_증감내역.at["비유동자산", '증감내역'] = ss
-            st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
+
+            # df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.set_index('세분류')
+
+            # df_all_bs_약식_누계_요약_증감내역.at["비유동자산", '증감내역'] = ss
+            # st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
+
+
+            # ####################################333
+            # # t_구분 ="유동자산"
+                
+            # df_all_bs_약식_유동자산 = df_all_bs_약식_누계_요약_증감대상[df_all_bs_약식_누계_요약_증감대상['세분류']== "유동자산"]
+            # ss = df_all_bs_약식_유동자산.iloc[:,2:].to_string(header=False, index=False,index_names=False).split('\n')
+            # vals = ['.'.join(ele.split()) for ele in ss]
+
+            # st.dataframe(df_all_bs_약식_유동자산,use_container_width=True)
+
+            # df_all_bs_약식_누계_요약_증감내역.at["유동자산", '증감내역'] = ss
+
+            # ########################################
+            # st.markdown(df_all_bs_약식_누계_요약_증감내역.to_html(escape=False),unsafe_allow_html=True)
+
+            # df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.reset_index()
+
+            # df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.astype({'2023-09누계':'int'}) 
+            # st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
+
+            # df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-', '.')
+            # df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('누계', '')
+
+            # df_tt = df_all_bs_약식_누계
+            # st.text("xddddd")
+            # st.dataframe(df_tt,use_container_width=True)
+
+            # st.text("new_data test")
+            # df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('-', '')
+            # df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('누계', '')
+            # df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('202409', '_2024년')
+            # df_all_bs_약식_누계_요약_증감내역.columns = df_all_bs_약식_누계_요약_증감내역.columns.str.replace('202309', '_2023년')
+
+            # df = df_all_bs_약식_누계_요약_증감내역
+            # st.dataframe(df)
+            # st.text(df.columns[5])
+
+            # tt = str(df.columns[4])
+            # st.text(tt)
+            # df_all_bs_약식 = df_all_bs_약식.reset_index()
+
+
+            # st.text("test3")
+            # df = pd.DataFrame(df_all_bs_약식_누계_요약_증감내역)
+            # df_all_bs_약식 = df_all_bs_약식.sort_index(ascending=False)
+
+            # df_all_bs_약식 = df_all_bs_약식.sort_values(기준일,ascending=False)
+
+
+            # #자산 sort
+
+            # # df_all_bs_약식.reindex()
+            # df_all_bs_약식_s = df_all_bs_약식.reset_index()
+
+            # st.text("요약BS")
+
+            # st.dataframe(df_all_bs_약식_s, use_container_width=True)
+
+
+
+            # st.dataframe(df_all_bs_약식_s)
+
+
+            # df_all_bs_약식.rename(columns = {기준일 : 기준일[0:7], 비교일 : 비교일[0:7]}, inplace = True)
+            # st.dataframe(df_all_bs_약식,use_container_width=True)
+
+
+            # st.dataframe(df_all_bs_약식,use_container_width=True)
 
 
 
