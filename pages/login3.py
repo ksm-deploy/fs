@@ -1352,7 +1352,7 @@ if authentication_status:
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 key1 = key1.unstack().reset_index()
                 st.text("unstack 테스트")
-                st.dataframe(key1, use_container_width=True)
+                # st.dataframe(key1, use_container_width=True)
                 
                 key1 = key1.astype({'회계연도':'str','전기월':'str'})
                 #일자 컬럼 생성 - 타입일자
@@ -1423,7 +1423,7 @@ if authentication_status:
             대상항목 = st.selectbox("항목선택",["매출","사업비","인건비","일반관리비","건물관리비","지급임차료","영업이익"], index= None)
             if 사업구분2 == "전체":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-                st.dataframe(df_구분손익누계)
+                # st.dataframe(df_구분손익누계)
                 # st.text("항목을 선택하시오")
                 # 멀티셀렉트 
                 # 대상항목 = st.multiselect("대상항목선택",df_손익_전체_누계['중분류'].unique(),default=[])
