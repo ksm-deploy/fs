@@ -1344,17 +1344,6 @@ if authentication_status:
             # st.text("전체, 공연, 전시별 누적그래프")
             # st.text("전체, 공연, 전시별 월별 트랜드그래프") 
             
-            
-            st.info("사업별손익")
-            사업구분2 = st.selectbox("사업구분선택 ",("전체","공연","전시"), index= None)
-
-            if 사업구분2 == "전체":
-                df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
-            if 사업구분2 == "공연":
-                df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)    
-            if 사업구분2 == "전시":
-                df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)    
-                
             def 차트():    
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 # 컬럼중 누계컬럼 dorp
@@ -1426,6 +1415,20 @@ if authentication_status:
                 # st.altair_chart(chart+text, use_container_width=True)
                 st.altair_chart(c__m구분손익, use_container_width=True)
 
+            
+            st.info("사업별손익")
+            사업구분2 = st.selectbox("사업구분선택 ",("전체","공연","전시"), index= None)
+
+            if 사업구분2 == "전체":
+                df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
+                차트()
+            if 사업구분2 == "공연":
+                df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)    
+                차트()
+            if 사업구분2 == "전시":
+                df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전시)    
+                차트()
+            
                 # 차트 입력
 
                 # df[df['LABELS'].str.contains(select_labels)]
