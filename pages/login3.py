@@ -1487,6 +1487,7 @@ if authentication_status:
 
             # st.text("bs요약")
             df_all_bs_약식_누계_병합_서식대상= df_all_bs_약식_누계_병합_서식대상.drop(columns=['중분류','bs분류'])
+            df_all_bs_약식_누계_병합_서식대상 = df_all_bs_약식_누계_병합_서식대상.set_index('세분류')
             st.dataframe(df_all_bs_약식_누계_병합_서식대상, use_container_width= True)
 
 
