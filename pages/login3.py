@@ -1344,7 +1344,7 @@ if authentication_status:
             # st.text("전체, 공연, 전시별 누적그래프")
             # st.text("전체, 공연, 전시별 월별 트랜드그래프") 
             
-            def m_chart(key1):    
+            def m_chart(key1, 대상항목):    
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
                 # 컬럼중 누계컬럼 dorp
                 df_구분손익누계 = key1.drop([f'비교년도',f'기준년도', '증감'], axis = 1)
@@ -1378,20 +1378,20 @@ if authentication_status:
 
 
                 # 년월까지만 보이게 컬럼변경
-                st.text("일자_년월 테스트")
+                # st.text("일자_년월 테스트")
                 # st.dataframe(df_손익_전체_누계, use_container_width=True)
 
                 
                 # 중분류_전체 = 
                 # st.text(중분류_전체)
-                st.text("항목을 선택하시오")
-                # 멀티셀렉트 
-                # 대상항목 = st.multiselect("대상항목선택",df_손익_전체_누계['중분류'].unique(),default=[])
-                # 단순셀렉트
-                default_ix = '매출'
-                # ★최초 디폴드 값 설정 추가 필요 study
+                # st.text("항목을 선택하시오")
+                # # 멀티셀렉트 
+                # # 대상항목 = st.multiselect("대상항목선택",df_손익_전체_누계['중분류'].unique(),default=[])
+                # # 단순셀렉트
+                # default_ix = '매출'
+                # # ★최초 디폴드 값 설정 추가 필요 study
 
-                대상항목 = st.selectbox("항목선택",df_구분손익누계['중분류'].unique(), index= None)
+                # 대상항목 = st.selectbox("항목선택",df_구분손익누계['중분류'].unique(), index= None)
                 #멀티셀렉트 데이터프레임 연동
                 # df_손익_전체_누계_trand = df_손익_전체_누계[df_손익_전체_누계['중분류'].isin(대상항목)]
                 df_구분손익누계_trand = df_구분손익누계[df_구분손익누계['중분류'] ==대상항목]
@@ -1422,7 +1422,14 @@ if authentication_status:
             if 사업구분2 == "전체":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_전체)
                 st.dataframe(df_구분손익누계)
-                m_chart(df_손익_전체_누계)
+                st.text("항목을 선택하시오")
+                # 멀티셀렉트 
+                # 대상항목 = st.multiselect("대상항목선택",df_손익_전체_누계['중분류'].unique(),default=[])
+                # 단순셀렉트
+                default_ix = '매출'
+                # ★최초 디폴드 값 설정 추가 필요 study
+                대상항목 = st.selectbox("항목선택",df_구분손익누계['중분류'].unique(), index= None)
+                m_chart(df_손익_전체_누계, 대상항목)
             if 사업구분2 == "공연":
                 df_구분손익누계 = templit("월별손익", df_all, df_tem , cost_SORT1, cost_SORT2, cond_공연)    
                 m_chart(df_손익_공연2_누계)
