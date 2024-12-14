@@ -107,14 +107,22 @@ if authentication_status:
     with cols[0]:
 
         # 기준년도, 기준월 INPUT BOX 입력 받기
-        기준년도 = st.text_input("년도", "2024")
+        # 기준년도 = st.text_input("년도", "2024")
+        기준년도 = st.radio(
+        "기준년도 👉",
+        key="visibility",
+        options=["2024", "2023", "2022"],)
+        # 기준년도 = st.selectbox("기준년도",("2016", "2017", "2018","2019","2020","2021","2022","2023","2024"),index=-1)
+
         비교년도 = int(기준년도)-1
     
         # 기준년도2 = 기준년도
         # 비교년도2 = 비교년도
     
     with cols[1]:    
-        기준월 = st.text_input("월", 9)
+        # 기준월 = st.text_input("월", 9)
+        # 초기 값은 max년월로 변수화 필요
+        기준월 = st.selectbox("기준월",("1", "2", "3","4","5","6","7","8","9","10","11","12"),index=8)
 
     targets =[f"{비교년도}",f"{기준년도}"]
 
@@ -260,7 +268,7 @@ if authentication_status:
 
     ##############이후 function 앞으로 배치
 
-    domain_1 =['2023', '2024', '전년비']
+    domain_1 =[f'{비교년도}', f'{기준년도}', '전년비']
     range_1 = ['gray', 'white', 'red']
 
 
@@ -289,7 +297,7 @@ if authentication_status:
                 df_tem_ch = df_tem_ch.pivot_table(index=['중분류','손익구분','코스트센터내역'], columns=["회계연도"], values="금액3",aggfunc="sum")
             
             
-            df_tem_ch['전년비'] = df_tem_ch['2024'] - df_tem_ch['2023']
+            df_tem_ch['전년비'] = df_tem_ch[f'{기준년도}'] - df_tem_ch[f'{비교년도}']
             df_tem_ch = df_tem_ch.stack().reset_index()
             df_tem_ch.rename(columns={0:'금액3'}, inplace=True)
 
@@ -569,7 +577,7 @@ if authentication_status:
 
             col1b, col2b = st.columns(2)
             with col1b:
-                st.error("서머리")
+                st.error("Summury")
                 col1, col2, col3 = st.columns(3)
                 # st.text("11")
                 with col1:
@@ -641,7 +649,7 @@ if authentication_status:
                     st.metric("임차료제외영업이익", f"{임차제외_영업이익_전시:,.0f}",f"{임차제외_영업이익_증감_전시:,.0f}")
 
                 with col2b:
-                    st.error(f"{기준년도}년 손익 Cash영향 (단위:억원)")
+                    st.error(f"{기준년도}년 손익 Cash영향 (누계, 단위:억원)")
                     df_all_wf = df_all[df_all['대분류']=='손익']
                     df_all_wf = df_all_wf.loc[(df_all_wf['회계연도'].isin(targets)) & (df_all_wf['전기월']<=int(기준월))]
 
@@ -656,11 +664,11 @@ if authentication_status:
 
                     def 금액작업(row):
                         if row['중분류'] == '매출':
-                            val = round(row['2024']/100000000)
+                            val = round(row[f'{기준년도}']/100000000)
                         elif row['중분류'] == '기부금':
-                            val = round(row['2024']/100000000)
+                            val = round(row[f'{기준년도}']/100000000)
                         else :
-                            val = round(row['2024']/100000000*-1)
+                            val = round(row[f'{기준년도}']/100000000*-1)
 
                         return val
 
@@ -675,14 +683,14 @@ if authentication_status:
                     fig = go.Figure(go.Waterfall(
                         name ="손익흐름", orientation='v',
                         x= df_tem.index, y=df_tem[f'{기준년도}_N'], 
-                        text=df_tem['2024_N'],textposition='outside',
+                        text=df_tem[f'{기준년도}_N'],textposition='outside',
                         texttemplate='%{text:,}',
                         increasing={'marker':{"color":"White"}},
                         decreasing={'marker':{"color":"#967078"}},
                         
                     ))
                     # https://docs.streamlit.io/develop/api-reference/widgets/st.color_picker
-                    fig.update_layout(height=800,title_text=f"전체현금흐름 영향 : {cashflow}억",
+                    fig.update_layout(height=800,title_text=f"전체현금흐름 영향 : {round(cashflow,1)}억",
                     
                     font=dict(
                         size=18,  # Set the font size here
@@ -842,7 +850,7 @@ if authentication_status:
             # st.text("중분류합계 테스트")
 
             df_all_bs_약식_누계_요약.insert(0,'bs분류',"")
-            # st.dataframe(df_all_bs_약식_누계_요약,use_container_width=True)
+            st.dataframe(df_all_bs_약식_누계_요약,use_container_width=True)
 
             # df_all_bs_약식_누계 = round(df_all_bs_약식_누계/1000000)
             df_all_bs_약식_누계_임시 = df_all_bs_약식_누계
@@ -948,7 +956,12 @@ if authentication_status:
 
             df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.reset_index()
 
-            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.astype({'2023-09누계':'int'}) 
+            # ★기준년월 f함수로 처리가능하도록 필요
+            비교테스트 = f'{비교일}누계'.replace('-01누계', '누계')
+            # df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-01누계', '누계')
+
+            df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.astype({f'{비교테스트}':'int'}) 
+            # df_all_bs_약식_누계_요약_증감내역 = df_all_bs_약식_누계_요약_증감내역.astype({'2023-09누계':'int'}) 
             # st.dataframe(df_all_bs_약식_누계_요약_증감내역,use_container_width=True)
 
             df_all_bs_약식_누계.columns = df_all_bs_약식_누계.columns.str.replace('-', '.')

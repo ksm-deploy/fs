@@ -48,6 +48,8 @@ page_icon = "Active",
 layout="wide"
 )
 
+st.sidebar.success('Select a page above')
+
 # <META http-equiv="imagetoolbar" content="no">
 # st.header("test")
 hide_streamlit_style = """
