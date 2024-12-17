@@ -1338,11 +1338,11 @@ if authentication_status:
 
             def 금액작업(row):
                 if row['중분류'] == '매출':
-                    val = round(row['2024']/100000000)
+                    val = round(row[f'{기준년도}']/100000000)
                 elif row['중분류'] == '기부금':
-                    val = round(row['2024']/100000000)
+                    val = round(row[f'{기준년도}']/100000000)
                 else :
-                    val = round(row['2024']/100000000*-1)
+                    val = round(row[f'{기준년도}']/100000000*-1)
 
                 return val
 
@@ -1424,6 +1424,7 @@ if authentication_status:
                 # st.dataframe(key1)
                 key1['일자'] = pd.to_datetime(key1['회계연도'].astype(str) + key1['전기월'].astype(str), format='%Y%m')
                 key1['일자'] = key1['일자'].dt.strftime("%Y/%m")
+                
                 # st.dataframe(df_구분손익누계, use_container_width=True)
                 
                 # 중분류_전체 = 
