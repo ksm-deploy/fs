@@ -1375,7 +1375,7 @@ if authentication_status:
                 st.info(f"지출 : {지출}") # 디자인 필요
         # st.text(매출)
 
-            st.dataframe(df_tem)
+            # st.dataframe(df_tem)
             chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
             x=alt.X('중분류', sort=None, title=""), y=alt.Y(f'{기준년도}_N',axis=alt.Axis(labels=False)),  color=alt.Color(f'{기준년도}_N',legend=None))
         # ,trendline="ols"
