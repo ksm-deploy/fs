@@ -1377,11 +1377,11 @@ if authentication_status:
 
             st.dataframe(df_tem)
             chart = alt.Chart(df_tem, title=f'자금수지효과 : {손익효과}억').properties(height=600).mark_bar().encode(
-            x=alt.X('중분류', sort=None, title=""), y=alt.Y(f'{기준년도}_N',axis=alt.Axis(labels=False)),  color=alt.Color('2024_N',legend=None))
+            x=alt.X('중분류', sort=None, title=""), y=alt.Y(f'{기준년도}_N',axis=alt.Axis(labels=False)),  color=alt.Color(f'{기준년도}_N',legend=None))
         # ,trendline="ols"
             text = alt.Chart(df_tem).mark_text(dx=0, dy=0, align='center',baseline='bottom',color='white', size=13).encode(
             # x=alt.X('일차', sort=None), y='일평균관람객',  detail='일평균관람객', text=alt.Text('일평균관람객:Q'))
-            x=alt.X('중분류', sort=None, title=""),  y=alt.Y(f'{기준년도}_N',axis=alt.Axis(labels=False), title=""),  detail='2024_N', text=alt.Text('2024_N:Q'))
+            x=alt.X('중분류', sort=None, title=""),  y=alt.Y(f'{기준년도}_N',axis=alt.Axis(labels=False), title=""),  detail=f'{기준년도}_N', text=alt.Text(f'{기준년도}_N:Q'))
 
     # chart.update_layout(font=dict(size=14))
         
