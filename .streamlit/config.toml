@@ -9,4 +9,4 @@ base="dark"
 font = "Noto Sans KR"
 
 [deprecation]
-showPyplotGlobalUse = False
+showPyplotGlobalUse = false
