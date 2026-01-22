@@ -56,41 +56,58 @@ st.markdown("<h1 style='text-align: center; color: white;'>Financial Summary Rep
 names = ["koo","sun","myung"]
 usernames = ["kkoo","sun","myung"]
 
-file_path = Path(__file__).parent / "hashed_pw.pkl"
+# 간단한 비밀번호 인증 (해시 없이)
+password_dict = {
+    "kkoo": "a1234",
+    "sun": "a1234",
+    "myung": "a1234"
+}
 
-with file_path.open("rb") as file:
-    hashed_passwords = pickle.load(file)
+# 로그인 상태를 session_state에 저장
+if 'logged_in' not in st.session_state:
+    st.session_state.logged_in = False
+    st.session_state.username = None
 
-
-authenticator = stauth.Authenticate(names, usernames, hashed_passwords, "FINANCIAL Data Dashboard", "addfd", cookie_expiry_days=30)
-# stauth.authenticate 오류 해결
-# https://stackoverflow.com/questions/73152424/streamlit-authenticate-init-got-multiple-values-for-argument-cookie-expir
-name, authentication_status, username = authenticator.login("Login", "main")
-
-
-if authentication_status == False:
-    st.error("error check")
-if authentication_status == None:
-    st.error("please enter your name and pw")
-if authentication_status:
+# 로그인 UI
+if not st.session_state.logged_in:
+    st.title("로그인")
+    login_username = st.text_input("Username", key="login_username")
+    login_password = st.text_input("Password", type="password", key="login_password")
+    
+    if st.button("로그인", key="login_button"):
+        if login_username in password_dict and password_dict[login_username] == login_password:
+            st.session_state.logged_in = True
+            st.session_state.username = login_username
+            st.success(f"로그인 성공! {login_username}님 환영합니다.")
+            st.rerun()
+        else:
+            st.error("Username 또는 Password가 잘못되었습니다.")
+else:
+    # 로그인 후 처리
+    name = st.session_state.username
+    authentication_status = True
+    username = st.session_state.username
     # st.header("hellow")
     cols = st.columns(14)
     with cols[13]:
-        authenticator.logout("logout","main")    
+        if st.button("로그아웃"):
+            st.session_state.logged_in = False
+            st.session_state.username = None
+            st.success("로그아웃 되었습니다.")
+            st.rerun()
 
     @st.cache_data
     # 엑셀 파일 읽어오기 함수
-
     def get_data_from_excel():
-            file_path2 = Path(__file__).parent / "fs.xlsx"
-            df_all = pd.read_excel(
-                        io = file_path2,
-                        engine = 'openpyxl',
-                        sheet_name ='T',
-                        skiprows = 0,
-                        usecols='a:m'
-            )
-            return df_all
+        file_path2 = Path(__file__).parent / "fs.xlsx"
+        df_all = pd.read_excel(
+                    io = file_path2,
+                    engine = 'openpyxl',
+                    sheet_name ='T',
+                    skiprows = 0,
+                    usecols='a:m'
+        )
+        return df_all
 
     get_data_from_excel()
     df_all = get_data_from_excel()
@@ -122,10 +139,10 @@ if authentication_status:
     with cols[1]:    
         # 기준월 = st.text_input("월", 9)
         # 초기 값은 max년월로 변수화 필요
-        기준월 = st.selectbox("기준월",("1", "2", "3","4","5","6","7","8","9","10","11","12"),index=8)
+        기준월_select = st.selectbox("기준월",("1", "2", "3","4","5","6","7","8","9","10","11","12"),index=8)
+        기준월 = str(기준월_select)  # 문자열로 명시적 변환
 
     targets =[f"{비교년도}",f"{기준년도}"]
-
 
     st.markdown("------")
 
@@ -889,10 +906,11 @@ if authentication_status:
 
 
             # st.text("서식대상 필터 테스트_apply후")
-            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
+            df_all_bs_약식_누계_병합_style = df_all_bs_약식_누계_병합.style.applymap(
                         lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합_서식대상[df_all_bs_약식_누계_병합_서식대상['bs분류'] ==""].index,slice(None))
                         # lambda _: "background-color: gray; ", subset=(['bs중분류','영업이익'], slice(None))
-                    ).format(precision=0, thousands=',')
+                    ).format(lambda x: f'{x:,.0f}' if isinstance(x, (int, float)) and x == x else x)
+            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합_style
 
 
             st.dataframe(df_all_bs_약식_누계_병합, hide_index=True,use_container_width=True)
@@ -1575,19 +1593,6 @@ if authentication_status:
             # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('세분류')
 
 
-
-            # 조건부 전체행컬러 변경
-            # df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.set_index('세분류')
-            df_all_bs_약식_누계_병합 = df_all_bs_약식_누계_병합.style.applymap(
-                        lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""].index,slice(None))
-                        # lambda x: f"background-color: gray; ", subset = (df_all_bs_약식_누계_병합[df_all_bs_약식_누계_병합['bs분류'] ==""],slice(None))
-                        
-
-                    ).format(precision=0, thousands=',')
-            # st.dataframe(df_all_bs_약식_누계_병합,hide_index=True, width=500)
-            st.dataframe(df_all_bs_약식_누계_병합,hide_index=True,use_container_width=True)
-
-            #★ style bar study 필요
 
             # 조건부 전체행 컬러변경2
             # def highlight_survived(s):
