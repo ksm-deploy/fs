@@ -681,12 +681,19 @@ else:
 
                     def 금액작업(row, 년도):
                         col_name = str(년도)
-                        if row['중분류'] == '매출':
-                            val = round(row[col_name]/100000000) if col_name in row.index else 0
-                        elif row['중분류'] == '기부금':
-                            val = round(row[col_name]/100000000) if col_name in row.index else 0
-                        else :
-                            val = round(row[col_name]/100000000*-1) if col_name in row.index else 0
+                        try:
+                            값 = row.get(col_name, 0)
+                            if pd.isna(값):
+                                값 = 0
+                            
+                            if row['중분류'] == '매출':
+                                val = round(값/100000000)
+                            elif row['중분류'] == '기부금':
+                                val = round(값/100000000)
+                            else :
+                                val = round(값/100000000*-1)
+                        except:
+                            val = 0
 
                         return val
 
