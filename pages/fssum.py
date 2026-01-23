@@ -679,18 +679,19 @@ else:
                     df_tem[f'{기준년도}_N'] = 0
                     df_tem = df_tem.reset_index()
 
-                    def 금액작업(row):
+                    def 금액작업(row, 년도):
+                        col_name = str(년도)
                         if row['중분류'] == '매출':
-                            val = round(row[f'{기준년도}']/100000000)
+                            val = round(row[col_name]/100000000) if col_name in row.index else 0
                         elif row['중분류'] == '기부금':
-                            val = round(row[f'{기준년도}']/100000000)
+                            val = round(row[col_name]/100000000) if col_name in row.index else 0
                         else :
-                            val = round(row[f'{기준년도}']/100000000*-1)
+                            val = round(row[col_name]/100000000*-1) if col_name in row.index else 0
 
                         return val
 
                     # 함수적용
-                    df_tem[f'{기준년도}_N'] = df_tem.apply(금액작업, axis=1)
+                    df_tem[f'{기준년도}_N'] = df_tem.apply(lambda row: 금액작업(row, 기준년도), axis=1)
                     df_tem = df_tem.set_index('중분류')
                     기부금 = df_tem.iloc[0,1]
                     # st.text(기부금)
